@@ -1,0 +1,1 @@
+C:\Users\Martinc\Documents\GitHub\Myo-Snake\MyoSnake\MyoSnake\MyoSnake.csproj;x64
