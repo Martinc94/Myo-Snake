@@ -29,17 +29,20 @@ namespace MyoSnake
 
         private void btnEasy_Click(object sender, RoutedEventArgs e)
         {
-            //this.Frame.Navigate(typeof(MyoSnake.DifficultySelection));
+            //pass player argument and difficulty argument
+            //this.Frame.Navigate(typeof(MyoSnake.Level));
         }
 
         private void btnNormal_Click(object sender, RoutedEventArgs e)
         {
-            //this.Frame.Navigate(typeof(MyoSnake.DifficultySelection));
+            //pass player argument and difficulty argument
+            //this.Frame.Navigate(typeof(MyoSnake.Level));
         }
 
         private void btnHard_Click(object sender, RoutedEventArgs e)
         {
-            //this.Frame.Navigate(typeof(MyoSnake.DifficultySelection));
+            //pass player argument and difficulty argument
+            //this.Frame.Navigate(typeof(MyoSnake.Level));
         }
     }
 }

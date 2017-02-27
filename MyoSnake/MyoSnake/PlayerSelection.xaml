@@ -19,7 +19,11 @@
         <!--<Grid.Background>
             <<ImageBrush ImageSource="Images/picture.jpg"></ImageBrush>
         </Grid.Background> -->
-        
+
+        <StackPanel Grid.Row="0">
+            <TextBlock FontSize="50" Margin="0,50" Foreground="White" FontStyle="Italic" FontFamily="arial" VerticalAlignment="Center" HorizontalAlignment="Center">Select how many players</TextBlock>
+        </StackPanel>
+
         <StackPanel Grid.Row="1">
             <Button x:Name="btnOnePlayer" x:Uid="btnOnePlayer" Margin="0,50,0,0" Background="DarkOrange" FontSize="40" FontFamily="arial" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnOnePlayer_Click">One Player</Button>
         </StackPanel>

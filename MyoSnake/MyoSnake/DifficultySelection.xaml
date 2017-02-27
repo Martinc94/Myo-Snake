@@ -18,6 +18,11 @@
         <!--<Grid.Background>
             <<ImageBrush ImageSource="Images/picture.jpg"></ImageBrush>
         </Grid.Background> -->
+
+        <StackPanel Grid.Row="0">
+            <TextBlock FontSize="50" Margin="0,50" Foreground="White" FontStyle="Italic" FontFamily="arial" VerticalAlignment="Center" HorizontalAlignment="Center">Select Difficulty</TextBlock>
+        </StackPanel>
+        
         <StackPanel Grid.Row="1">
             <Button x:Name="btnEasy" x:Uid="btnEasy" Background="DarkOrange" FontSize="40" FontFamily="arial" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnEasy_Click">Easy</Button>
         </StackPanel>

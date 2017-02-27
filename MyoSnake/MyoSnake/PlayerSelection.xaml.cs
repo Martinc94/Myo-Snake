@@ -29,11 +29,13 @@ namespace MyoSnake
 
         private void btnOnePlayer_Click(object sender, RoutedEventArgs e)
         {
+            //pass one player argument
             this.Frame.Navigate(typeof(MyoSnake.DifficultySelection));
         }
 
         private void btnTwoPlayer_Click(object sender, RoutedEventArgs e)
         {
+            //pass two player argument
             this.Frame.Navigate(typeof(MyoSnake.DifficultySelection));
         }
     }
