@@ -24,6 +24,8 @@ namespace MyoSnake
     public sealed partial class Level : Page
     {
         Grid grid = new Grid();
+        Snake player1 = new Snake();
+
         public Level()
         {
             this.InitializeComponent();
@@ -90,5 +92,12 @@ namespace MyoSnake
             mainGrid.Children.Add(grid);
             
         } // Init()
+
+        // draws the player on the screen
+        private void drawPlayer()
+        {
+           
+
+        }
     }
 }
