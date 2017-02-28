@@ -21,6 +21,13 @@ namespace MyoSnake
             // initialise body list
             Body = new List<SnakeBody>();
 
+            // set start size
+            StartSize = 4;
+
+            // set start PosX and PosY
+            StartPosX = 10;
+            StartPosY = 10;
+
             // add body parts
             for (int i = 0; i < StartSize; i++)
             {
@@ -33,7 +40,7 @@ namespace MyoSnake
         public void IncreaseBodySize()
         {
             // create body part
-            SnakeBody body = new SnakeBody();
+            SnakeBody bodyPart = new SnakeBody();
 
             // if there are body parts
             if (Body.Count > 0)
@@ -41,32 +48,32 @@ namespace MyoSnake
                 SnakeBody lastPart = Body[Body.Count - 1];
 
                 // set the body part direction
-                body.CurrentDirection = lastPart.CurrentDirection;
+                bodyPart.CurrentDirection = lastPart.CurrentDirection;
 
                 // set the body part position
                 switch (lastPart.CurrentDirection)
                 {
                     case "N":
 
-                        body.PosX = lastPart.PosX - 1;
-                        body.PosY = lastPart.PosY;
+                        bodyPart.PosX = lastPart.PosX - 1;
+                        bodyPart.PosY = lastPart.PosY;
 
                         break;
                     case "W":
 
-                        body.PosX = lastPart.PosX;
-                        body.PosY = lastPart.PosY + 1;
+                        bodyPart.PosX = lastPart.PosX;
+                        bodyPart.PosY = lastPart.PosY + 1;
 
                         break;
                     case "E":
 
-                        body.PosX = lastPart.PosX;
-                        body.PosY = lastPart.PosY - 1;
+                        bodyPart.PosX = lastPart.PosX;
+                        bodyPart.PosY = lastPart.PosY - 1;
 
                         break;
                     case "S":
-                        body.PosX = lastPart.PosX + 1;
-                        body.PosY = lastPart.PosY;
+                        bodyPart.PosX = lastPart.PosX + 1;
+                        bodyPart.PosY = lastPart.PosY;
                         break;
 
                 } // switch
@@ -74,11 +81,14 @@ namespace MyoSnake
             else // if there are no body parts (first part)
             {
                 // set starting values
-                body.PosX = StartPosX;
-                body.PosY = StartPosY;
-                body.CurrentDirection = "N";
+                bodyPart.PosX = StartPosX;
+                bodyPart.PosY = StartPosY;
+                bodyPart.CurrentDirection = "N";
 
             } // if
+
+            // add body part to the list
+            Body.Add(bodyPart);
 
         } // IncreaseBodySize()
 

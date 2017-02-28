@@ -24,6 +24,7 @@ namespace MyoSnake
     public sealed partial class Level : Page
     {
         Grid grid = new Grid();
+        Dictionary<string, StackPanel> gameBoard = new Dictionary<string, StackPanel>();
         Snake player1 = new Snake();
 
         DispatcherTimer timer = new DispatcherTimer();
@@ -107,6 +108,10 @@ namespace MyoSnake
 
                     // add stackpanel to grid
                     grid.Children.Add(sp);
+
+                    // add stackpanel to gameBoard dictionary
+                    gameBoard.Add(sp.Tag.ToString(), sp);
+
                 } // for
             } // for
 
@@ -121,38 +126,28 @@ namespace MyoSnake
         // draws the player on the screen
         private void drawPlayer()
         {
-           
-            foreach(var item in grid.Children)
+            System.Diagnostics.Debug.WriteLine("Starting to draw snake.");
+
+            // loop through each body part
+            foreach (var bodyPart in player1.Body)
             {
-                var sp = item as StackPanel;
-                string[] index = sp.Tag.ToString().Split('.');
-                int row = Convert.ToInt32(index[0]);
-                int col = Convert.ToInt32(index[1]);
 
-               // System.Diagnostics.Debug.WriteLine("Panels X: " + row + " and Y: " + col);
+                StackPanel sp = null;
 
-               // sp.Background = new SolidColorBrush(Colors.Red);
+                // try and get the stackpanel at the position the body part is at
+                gameBoard.TryGetValue(bodyPart.PosX + "." + bodyPart.PosY, out sp);
 
-                foreach (var bodyPart in player1.Body)
+                // if a panel is there
+                if(sp != null)
                 {
+                    // draw the part
+                    sp.Background = new SolidColorBrush(Colors.Red);
 
-                    System.Diagnostics.Debug.WriteLine("Body X: " + bodyPart.PosX + " and Y: " + bodyPart.PosY);
-                    if (bodyPart.PosX == row && bodyPart.PosY == col)
-                    {
-                        // draw the part
-                        sp.Background = new SolidColorBrush(Colors.Red);
-
-                        // break out of loop
-                        break;
-
-                    } // if
-
-                } // for
-
-                // System.Diagnostics.Debug.WriteLine(sp.Tag);
-
+                } // if
 
             } // for
+
+            System.Diagnostics.Debug.WriteLine("Finished drawing snake.");
 
         } // drawPlayer()
     }
