@@ -83,6 +83,9 @@ namespace MyoSnake
                     sp.SetValue(Grid.RowProperty, i);
                     sp.SetValue(Grid.ColumnProperty, j);
 
+                    // add tag to find it later
+                    sp.Tag = i + "." + j;
+
                     // add stackpanel to grid
                     grid.Children.Add(sp);
                 } // for
@@ -90,14 +93,23 @@ namespace MyoSnake
 
             // add grid to page
             mainGrid.Children.Add(grid);
-            
+
+            drawPlayer();
         } // Init()
 
         // draws the player on the screen
         private void drawPlayer()
         {
            
+            foreach(var item in grid.Children)
+            {
+                var sp = item as StackPanel;
 
-        }
+                System.Diagnostics.Debug.WriteLine(sp.Tag);
+
+
+            } // for
+
+        } // drawPlayer()
     }
 }
