@@ -26,14 +26,33 @@ namespace MyoSnake
         Grid grid = new Grid();
         Snake player1 = new Snake();
 
+        DispatcherTimer timer = new DispatcherTimer();
+
         public Level()
         {
             this.InitializeComponent();
+
+            // setup timer
+
+            // set interval time
+            timer.Interval = TimeSpan.FromMilliseconds(800);
+
+            // set tick handler
+            timer.Tick += Timer_Tick;
 
             // initialise level
             Init();
 
         }
+
+        // handler for tick event
+        private void Timer_Tick(object sender, object e)
+        {
+
+            // draw the player
+            drawPlayer();
+
+        } // Timer_Tick()
 
         private void Init()
         {
@@ -94,7 +113,9 @@ namespace MyoSnake
             // add grid to page
             mainGrid.Children.Add(grid);
 
-            drawPlayer();
+            // start the timer to draw the player
+            timer.Start();
+
         } // Init()
 
         // draws the player on the screen
@@ -104,8 +125,31 @@ namespace MyoSnake
             foreach(var item in grid.Children)
             {
                 var sp = item as StackPanel;
+                string[] index = sp.Tag.ToString().Split('.');
+                int row = Convert.ToInt32(index[0]);
+                int col = Convert.ToInt32(index[1]);
 
-                System.Diagnostics.Debug.WriteLine(sp.Tag);
+               // System.Diagnostics.Debug.WriteLine("Panels X: " + row + " and Y: " + col);
+
+               // sp.Background = new SolidColorBrush(Colors.Red);
+
+                foreach (var bodyPart in player1.Body)
+                {
+
+                    System.Diagnostics.Debug.WriteLine("Body X: " + bodyPart.PosX + " and Y: " + bodyPart.PosY);
+                    if (bodyPart.PosX == row && bodyPart.PosY == col)
+                    {
+                        // draw the part
+                        sp.Background = new SolidColorBrush(Colors.Red);
+
+                        // break out of loop
+                        break;
+
+                    } // if
+
+                } // for
+
+                // System.Diagnostics.Debug.WriteLine(sp.Tag);
 
 
             } // for
