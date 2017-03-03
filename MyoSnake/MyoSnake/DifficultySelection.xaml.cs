@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyoSnake.Classes;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,6 +23,8 @@ namespace MyoSnake
     /// </summary>
     public sealed partial class DifficultySelection : Page
     {
+        private gameSettings settings;
+
         public DifficultySelection()
         {
             this.InitializeComponent();
@@ -30,19 +33,28 @@ namespace MyoSnake
         private void btnEasy_Click(object sender, RoutedEventArgs e)
         {
             //pass player argument and difficulty argument
-            //this.Frame.Navigate(typeof(MyoSnake.Level));
+            settings.Diff = 0;
+            //this.Frame.Navigate(typeof(MyoSnake.Level,settings));
         }
 
         private void btnNormal_Click(object sender, RoutedEventArgs e)
         {
             //pass player argument and difficulty argument
+            settings.Diff = 1;
             //this.Frame.Navigate(typeof(MyoSnake.Level));
         }
 
         private void btnHard_Click(object sender, RoutedEventArgs e)
         {
             //pass player argument and difficulty argument
+            settings.Diff = 2;
             //this.Frame.Navigate(typeof(MyoSnake.Level));
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            settings = (gameSettings)e.Parameter;
         }
     }
 }

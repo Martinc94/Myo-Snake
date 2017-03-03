@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyoSnake.Classes;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -30,13 +31,19 @@ namespace MyoSnake
         private void btnOnePlayer_Click(object sender, RoutedEventArgs e)
         {
             //pass one player argument
-            this.Frame.Navigate(typeof(MyoSnake.DifficultySelection));
+            var settings = new gameSettings();
+            settings.Players = 1;
+
+            this.Frame.Navigate(typeof(MyoSnake.DifficultySelection),settings);
         }
 
         private void btnTwoPlayer_Click(object sender, RoutedEventArgs e)
         {
             //pass two player argument
-            this.Frame.Navigate(typeof(MyoSnake.DifficultySelection));
+            var settings = new gameSettings();
+            settings.Players = 2;
+
+            this.Frame.Navigate(typeof(MyoSnake.DifficultySelection),settings);
         }
     }
 }
