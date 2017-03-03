@@ -21,19 +21,19 @@
         </Grid.Background> -->
 
         <StackPanel Grid.Row="0">
-            <TextBlock FontSize="50" Margin="0,50" Foreground="White" FontStyle="Italic" FontFamily="arial" VerticalAlignment="Center" HorizontalAlignment="Center">Game Over</TextBlock>
+            <TextBlock x:Uid="lblPostGame" FontSize="50" Margin="0,50" Foreground="White" FontStyle="Italic" FontFamily="arial" VerticalAlignment="Center" HorizontalAlignment="Center" Text="lblPostGame"></TextBlock>
         </StackPanel>
 
         <StackPanel Grid.Row="1">
-            <TextBlock x:Name="lblMessage" FontSize="50" Margin="0,50" Foreground="White" FontStyle="Italic" FontFamily="arial" VerticalAlignment="Center" HorizontalAlignment="Center">message here</TextBlock>
+            <TextBlock x:Uid="lblMessage" FontSize="50" Margin="0,50" Foreground="White" FontStyle="Italic" FontFamily="arial" VerticalAlignment="Center" HorizontalAlignment="Center" Text="lblMessage"></TextBlock>
         </StackPanel>
         
         <StackPanel Grid.Row="2">
-            <Button x:Name="btnReplay" x:Uid="btnReplay" Background="DarkOrange" FontSize="40" FontFamily="arial" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnReplay_Click">Play Again</Button>
+            <Button x:Name="btnReplay" x:Uid="btnReplay" Background="DarkOrange" FontSize="40" FontFamily="arial" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnReplay_Click" Content="btnReplay"></Button>
         </StackPanel>
 
         <StackPanel Grid.Row="3">
-            <Button x:Name="btnMenu" x:Uid="btnMenu" Background="DarkOrange" FontSize="40" FontFamily="arial" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnMenu_Click">Main Menu</Button>
+            <Button x:Name="btnMenu" x:Uid="btnMainMenu" Background="DarkOrange" FontSize="40" FontFamily="arial" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnMenu_Click" Content="btnMainMenu"></Button>
         </StackPanel>
         
     </Grid>

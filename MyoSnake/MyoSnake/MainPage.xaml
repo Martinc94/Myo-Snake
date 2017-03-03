@@ -22,11 +22,11 @@
         </Grid.Background> -->
 
         <StackPanel Grid.Row="1">
-            <TextBlock FontSize="70" Foreground="White" FontStyle="Italic" FontFamily="arial" VerticalAlignment="Center" HorizontalAlignment="Center">Myo Snake</TextBlock>
+            <TextBlock x:Uid="lblTitle" FontSize="70" Foreground="White" FontStyle="Italic" FontFamily="arial" VerticalAlignment="Center" HorizontalAlignment="Center" Text="lblTitle"></TextBlock>
         </StackPanel>
 
         <StackPanel Grid.Row="3">
-            <Button x:Name="btnStart" x:Uid="btnStart" Background="DarkOrange" FontSize="40" FontFamily="arial" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Start_Click">Play!</Button>
+            <Button x:Uid="btnStart" Background="DarkOrange" FontSize="40" FontFamily="arial" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Start_Click" Content="btnPlay"></Button>
         </StackPanel>
        
     </Grid>
