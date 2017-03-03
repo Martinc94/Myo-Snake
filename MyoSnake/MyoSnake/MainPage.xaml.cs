@@ -45,7 +45,9 @@ namespace MyoUWP
             this.Frame.Navigate(typeof(MyoSnake.Selection));
         }
 
-
-
+        private void HighScore_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MyoSnake.HighScores));
+        }
     }
 }

@@ -156,4 +156,10 @@
   <data name="lblTitle.Text" xml:space="preserve">
     <value>MyoSnake</value>
   </data>
+  <data name="btnHighScores.Content" xml:space="preserve">
+    <value>Highscores</value>
+  </data>
+  <data name="lblHighscore.Text" xml:space="preserve">
+    <value>Highscores</value>
+  </data>
 </root>

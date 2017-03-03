@@ -125,6 +125,10 @@
     <value>Crua</value>
     <comment>Hard</comment>
   </data>
+  <data name="btnHighScore.Content" xml:space="preserve">
+    <value>Scóir ard</value>
+    <comment>Highscores</comment>
+  </data>
   <data name="btnMainMenu.Content" xml:space="preserve">
     <value>Príomhroghchlár</value>
     <comment>Main Menu</comment>
@@ -152,6 +156,10 @@
   <data name="lblDiff.Text" xml:space="preserve">
     <value>Roghnaigh Deacracht</value>
     <comment>Select Difficulty</comment>
+  </data>
+  <data name="lblHighscore.Text" xml:space="preserve">
+    <value>Scóir ard</value>
+    <comment>lblHighscore.Text</comment>
   </data>
   <data name="lblMessage.Text" xml:space="preserve">
     <value>lblMessage</value>

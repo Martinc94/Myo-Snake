@@ -123,6 +123,9 @@
   <data name="btnHard.Content" xml:space="preserve">
     <value>Hard</value>
   </data>
+  <data name="btnHighScore.Content" xml:space="preserve">
+    <value>Highscores</value>
+  </data>
   <data name="btnMainMenu.Content" xml:space="preserve">
     <value>Main Menu</value>
   </data>
@@ -143,6 +146,9 @@
   </data>
   <data name="lblDiff.Text" xml:space="preserve">
     <value>Select Difficulty</value>
+  </data>
+  <data name="lblHighscore.Text" xml:space="preserve">
+    <value>HighScores</value>
   </data>
   <data name="lblMessage.Text" xml:space="preserve">
     <value>lblMessage</value>
