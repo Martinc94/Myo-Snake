@@ -104,6 +104,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\gameSettings.cs" />
     <Compile Include="Classes\myHeldPose.cs" />
     <Compile Include="DifficultySelection.xaml.cs">
       <DependentUpon>DifficultySelection.xaml</DependentUpon>
