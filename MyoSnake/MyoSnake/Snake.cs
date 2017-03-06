@@ -11,6 +11,9 @@ namespace MyoSnake
         public string PlayerName { get; set; }
         public List<SnakeBody> Body { get; set; }
 
+        public SnakeBody Head { get; set; }
+        public SnakeBody Tail { get; set; }
+
         public int StartSize { get; set; }
         public int StartPosX { get; set; }
         public int StartPosY { get; set; }
@@ -55,7 +58,7 @@ namespace MyoSnake
                 {
                     case "N":
 
-                        bodyPart.PosX = lastPart.PosX - 1;
+                        bodyPart.PosX = lastPart.PosX + 1;
                         bodyPart.PosY = lastPart.PosY;
 
                         break;
@@ -72,7 +75,7 @@ namespace MyoSnake
 
                         break;
                     case "S":
-                        bodyPart.PosX = lastPart.PosX + 1;
+                        bodyPart.PosX = lastPart.PosX - 1;
                         bodyPart.PosY = lastPart.PosY;
                         break;
 
@@ -85,12 +88,54 @@ namespace MyoSnake
                 bodyPart.PosY = StartPosY;
                 bodyPart.CurrentDirection = "N";
 
+                // set head
+                Head = bodyPart;
+
             } // if
 
             // add body part to the list
             Body.Add(bodyPart);
 
+            // Flag as tail
+            Tail = bodyPart;
+
         } // IncreaseBodySize()
+
+        // moves the snake
+        public void Move()
+        {
+
+            foreach (var bodyPart in Body)
+            {
+
+                // set the body part position
+                switch (bodyPart.CurrentDirection)
+                {
+                    case "N":
+
+                        bodyPart.PosX -= 1;
+
+                        break;
+                    case "W":
+                        
+                        bodyPart.PosY -= 1;
+
+                        break;
+                    case "E":
+                       
+                        bodyPart.PosY += 1;
+
+                        break;
+                    case "S":
+                        bodyPart.PosX += 1;
+
+                        break;
+
+                } // switch
+
+            } // foreach
+
+        } // Move()
 
     } // class
 } // namespace

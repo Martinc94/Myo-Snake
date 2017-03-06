@@ -36,7 +36,7 @@ namespace MyoSnake
             // setup timer
 
             // set interval time
-            timer.Interval = TimeSpan.FromMilliseconds(800);
+            timer.Interval = TimeSpan.FromMilliseconds(400);
 
             // set tick handler
             timer.Tick += Timer_Tick;
@@ -128,11 +128,31 @@ namespace MyoSnake
         {
             System.Diagnostics.Debug.WriteLine("Starting to draw snake.");
 
+            StackPanel sp = null;
+
+            // reset old last player body part
+
+            // try and get the stackpanel at the position the body part is at
+            gameBoard.TryGetValue(player1.Tail.PosX + "." + player1.Tail.PosY, out sp);
+
+            // if a panel is there
+            if (sp != null)
+            {
+                // draw the part
+                sp.Background = new SolidColorBrush(Colors.Blue);
+
+            } // if
+
+            // move the player
+            player1.Move();
+
             // loop through each body part
             foreach (var bodyPart in player1.Body)
             {
 
-                StackPanel sp = null;
+                // check if head of snake as hit a wall
+           
+                sp = null;
 
                 // try and get the stackpanel at the position the body part is at
                 gameBoard.TryGetValue(bodyPart.PosX + "." + bodyPart.PosY, out sp);
@@ -146,6 +166,19 @@ namespace MyoSnake
                 } // if
 
             } // for
+
+            sp = null;
+
+            // try and get the stackpanel at the position the body part is at
+            gameBoard.TryGetValue(player1.Head.PosX + "." + player1.Head.PosY, out sp);
+
+            // if a panel is there
+            if (sp != null)
+            {
+                // draw the part
+                sp.Background = new SolidColorBrush(Colors.Orange);
+
+            } // if
 
             System.Diagnostics.Debug.WriteLine("Finished drawing snake.");
 
