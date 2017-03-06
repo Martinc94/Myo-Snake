@@ -92,6 +92,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Data\HighScores.txt" />
     <Content Include="x64\myo.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -109,6 +110,7 @@
     </Compile>
     <Compile Include="Classes\gameSettings.cs" />
     <Compile Include="Classes\myHeldPose.cs" />
+    <Compile Include="Data\Score.cs" />
     <Compile Include="DifficultySelection.xaml.cs">
       <DependentUpon>DifficultySelection.xaml</DependentUpon>
     </Compile>
@@ -118,6 +120,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Score.cs" />
     <Compile Include="PostGame.xaml.cs">
       <DependentUpon>PostGame.xaml</DependentUpon>
     </Compile>
