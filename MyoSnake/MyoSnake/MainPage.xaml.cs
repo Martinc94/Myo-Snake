@@ -20,10 +20,7 @@ using MyoSharp.Device;
 using MyoSharp.Exceptions;
 using MyoSharp.Poses;
 using Windows.UI;
-
-
-
-
+using System.Diagnostics;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -37,7 +34,6 @@ namespace MyoUWP
         public MainPage()
         {
             this.InitializeComponent();
-
         }
 
         private void Start_Click(object sender, RoutedEventArgs e)

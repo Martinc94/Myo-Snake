@@ -128,6 +128,8 @@
     <Compile Include="PlayerSelection.xaml.cs">
       <DependentUpon>PlayerSelection.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\Helpers.cs" />
+    <Compile Include="ViewModel\HighScoreViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
