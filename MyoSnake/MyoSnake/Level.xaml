@@ -7,7 +7,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid x:Name="mainGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid x:Name="mainGrid"></Grid>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:Name="leftBtn" Content="Left" Width="60" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" Click="leftBtn_Click"/>
+            <Button x:Name="rightBtn" Content="Right" Width="60" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" Click="rightBtn_Click"/>
+        </StackPanel>
     </Grid>
 </Page>

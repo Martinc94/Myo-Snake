@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI;
+using System.Diagnostics;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -63,7 +64,7 @@ namespace MyoSnake
 
             // grid.Width = 400;
             // grid.Height = 400;
-            grid.Margin = new Thickness(20);
+            grid.Margin = new Thickness(20, 100, 20, 20);
             grid.HorizontalAlignment = HorizontalAlignment.Stretch;
             grid.VerticalAlignment = VerticalAlignment.Stretch;
             grid.BorderThickness = new Thickness(4);
@@ -126,7 +127,6 @@ namespace MyoSnake
         // draws the player on the screen
         private void drawPlayer()
         {
-            System.Diagnostics.Debug.WriteLine("Starting to draw snake.");
 
             StackPanel sp = null;
 
@@ -180,8 +180,17 @@ namespace MyoSnake
 
             } // if
 
-            System.Diagnostics.Debug.WriteLine("Finished drawing snake.");
-
         } // drawPlayer()
+
+        private void leftBtn_Click(object sender, RoutedEventArgs e)
+        {
+            player1.MoveLeft();
+
+        }
+
+        private void rightBtn_Click(object sender, RoutedEventArgs e)
+        {
+            player1.MoveRight();
+        }
     }
 }

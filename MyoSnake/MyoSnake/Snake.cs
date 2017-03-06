@@ -104,6 +104,7 @@ namespace MyoSnake
         // moves the snake
         public void Move()
         {
+            SnakeBody last = null;
 
             foreach (var bodyPart in Body)
             {
@@ -115,27 +116,100 @@ namespace MyoSnake
 
                         bodyPart.PosX -= 1;
 
+                        if (last != null)
+                            bodyPart.CurrentDirection = last.CurrentDirection;
+
                         break;
                     case "W":
                         
                         bodyPart.PosY -= 1;
+
+                        if (last != null)
+                            bodyPart.CurrentDirection = last.CurrentDirection;
 
                         break;
                     case "E":
                        
                         bodyPart.PosY += 1;
 
+                        if (last != null)
+                            bodyPart.CurrentDirection = last.CurrentDirection;
+
                         break;
                     case "S":
                         bodyPart.PosX += 1;
+
+                        if (last != null)
+                            bodyPart.CurrentDirection = last.CurrentDirection;
 
                         break;
 
                 } // switch
 
+                // save last part
+                last = bodyPart;
+
             } // foreach
 
         } // Move()
+
+        // updates the direction of the snakes head, to make it move left of its current position
+        public void MoveLeft()
+        {
+            switch (Head.CurrentDirection)
+            {
+                case "N":
+
+                    Head.CurrentDirection = "W";
+
+                    break;
+                case "W":
+
+                    Head.CurrentDirection = "S";
+
+                    break;
+                case "E":
+
+                    Head.CurrentDirection = "N";
+
+                    break;
+                case "S":
+                    Head.CurrentDirection = "E";
+
+                    break;
+
+            } // switch
+
+        } // MoveLeft()
+
+        // updates the direction of the snakes head, to make it move right of its current position
+        public void MoveRight()
+        {
+            switch (Head.CurrentDirection)
+            {
+                case "N":
+
+                    Head.CurrentDirection = "E";
+
+                    break;
+                case "W":
+
+                    Head.CurrentDirection = "N";
+
+                    break;
+                case "E":
+
+                    Head.CurrentDirection = "S";
+
+                    break;
+                case "S":
+                    Head.CurrentDirection = "W";
+
+                    break;
+
+            } // switch
+
+        } // MoveRight()
 
     } // class
 } // namespace
