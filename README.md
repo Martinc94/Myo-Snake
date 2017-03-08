@@ -24,8 +24,53 @@ We had previously used a single myo in our labs and wanted to get two myo commun
 ##Technologies Used:
 
 ###Localisation:
-
-We have deStringifyed the App the include Language Support for English (en-GB, en-US) and Irish (ga).
+The project has deStringifyed to the include Language Support for English (en-GB, en-US) and Irish (ga).
 All text is stored in .resw files for each language.
 Additional language support can be easily and quickly added to the App.
+
+###MVVM
+Model-view View-model
+MVVM separates the responsibility for the appearance and layout of the UI from the responsibility for the presentation logic.
+
+####Model
+The model represents the data we are dealing with.
+
+####View 
+The view is what the end user sees and interacts with.
+
+####Viewmodel 
+The Viewmodel connects the Model to the View.
+It allows for loose coupling and binding of data.
+
+###Local Storage
+This project uses local storage to save highscores in a Json Array.
+
+Initialise and get a handle on File
+```
+StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+StorageFile file;
+```
+
+Open File or create if doesnt exist
+```
+file = await storageFolder.CreateFileAsync("HighScores.txt", CreationCollisionOption.OpenIfExists);
+string Json = await Windows.Storage.FileIO.ReadTextAsync(file);
+```
+
+Example of Json Stored Object
+```json
+{
+  "Name": "Joe Bloggs",
+  "HighScore": "2000"
+}
+```
+
+## Json.Net 
+This project uses Json.Net by newtonsoft as it handles serialisation and deserialisation very well.
+<br>
+http://www.newtonsoft.com/json
+
+##Project Management
+GitHub was used for managing the project's source control and issue tracking.
+
 
