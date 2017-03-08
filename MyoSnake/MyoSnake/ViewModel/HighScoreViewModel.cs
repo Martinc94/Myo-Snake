@@ -1,6 +1,8 @@
 ﻿using MyoSnake.Data;
+using MyoSnake.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +13,7 @@ namespace MyoSnake.ViewModel
    public class HighScoreViewModel : Helper.NotificationBase<Score>
     {
         public HighScoreViewModel(Score score = null) : base(score) { }
+      
         public String Name
         {
             get { return This.Name; }

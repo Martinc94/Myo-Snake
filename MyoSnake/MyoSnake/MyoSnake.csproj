@@ -110,6 +110,7 @@
     </Compile>
     <Compile Include="Classes\gameSettings.cs" />
     <Compile Include="Classes\myHeldPose.cs" />
+    <Compile Include="Converters\ObjectExistsToVisible.cs" />
     <Compile Include="Data\Score.cs" />
     <Compile Include="DifficultySelection.xaml.cs">
       <DependentUpon>DifficultySelection.xaml</DependentUpon>
@@ -130,6 +131,7 @@
     </Compile>
     <Compile Include="ViewModel\Helpers.cs" />
     <Compile Include="ViewModel\HighScoreViewModel.cs" />
+    <Compile Include="ViewModel\HighScoreVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

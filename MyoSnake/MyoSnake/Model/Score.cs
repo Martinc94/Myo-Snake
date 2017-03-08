@@ -52,6 +52,9 @@ namespace MyoSnake.Model
             scoreFile = await storageFolder.CreateFileAsync("HighScores.txt", CreationCollisionOption.OpenIfExists);
             string Json = await Windows.Storage.FileIO.ReadTextAsync(scoreFile);
 
+            //find localStorage
+            //Debug.WriteLine(scoreFile.Path);
+
             var jScoreList = JsonArray.Parse(Json);
             CreateList(jScoreList);
         }
@@ -72,10 +75,10 @@ namespace MyoSnake.Model
 
                     switch (key)
                     {
-                        case "Title":
+                        case "Name":
                             nScore.Name = value.GetString();
                             break;
-                        case "Year":
+                        case "Highscore":
                             nScore.Highscore = value.GetString();
                             break;
                         
