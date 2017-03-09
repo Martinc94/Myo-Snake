@@ -24,9 +24,12 @@ namespace MyoSnake
     /// </summary>
     public sealed partial class Level : Page
     {
+        Random ran = new Random();
         Grid grid = new Grid();
         Dictionary<string, StackPanel> gameBoard = new Dictionary<string, StackPanel>();
         Snake player1 = new Snake();
+        Pickup pickup = new Pickup();
+        int boardSize = 32;
 
         DispatcherTimer timer = new DispatcherTimer();
 
@@ -54,13 +57,15 @@ namespace MyoSnake
             // draw the player
             drawPlayer();
 
+            placePickup();
+
         } // Timer_Tick()
 
         private void Init()
         {
 
-            int rowCount = 32;
-            int colCount = 32;
+            int rowCount = boardSize;
+            int colCount = boardSize;
 
             // grid.Width = 400;
             // grid.Height = 400;
@@ -202,6 +207,59 @@ namespace MyoSnake
             } // if
 
         } // drawPlayer()
+
+        // places the pickup for the player
+        private void placePickup()
+        {
+
+            StackPanel sp = null;
+
+            // remove old pickup
+           
+            // try and get the stackpanel at the position
+            gameBoard.TryGetValue(pickup.PosX + "." + pickup.PosY, out sp);
+
+            // if a panel is there
+            if (sp != null)
+            {
+                // draw the part
+                sp.Background = new SolidColorBrush(Colors.Blue);
+
+            } // if
+          
+            // generate X coord
+            pickup.PosX = generateCoord();
+
+            // generate Y coord
+            pickup.PosY = generateCoord();
+
+            // check that spot is not taken
+
+            // place the pickup
+
+            // try and get the stackpanel at the position
+            gameBoard.TryGetValue(pickup.PosX + "." + pickup.PosY, out sp);
+
+            // if a panel is there
+            if (sp != null)
+            {
+                // draw the part
+                sp.Background = new SolidColorBrush(Colors.Orange);
+
+            } // if
+
+        } // placePickup()
+
+        private int generateCoord()
+        {
+            int coord = 0;
+
+            // generate a random number
+            coord = ran.Next(boardSize);
+
+            return coord;
+
+        } // generateCoord()
 
         private void leftBtn_Click(object sender, RoutedEventArgs e)
         {
