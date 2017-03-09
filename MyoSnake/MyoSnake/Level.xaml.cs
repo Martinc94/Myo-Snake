@@ -130,18 +130,39 @@ namespace MyoSnake
 
             StackPanel sp = null;
 
-            // reset old last player body part
+            //// reset old last player body part
 
-            // try and get the stackpanel at the position the body part is at
-            gameBoard.TryGetValue(player1.Tail.PosX + "." + player1.Tail.PosY, out sp);
+            //// try and get the stackpanel at the position the body part is at
+            //gameBoard.TryGetValue(player1.Tail.PosX + "." + player1.Tail.PosY, out sp);
 
-            // if a panel is there
-            if (sp != null)
+            //// if a panel is there
+            //if (sp != null)
+            //{
+            //    // draw the part
+            //    sp.Background = new SolidColorBrush(Colors.Blue);
+
+            //} // if
+
+            // loop through each body part
+            foreach (var bodyPart in player1.Body)
             {
-                // draw the part
-                sp.Background = new SolidColorBrush(Colors.Blue);
 
-            } // if
+                // check if head of snake as hit a wall
+
+                sp = null;
+
+                // try and get the stackpanel at the position the body part is at
+                gameBoard.TryGetValue(bodyPart.PosX + "." + bodyPart.PosY, out sp);
+
+                // if a panel is there
+                if (sp != null)
+                {
+                    // draw the part
+                    sp.Background = new SolidColorBrush(Colors.Blue);
+
+                } // if
+
+            } // for
 
             // move the player
             player1.Move();

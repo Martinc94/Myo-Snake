@@ -104,52 +104,43 @@ namespace MyoSnake
         // moves the snake
         public void Move()
         {
-            SnakeBody last = null;
+           // SnakeBody last = Head;
 
-            foreach (var bodyPart in Body)
+            for (int i = Body.Count -1; i >= 0; i--)
             {
 
                 // set the body part position
-                switch (bodyPart.CurrentDirection)
+                switch (Body[i].CurrentDirection)
                 {
                     case "N":
 
-                        bodyPart.PosX -= 1;
-
-                        if (last != null)
-                            bodyPart.CurrentDirection = last.CurrentDirection;
-
+                        Body[i].PosX -= 1;
+                        
                         break;
                     case "W":
+
+                        Body[i].PosY -= 1;
                         
-                        bodyPart.PosY -= 1;
-
-                        if (last != null)
-                            bodyPart.CurrentDirection = last.CurrentDirection;
-
                         break;
                     case "E":
-                       
-                        bodyPart.PosY += 1;
 
-                        if (last != null)
-                            bodyPart.CurrentDirection = last.CurrentDirection;
-
+                        Body[i].PosY += 1;
+                        
                         break;
                     case "S":
-                        bodyPart.PosX += 1;
-
-                        if (last != null)
-                            bodyPart.CurrentDirection = last.CurrentDirection;
+                        Body[i].PosX += 1;
 
                         break;
 
                 } // switch
 
-                // save last part
-                last = bodyPart;
+                if (i > 0)
+                {
+                    // tell body part where to move next, by getting the part ahead of its direction
+                    Body[i].CurrentDirection = Body[i - 1].CurrentDirection;
 
-            } // foreach
+                } // if
+            } // for
 
         } // Move()
 
