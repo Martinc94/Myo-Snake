@@ -25,11 +25,12 @@ namespace MyoSnake
     public sealed partial class Level : Page
     {
         Random ran = new Random();
+        static int boardSize = 32;
         Grid grid = new Grid();
         Dictionary<string, StackPanel> gameBoard = new Dictionary<string, StackPanel>();
-        Snake player1 = new Snake();
+        Snake player1 = new Snake(boardSize);
         Pickup pickup = new Pickup();
-        int boardSize = 32;
+        
 
         DispatcherTimer timer = new DispatcherTimer();
 
@@ -157,7 +158,7 @@ namespace MyoSnake
                 sp = null;
 
                 // try and get the stackpanel at the position the body part is at
-                gameBoard.TryGetValue(bodyPart.PosX + "." + bodyPart.PosY, out sp);
+                gameBoard.TryGetValue(bodyPart.PosY + "." + bodyPart.PosX, out sp);
 
                 // if a panel is there
                 if (sp != null)
@@ -181,7 +182,7 @@ namespace MyoSnake
                 sp = null;
 
                 // try and get the stackpanel at the position the body part is at
-                gameBoard.TryGetValue(bodyPart.PosX + "." + bodyPart.PosY, out sp);
+                gameBoard.TryGetValue(bodyPart.PosY + "." + bodyPart.PosX, out sp);
 
                 // if a panel is there
                 if(sp != null)
@@ -196,7 +197,7 @@ namespace MyoSnake
             sp = null;
 
             // try and get the stackpanel at the position the body part is at
-            gameBoard.TryGetValue(player1.Head.PosX + "." + player1.Head.PosY, out sp);
+            gameBoard.TryGetValue(player1.Head.PosY + "." + player1.Head.PosX, out sp);
 
             // if a panel is there
             if (sp != null)
@@ -217,7 +218,7 @@ namespace MyoSnake
             // remove old pickup
            
             // try and get the stackpanel at the position
-            gameBoard.TryGetValue(pickup.PosX + "." + pickup.PosY, out sp);
+            gameBoard.TryGetValue(pickup.PosY + "." + pickup.PosX, out sp);
 
             // if a panel is there
             if (sp != null)
@@ -238,7 +239,7 @@ namespace MyoSnake
             // place the pickup
 
             // try and get the stackpanel at the position
-            gameBoard.TryGetValue(pickup.PosX + "." + pickup.PosY, out sp);
+            gameBoard.TryGetValue(pickup.PosY + "." + pickup.PosX, out sp);
 
             // if a panel is there
             if (sp != null)

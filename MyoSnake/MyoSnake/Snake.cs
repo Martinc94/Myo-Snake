@@ -17,10 +17,14 @@ namespace MyoSnake
         public int StartSize { get; set; }
         public int StartPosX { get; set; }
         public int StartPosY { get; set; }
-        
+        private int boardSize;
 
-        public Snake()
+        public Snake(int boardSize)
         {
+
+            // save the board size
+            this.boardSize = boardSize;
+
             // initialise body list
             Body = new List<SnakeBody>();
 
@@ -58,28 +62,29 @@ namespace MyoSnake
                 {
                     case "N":
 
-                        bodyPart.PosX = lastPart.PosX + 1;
-                        bodyPart.PosY = lastPart.PosY;
+                        bodyPart.PosY = lastPart.PosY + 1;
+                        bodyPart.PosX = lastPart.PosX;
 
                         break;
                     case "W":
 
-                        bodyPart.PosX = lastPart.PosX;
-                        bodyPart.PosY = lastPart.PosY + 1;
+                        bodyPart.PosY = lastPart.PosY;
+                        bodyPart.PosX = lastPart.PosX + 1;
 
                         break;
                     case "E":
 
-                        bodyPart.PosX = lastPart.PosX;
-                        bodyPart.PosY = lastPart.PosY - 1;
+                        bodyPart.PosY = lastPart.PosY;
+                        bodyPart.PosX = lastPart.PosX - 1;
 
                         break;
                     case "S":
-                        bodyPart.PosX = lastPart.PosX - 1;
-                        bodyPart.PosY = lastPart.PosY;
+                        bodyPart.PosY = lastPart.PosY - 1;
+                        bodyPart.PosX = lastPart.PosX;
                         break;
 
                 } // switch
+
             }
             else // if there are no body parts (first part)
             {
@@ -114,25 +119,36 @@ namespace MyoSnake
                 {
                     case "N":
 
-                        Body[i].PosX -= 1;
+                        Body[i].PosY -= 1;
                         
                         break;
                     case "W":
 
-                        Body[i].PosY -= 1;
+                        Body[i].PosX -= 1;
                         
                         break;
                     case "E":
 
-                        Body[i].PosY += 1;
+                        Body[i].PosX += 1;
                         
                         break;
                     case "S":
-                        Body[i].PosX += 1;
+                        Body[i].PosY += 1;
 
                         break;
 
                 } // switch
+
+                // account for walls, move snake to other size of the board
+                if (Body[i].PosX >= boardSize)
+                    Body[i].PosX = 0;
+                else if (Body[i].PosX < 0)
+                    Body[i].PosX = boardSize - 1;
+
+                if (Body[i].PosY >= boardSize)
+                    Body[i].PosY = 0;
+                else if (Body[i].PosY < 0)
+                    Body[i].PosY = boardSize - 1;
 
                 if (i > 0)
                 {
