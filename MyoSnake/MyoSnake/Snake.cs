@@ -29,7 +29,7 @@ namespace MyoSnake
             Body = new List<SnakeBody>();
 
             // set start size
-            StartSize = 4;
+            StartSize = 30;
 
             // set start PosX and PosY
             StartPosX = 10;
@@ -85,6 +85,18 @@ namespace MyoSnake
 
                 } // switch
 
+                // account for walls, move snake to other size of the board
+
+                if (bodyPart.PosX >= boardSize) // if X axis too big
+                    bodyPart.PosX = 0; // set back to 0
+                else if (bodyPart.PosX < 0) // if X axis too small
+                    bodyPart.PosX = boardSize - 1; // set to other side of board
+
+                if (bodyPart.PosY >= boardSize) // if Y axis too big
+                    bodyPart.PosY = 0; // reset to 0
+                else if (bodyPart.PosY < 0) // if Y axis is too small
+                    bodyPart.PosY = boardSize - 1; // set to other side of board
+
             }
             else // if there are no body parts (first part)
             {
@@ -109,9 +121,9 @@ namespace MyoSnake
         // moves the snake
         public void Move()
         {
-           // SnakeBody last = Head;
+            // SnakeBody last = Head;
 
-            for (int i = Body.Count -1; i >= 0; i--)
+            for (int i = Body.Count - 1; i >= 0; i--)
             {
 
                 // set the body part position
@@ -120,17 +132,17 @@ namespace MyoSnake
                     case "N":
 
                         Body[i].PosY -= 1;
-                        
+
                         break;
                     case "W":
 
                         Body[i].PosX -= 1;
-                        
+
                         break;
                     case "E":
 
                         Body[i].PosX += 1;
-                        
+
                         break;
                     case "S":
                         Body[i].PosY += 1;
@@ -140,15 +152,16 @@ namespace MyoSnake
                 } // switch
 
                 // account for walls, move snake to other size of the board
-                if (Body[i].PosX >= boardSize)
-                    Body[i].PosX = 0;
-                else if (Body[i].PosX < 0)
-                    Body[i].PosX = boardSize - 1;
 
-                if (Body[i].PosY >= boardSize)
-                    Body[i].PosY = 0;
-                else if (Body[i].PosY < 0)
-                    Body[i].PosY = boardSize - 1;
+                if (Body[i].PosX >= boardSize) // if X axis too big
+                    Body[i].PosX = 0; // set back to 0
+                else if (Body[i].PosX < 0) // if X axis too small
+                    Body[i].PosX = boardSize - 1; // set to other side of board
+
+                if (Body[i].PosY >= boardSize) // if Y axis too big
+                    Body[i].PosY = 0; // reset to 0
+                else if (Body[i].PosY < 0) // if Y axis is too small
+                    Body[i].PosY = boardSize - 1; // set to other side of board
 
                 if (i > 0)
                 {

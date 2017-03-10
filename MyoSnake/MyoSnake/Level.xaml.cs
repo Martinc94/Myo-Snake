@@ -30,6 +30,7 @@ namespace MyoSnake
         Dictionary<string, StackPanel> gameBoard = new Dictionary<string, StackPanel>();
         Snake player1 = new Snake(boardSize);
         Pickup pickup = new Pickup();
+        Boolean player1Moved = false;
         
 
         DispatcherTimer timer = new DispatcherTimer();
@@ -58,7 +59,11 @@ namespace MyoSnake
             // draw the player
             drawPlayer();
 
-            placePickup();
+            // place the pickup
+            //placePickup();
+
+            // reset player move count
+            player1Moved = false;
 
         } // Timer_Tick()
 
@@ -136,18 +141,7 @@ namespace MyoSnake
 
             StackPanel sp = null;
 
-            //// reset old last player body part
-
-            //// try and get the stackpanel at the position the body part is at
-            //gameBoard.TryGetValue(player1.Tail.PosX + "." + player1.Tail.PosY, out sp);
-
-            //// if a panel is there
-            //if (sp != null)
-            //{
-            //    // draw the part
-            //    sp.Background = new SolidColorBrush(Colors.Blue);
-
-            //} // if
+            // reset old last player body parts
 
             // loop through each body part
             foreach (var bodyPart in player1.Body)
@@ -264,13 +258,30 @@ namespace MyoSnake
 
         private void leftBtn_Click(object sender, RoutedEventArgs e)
         {
-            player1.MoveLeft();
+            if (player1Moved == false)
+            {
+                // move the player
+                player1.MoveLeft();
+
+                // decrease move count
+                player1Moved = true;
+
+            } // if
 
         }
 
         private void rightBtn_Click(object sender, RoutedEventArgs e)
         {
-            player1.MoveRight();
+
+            if (player1Moved == false)
+            {
+                // move the player
+                player1.MoveRight();
+
+                // decrease move count
+                player1Moved = true;
+
+            } // if
         }
     }
 }
