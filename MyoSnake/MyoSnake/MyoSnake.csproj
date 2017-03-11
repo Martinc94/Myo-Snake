@@ -110,17 +110,6 @@
     </Compile>
     <Compile Include="Classes\gameSettings.cs" />
     <Compile Include="Classes\myHeldPose.cs" />
-    <Compile Include="Level.xaml.cs">
-      <DependentUpon>Level.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MyoDemo.xaml.cs">
-      <DependentUpon>MyoDemo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pickup.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Snake.cs" />
-    <Compile Include="SnakeBody.cs" />
-  </ItemGroup>
     <Compile Include="Converters\ObjectExistsToVisible.cs" />
     <Compile Include="Data\Score.cs" />
     <Compile Include="DifficultySelection.xaml.cs">
