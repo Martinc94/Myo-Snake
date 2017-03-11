@@ -13,37 +13,28 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-using MyoUWP.Classes;
+// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-using MyoSharp.Communication;
-using MyoSharp.Device;
-using MyoSharp.Exceptions;
-using MyoSharp.Poses;
-using Windows.UI;
-using System.Diagnostics;
-
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
-namespace MyoUWP
+namespace MyoSnake
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class PostGame : Page
     {
-        public MainPage()
+        public PostGame()
         {
             this.InitializeComponent();
         }
 
-        private void Start_Click(object sender, RoutedEventArgs e)
+        private void btnReplay_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(MyoSnake.Selection));
+
         }
 
-        private void HighScore_Click(object sender, RoutedEventArgs e)
+        private void btnMenu_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(MyoSnake.HighScores));
+
         }
     }
 }
