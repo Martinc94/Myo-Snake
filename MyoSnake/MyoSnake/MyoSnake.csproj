@@ -93,6 +93,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\HighScores.txt" />
+    <Content Include="Images\myo.png" />
+    <Content Include="Images\MyoLogo.png" />
+    <Content Include="Images\snake.png" />
     <Content Include="x64\myo.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

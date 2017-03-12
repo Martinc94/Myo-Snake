@@ -11,18 +11,27 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" />
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="3*" />
             <RowDefinition Height="2*" />
             <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
-        
-        <!--<Grid.Background>
-            <<ImageBrush ImageSource="Images/picture.jpg"></ImageBrush>
-        </Grid.Background> -->
 
-        <StackPanel Grid.Row="1">
+        <StackPanel Grid.Row="0">
             <TextBlock x:Uid="lblTitle" FontSize="70" Foreground="White" FontStyle="Italic" FontFamily="arial" VerticalAlignment="Center" HorizontalAlignment="Center" Text="lblTitle"></TextBlock>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.RowSpan="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+
+                <Image Source="Images/snake.png" Height="200" Grid.Column="1"/>
+                <Image Source="Images/myo.png" Height="200" Grid.Column="0"/>
+                <Image Source="Images/Myologo.png" Height="200" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+            </Grid>
         </StackPanel>
 
         <StackPanel Grid.Row="2">
