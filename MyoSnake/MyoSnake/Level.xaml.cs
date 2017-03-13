@@ -30,6 +30,7 @@ namespace MyoSnake
         Dictionary<string, StackPanel> gameBoard = new Dictionary<string, StackPanel>();
         Snake player1 = new Snake(boardSize);
         Pickup pickup = new Pickup();
+        SolidColorBrush backgroundColour = new SolidColorBrush(Colors.Blue);
         Boolean player1Moved = false;
         
 
@@ -60,7 +61,7 @@ namespace MyoSnake
             drawPlayer();
 
             // place the pickup
-            //placePickup();
+            placePickup();
 
             // reset player move count
             player1Moved = false;
@@ -109,7 +110,7 @@ namespace MyoSnake
                     //sp.Height = spHeight;
                     sp.BorderThickness = new Thickness(2);
                     sp.BorderBrush = new SolidColorBrush(Windows.UI.Colors.Black);
-                    sp.Background = new SolidColorBrush(Windows.UI.Colors.Blue);
+                    sp.Background = backgroundColour;
 
                     // set stackpanels row and column index
                     sp.SetValue(Grid.RowProperty, i);
@@ -158,7 +159,7 @@ namespace MyoSnake
                 if (sp != null)
                 {
                     // draw the part
-                    sp.Background = new SolidColorBrush(Colors.Blue);
+                    sp.Background = backgroundColour;
 
                 } // if
 
@@ -218,7 +219,7 @@ namespace MyoSnake
             if (sp != null)
             {
                 // draw the part
-                sp.Background = new SolidColorBrush(Colors.Blue);
+                sp.Background = backgroundColour;
 
             } // if
           
@@ -238,8 +239,20 @@ namespace MyoSnake
             // if a panel is there
             if (sp != null)
             {
-                // draw the part
-                sp.Background = new SolidColorBrush(Colors.Orange);
+                if (sp.Background == backgroundColour)
+                {
+                    // draw the part
+                    sp.Background = new SolidColorBrush(Colors.Orange);
+                } else
+                {
+                    //Debug.WriteLine("Recursive method call!");
+
+                    // try place the pickup again
+                    placePickup();
+
+                   // Debug.WriteLine("Returning!");
+                    return;
+                } // if
 
             } // if
 
