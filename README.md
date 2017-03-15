@@ -76,7 +76,7 @@ GitHub was used for managing the project's source control and issue tracking.
 ## Cloud
 ### Server
 The Server we chose to save the highscores is NodeJS.
-We chose NodeJS as its capable of Asynchronous I/O, its fast, lightweight, requires little setup, reliability and its use of javascript which allows handling and manipulation of the data such as determining rank of scores.
+We chose NodeJS as its capable of Asynchronous I/O, its fast, lightweight, requires little setup, reliable and its use of javascript which allows handling and manipulation of the data such as determining rank of scores.
 
 ### Database
 The database we chose is MongoDB. We chose mongoDB as it combines well with NodeJS with the use of the Mongoose connector.
