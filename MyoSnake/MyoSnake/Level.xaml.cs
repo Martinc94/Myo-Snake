@@ -30,11 +30,19 @@ namespace MyoSnake
         Grid grid = new Grid();
         Dictionary<string, StackPanel> gameBoard = new Dictionary<string, StackPanel>();
         Snake player1 = new Snake(boardSize);
-        Pickup pickup = new Pickup();
-        SolidColorBrush backgroundColour = new SolidColorBrush(Colors.Blue);
-        Boolean player1Moved = false;
-        
 
+        SolidColorBrush backgroundColour = new SolidColorBrush(Colors.SeaGreen);
+       // SolidColorBrush backgroundColour = new SolidColorBrush(Colors.OliveDrab);
+        SolidColorBrush pickUpColour = new SolidColorBrush(Colors.Orange);
+
+        SolidColorBrush player1BodyColour = new SolidColorBrush(Colors.LimeGreen);
+        SolidColorBrush player1HeadColour = new SolidColorBrush(Colors.Lime);
+        SolidColorBrush player2BodyColour = new SolidColorBrush(Colors.Green);
+        SolidColorBrush player2HeadColour = new SolidColorBrush(Colors.Yellow);
+
+        Pickup pickup = new Pickup();
+        Boolean player1Moved = false;
+       
         DispatcherTimer timer = new DispatcherTimer();
 
         public Level()
@@ -110,7 +118,7 @@ namespace MyoSnake
                     //sp.Width = spWidth;
                     //sp.Height = spHeight;
                     sp.BorderThickness = new Thickness(2);
-                    sp.BorderBrush = new SolidColorBrush(Windows.UI.Colors.Black);
+                    sp.BorderBrush = backgroundColour;
                     sp.Background = backgroundColour;
 
                     // set stackpanels row and column index
@@ -183,8 +191,8 @@ namespace MyoSnake
                 // if a panel is there
                 if(sp != null)
                 {
-                    // draw the part
-                    sp.Background = new SolidColorBrush(Colors.Red);
+                    // draw the players body
+                    sp.Background = player1BodyColour;
 
                 } // if
 
@@ -198,8 +206,8 @@ namespace MyoSnake
             // if a panel is there
             if (sp != null)
             {
-                // draw the part
-                sp.Background = new SolidColorBrush(Colors.Orange);
+                // draw the players head
+                sp.Background = player1HeadColour;
 
             } // if
 
@@ -265,13 +273,12 @@ namespace MyoSnake
 
             } while (isFree == false); // do while
 
-
             // place the pickup
             if(sp != null)
             {
 
-                // draw the part
-                sp.Background = new SolidColorBrush(Colors.Orange);
+                // draw the pickup
+                sp.Background = pickUpColour;
 
             } // if
 
