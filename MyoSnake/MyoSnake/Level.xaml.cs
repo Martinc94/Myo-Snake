@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI;
 using System.Diagnostics;
+using Windows.Storage;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -29,10 +30,20 @@ namespace MyoSnake
         Grid grid = new Grid();
         Dictionary<string, StackPanel> gameBoard = new Dictionary<string, StackPanel>();
         Snake player1 = new Snake(boardSize);
+
+        SolidColorBrush backgroundColour = new SolidColorBrush(Colors.SeaGreen);
+       // SolidColorBrush backgroundColour = new SolidColorBrush(Colors.OliveDrab);
+        SolidColorBrush pickUpColour = new SolidColorBrush(Colors.DarkOrange);
+
+        SolidColorBrush player1BodyColour = new SolidColorBrush(Colors.LimeGreen);
+        SolidColorBrush player1HeadColour = new SolidColorBrush(Colors.Lime);
+        SolidColorBrush player2BodyColour = new SolidColorBrush(Colors.Green);
+        SolidColorBrush player2HeadColour = new SolidColorBrush(Colors.Yellow);
+
         Pickup pickup = new Pickup();
         Boolean player1Moved = false;
-        
-
+        Boolean pickupPlaced = false;
+       
         DispatcherTimer timer = new DispatcherTimer();
 
         public Level()
@@ -59,8 +70,15 @@ namespace MyoSnake
             // draw the player
             drawPlayer();
 
-            // place the pickup
-            //placePickup();
+            if (pickupPlaced == false)
+            {
+                // place the pickup
+                placePickup();
+
+                // flag as placed
+                pickupPlaced = true;
+
+            } // if
 
             // reset player move count
             player1Moved = false;
@@ -73,8 +91,6 @@ namespace MyoSnake
             int rowCount = boardSize;
             int colCount = boardSize;
 
-            // grid.Width = 400;
-            // grid.Height = 400;
             grid.Margin = new Thickness(20, 100, 20, 20);
             grid.HorizontalAlignment = HorizontalAlignment.Stretch;
             grid.VerticalAlignment = VerticalAlignment.Stretch;
@@ -97,7 +113,6 @@ namespace MyoSnake
                 grid.ColumnDefinitions.Insert(j, new ColumnDefinition());
             } // for
 
-           
             // build the grid
             for (int i = 0; i < grid.RowDefinitions.Count; i++)
             {
@@ -108,8 +123,8 @@ namespace MyoSnake
                     //sp.Width = spWidth;
                     //sp.Height = spHeight;
                     sp.BorderThickness = new Thickness(2);
-                    sp.BorderBrush = new SolidColorBrush(Windows.UI.Colors.Black);
-                    sp.Background = new SolidColorBrush(Windows.UI.Colors.Blue);
+                    sp.BorderBrush = backgroundColour;
+                    sp.Background = backgroundColour;
 
                     // set stackpanels row and column index
                     sp.SetValue(Grid.RowProperty, i);
@@ -140,6 +155,7 @@ namespace MyoSnake
         {
 
             StackPanel sp = null;
+            Boolean increasePlayer1Size = false;
 
             // reset old last player body parts
 
@@ -158,7 +174,7 @@ namespace MyoSnake
                 if (sp != null)
                 {
                     // draw the part
-                    sp.Background = new SolidColorBrush(Colors.Blue);
+                    sp.Background = backgroundColour;
 
                 } // if
 
@@ -170,8 +186,6 @@ namespace MyoSnake
             // loop through each body part
             foreach (var bodyPart in player1.Body)
             {
-
-                // check if head of snake as hit a wall
            
                 sp = null;
 
@@ -181,8 +195,21 @@ namespace MyoSnake
                 // if a panel is there
                 if(sp != null)
                 {
-                    // draw the part
-                    sp.Background = new SolidColorBrush(Colors.Red);
+
+                    // check of pickup is placed
+                    if(sp.Background == pickUpColour)
+                    {
+                        // increase score
+
+                        // flag player 1 for body size increase
+                        increasePlayer1Size = true;
+
+                        // place pickup
+                        placePickup();
+                    }
+
+                    // draw the players body
+                    sp.Background = player1BodyColour;
 
                 } // if
 
@@ -196,8 +223,19 @@ namespace MyoSnake
             // if a panel is there
             if (sp != null)
             {
-                // draw the part
-                sp.Background = new SolidColorBrush(Colors.Orange);
+                // draw the players head
+                sp.Background = player1HeadColour;
+
+            } // if
+
+            // check if player needs to get bigger
+            if (increasePlayer1Size)
+            {
+                // increase player 1 size
+                player1.IncreaseBodySize();
+
+                // reset flag
+                increasePlayer1Size = false;
 
             } // if
 
@@ -208,6 +246,9 @@ namespace MyoSnake
         {
 
             StackPanel sp = null;
+            Boolean isFree = false;
+            int posX;
+            int posY;
 
             // remove old pickup
            
@@ -218,28 +259,54 @@ namespace MyoSnake
             if (sp != null)
             {
                 // draw the part
-                sp.Background = new SolidColorBrush(Colors.Blue);
+                sp.Background = backgroundColour;
 
             } // if
-          
-            // generate X coord
-            pickup.PosX = generateCoord();
 
-            // generate Y coord
-            pickup.PosY = generateCoord();
+            // generate pickup position until a free spot is generated
+            do
+            {
+                // generate X coord
+                posX = generateCoord();
 
-            // check that spot is not taken
+                // generate Y coord
+                posY = generateCoord();
+
+                // try and get the stackpanel at the position
+                gameBoard.TryGetValue(posY + "." + posX, out sp);
+
+                // if a panel is there
+                if (sp != null)
+                {
+                    // check if stackpanel is the background
+                    if (sp.Background == backgroundColour)
+                    {
+                        // set the coords
+                        pickup.PosX = posX;
+                        pickup.PosY = posY;
+
+                        // flag as free
+                        isFree = true;
+                    }
+                    else
+                    {
+                        // otherwise, position not free
+                        isFree = false;
+
+                        //Debug.WriteLine("Position not free!");
+       
+                    } // if
+
+                } // if
+
+            } while (isFree == false); // do while
 
             // place the pickup
-
-            // try and get the stackpanel at the position
-            gameBoard.TryGetValue(pickup.PosY + "." + pickup.PosX, out sp);
-
-            // if a panel is there
-            if (sp != null)
+            if(sp != null)
             {
-                // draw the part
-                sp.Background = new SolidColorBrush(Colors.Orange);
+
+                // draw the pickup
+                sp.Background = pickUpColour;
 
             } // if
 
