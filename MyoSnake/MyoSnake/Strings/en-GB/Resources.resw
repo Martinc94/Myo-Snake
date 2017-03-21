@@ -162,4 +162,10 @@
   <data name="lblHighscore.Text" xml:space="preserve">
     <value>Highscores</value>
   </data>
+  <data name="btnGlobal.Content" xml:space="preserve">
+    <value>Global</value>
+  </data>
+  <data name="btnLocal.Content" xml:space="preserve">
+    <value>Local</value>
+  </data>
 </root>

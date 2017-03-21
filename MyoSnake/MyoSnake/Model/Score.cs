@@ -59,6 +59,37 @@ namespace MyoSnake.Model
             CreateList(jScoreList);
         }
 
+        public static async Task LoadGlobal()
+        {
+            //get scores from Server and save to file
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            /*StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            StorageFile scoreFile;
+
+            //get
+            scoreFile = await storageFolder.CreateFileAsync("HighScores.txt", CreationCollisionOption.OpenIfExists);
+            string Json = await Windows.Storage.FileIO.ReadTextAsync(scoreFile);
+
+            //find localStorage
+            //Debug.WriteLine(scoreFile.Path);
+
+            var jScoreList = JsonArray.Parse(Json);
+            CreateList(jScoreList);*/
+        }
+
         //adds JsonArray to a List
         private static void CreateList(JsonArray jList)
         {

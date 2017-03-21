@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="MyoSnake.HighScores"
+    x:Class="MyoSnake.LocalHighScores"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MyoSnake"
@@ -24,8 +24,6 @@
             <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
-
-
 
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
             <TextBlock x:Uid="lblHighscore" FontSize="70" Foreground="White" FontStyle="Italic" FontFamily="arial" VerticalAlignment="Center" HorizontalAlignment="Center" Text="lblHighscore"></TextBlock>
@@ -61,11 +59,8 @@
                     <TextBlock VerticalAlignment="Center" Margin="5" MinWidth="70">Score:</TextBlock>
                     <TextBlock Text="{x:Bind viewHighScores.Selected.HighScore, Mode=TwoWay, FallbackValue='0'}"  Margin="5" />
                 </StackPanel>
-
             </StackPanel>
         </ScrollViewer>
-
-
-
+        
     </Grid>
 </Page>
