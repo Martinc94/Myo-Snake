@@ -31,6 +31,7 @@ namespace MyoSnake.ViewModel
         }
 
         ObservableCollection<HighScoreViewModel> _Score = new ObservableCollection<HighScoreViewModel>();
+
         public ObservableCollection<HighScoreViewModel> highScores
         {
             get { return _Score; }
@@ -60,7 +61,7 @@ namespace MyoSnake.ViewModel
 
         void Score_OnNotifyPropertyChanged(Object sender, PropertyChangedEventArgs e)
         {
-         
+            Debug.WriteLine("Property changed");
         }
     }
 

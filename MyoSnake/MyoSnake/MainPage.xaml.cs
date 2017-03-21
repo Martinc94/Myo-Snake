@@ -43,7 +43,7 @@ namespace MyoUWP
 
         private void HighScore_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(MyoSnake.HighScoresMenu));
+            this.Frame.Navigate(typeof(MyoSnake.HighScores));
         }
     }
 }

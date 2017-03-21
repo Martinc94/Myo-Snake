@@ -16,9 +16,9 @@ using Windows.UI.Xaml.Navigation;
 
 namespace MyoSnake
 {
-    public sealed partial class LocalHighScores : Page
+    public sealed partial class HighScores : Page
     {
-        public LocalHighScores()
+        public HighScores()
         {
             this.InitializeComponent();
             viewHighScores = new HighScoreVM();

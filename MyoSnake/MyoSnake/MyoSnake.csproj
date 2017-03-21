@@ -118,14 +118,8 @@
     <Compile Include="DifficultySelection.xaml.cs">
       <DependentUpon>DifficultySelection.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GlobalHighScores.xaml.cs">
-      <DependentUpon>GlobalHighScores.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="HighScoresMenu.xaml.cs">
-      <DependentUpon>HighScoresMenu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="LocalHighScores.xaml.cs">
-      <DependentUpon>LocalHighScores.xaml</DependentUpon>
+    <Compile Include="HighScores.xaml.cs">
+      <DependentUpon>HighScores.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -166,15 +160,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GlobalHighScores.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="HighScoresMenu.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="LocalHighScores.xaml">
+    <Page Include="HighScores.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

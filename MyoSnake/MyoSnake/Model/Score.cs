@@ -25,17 +25,21 @@ namespace MyoSnake.Model
 
         public static async Task init(List<Score> HighScores)
         {
+            //loads scores from server
+            LoadGlobal();
+
             if (scoreList.Count != 0)
-            {
-                scoreList = new List<Score>();
-                LoadData();
+            {    
+                await LoadData();
+                //scoreList = new List<Score>();
                 HighScores = scoreList;
             }
             else
             {
-                LoadData();
+                await LoadData();
                 HighScores = scoreList;
             }
+
         }
 
         public static async Task LoadData()
@@ -53,41 +57,57 @@ namespace MyoSnake.Model
             string Json = await Windows.Storage.FileIO.ReadTextAsync(scoreFile);
 
             //find localStorage
-            //Debug.WriteLine(scoreFile.Path);
+            Debug.WriteLine(scoreFile.Path);
 
             var jScoreList = JsonArray.Parse(Json);
             CreateList(jScoreList);
         }
 
+        //get scores from Server and save to file
         public static async Task LoadGlobal()
         {
-            //get scores from Server and save to file
+            //Create an HTTP client object
+            Windows.Web.Http.HttpClient httpClient = new Windows.Web.Http.HttpClient();
+
+            //Add a user-agent header to the GET request. 
+            var headers = httpClient.DefaultRequestHeaders;
+
+            //The safe way to add a header value is to use the TryParseAdd method and verify the return value is true,
+            //especially if the header value is coming from user input.
+            string header = "ie";
+            if (!headers.UserAgent.TryParseAdd(header))
+            {
+                throw new Exception("Invalid header value: " + header);
+            }
+
+            header = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)";
+            if (!headers.UserAgent.TryParseAdd(header))
+            {
+                throw new Exception("Invalid header value: " + header);
+            }
+
+            Uri requestUri = new Uri("http://52.169.18.184:3000/api/getScores");
+
+            //Send the GET request asynchronously and retrieve the response as a string.
+            Windows.Web.Http.HttpResponseMessage httpResponse = new Windows.Web.Http.HttpResponseMessage();
+            string httpResponseBody = "";
+
+            try
+            {
+                //Send the GET request
+                httpResponse = await httpClient.GetAsync(requestUri);
+                httpResponse.EnsureSuccessStatusCode();
+                httpResponseBody = await httpResponse.Content.ReadAsStringAsync();
+
+                //save score to file
+                Save(httpResponseBody);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-            /*StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-            StorageFile scoreFile;
-
-            //get
-            scoreFile = await storageFolder.CreateFileAsync("HighScores.txt", CreationCollisionOption.OpenIfExists);
-            string Json = await Windows.Storage.FileIO.ReadTextAsync(scoreFile);
-
-            //find localStorage
-            //Debug.WriteLine(scoreFile.Path);
-
-            var jScoreList = JsonArray.Parse(Json);
-            CreateList(jScoreList);*/
+            }
+            catch (Exception ex)
+            {
+                httpResponseBody = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
+            }
         }
 
         //adds JsonArray to a List
@@ -106,10 +126,10 @@ namespace MyoSnake.Model
 
                     switch (key)
                     {
-                        case "Name":
+                        case "name":
                             nScore.Name = value.GetString();
                             break;
-                        case "Highscore":
+                        case "score":
                             nScore.Highscore = value.GetString();
                             break;
                         
@@ -140,8 +160,17 @@ namespace MyoSnake.Model
 
         }//end update
 
-        public async void Save(Score hs)
+        public static async void Save(String jsonScoreArray)
         {
+            //save json to txt file
+            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            StorageFile file;
+
+            //get file 
+            file = await storageFolder.CreateFileAsync("HighScores.txt", CreationCollisionOption.OpenIfExists);
+
+            Debug.WriteLine("Response: " + jsonScoreArray);
+            await FileIO.WriteTextAsync(file, jsonScoreArray);
 
         }//end add
 
