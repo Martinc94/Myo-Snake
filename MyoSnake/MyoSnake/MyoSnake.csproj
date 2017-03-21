@@ -113,6 +113,7 @@
     </Compile>
     <Compile Include="Classes\gameSettings.cs" />
     <Compile Include="Classes\myHeldPose.cs" />
+    <Compile Include="Classes\MyoManager.cs" />
     <Compile Include="Converters\ObjectExistsToVisible.cs" />
     <Compile Include="Data\Score.cs" />
     <Compile Include="DifficultySelection.xaml.cs">

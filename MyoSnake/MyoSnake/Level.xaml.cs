@@ -26,6 +26,7 @@ namespace MyoSnake
     /// </summary>
     public sealed partial class Level : Page
     {
+        MyoManager myoManager = null;
         Random ran = new Random();
         static int boardSize = 32;
         Grid grid = new Grid();
@@ -50,6 +51,9 @@ namespace MyoSnake
 
         public Level()
         {
+            // get instance of MyoManager
+            myoManager = MyoManager.getInstance();
+
             this.InitializeComponent();
 
             // setup timer
