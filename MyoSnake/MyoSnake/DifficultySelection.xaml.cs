@@ -34,7 +34,7 @@ namespace MyoSnake
         {
             //pass player argument and difficulty argument
             settings.Diff = 0;
-            //this.Frame.Navigate(typeof(MyoSnake.Level,settings));
+            this.Frame.Navigate(typeof(Level), settings);
         }
 
         private void btnNormal_Click(object sender, RoutedEventArgs e)

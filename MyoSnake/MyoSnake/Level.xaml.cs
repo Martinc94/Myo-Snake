@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.UI;
 using System.Diagnostics;
 using Windows.Storage;
+using MyoSnake.Classes;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -45,6 +46,7 @@ namespace MyoSnake
         Boolean pickupPlaced = false;
        
         DispatcherTimer timer = new DispatcherTimer();
+        gameSettings settings = null;
 
         public Level()
         {
@@ -61,6 +63,12 @@ namespace MyoSnake
             // initialise level
             Init();
 
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            settings = (gameSettings)e.Parameter;
         }
 
         // handler for tick event

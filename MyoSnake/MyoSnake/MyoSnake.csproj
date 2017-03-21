@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -121,10 +121,14 @@
     <Compile Include="HighScores.xaml.cs">
       <DependentUpon>HighScores.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Level.xaml.cs">
+      <DependentUpon>Level.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Score.cs" />
+    <Compile Include="Classes\Pickup.cs" />
     <Compile Include="PostGame.xaml.cs">
       <DependentUpon>PostGame.xaml</DependentUpon>
     </Compile>
@@ -132,6 +136,8 @@
     <Compile Include="PlayerSelection.xaml.cs">
       <DependentUpon>PlayerSelection.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\Snake.cs" />
+    <Compile Include="Classes\SnakeBody.cs" />
     <Compile Include="ViewModel\Helpers.cs" />
     <Compile Include="ViewModel\HighScoreViewModel.cs" />
     <Compile Include="ViewModel\HighScoreVM.cs" />
@@ -163,6 +169,10 @@
     <Page Include="HighScores.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Level.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
