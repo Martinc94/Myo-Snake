@@ -33,7 +33,7 @@ namespace MyoSnake
 
         SolidColorBrush backgroundColour = new SolidColorBrush(Colors.SeaGreen);
        // SolidColorBrush backgroundColour = new SolidColorBrush(Colors.OliveDrab);
-        SolidColorBrush pickUpColour = new SolidColorBrush(Colors.Orange);
+        SolidColorBrush pickUpColour = new SolidColorBrush(Colors.DarkOrange);
 
         SolidColorBrush player1BodyColour = new SolidColorBrush(Colors.LimeGreen);
         SolidColorBrush player1HeadColour = new SolidColorBrush(Colors.Lime);
@@ -42,6 +42,7 @@ namespace MyoSnake
 
         Pickup pickup = new Pickup();
         Boolean player1Moved = false;
+        Boolean pickupPlaced = false;
        
         DispatcherTimer timer = new DispatcherTimer();
 
@@ -69,8 +70,15 @@ namespace MyoSnake
             // draw the player
             drawPlayer();
 
-            // place the pickup
-            placePickup();
+            if (pickupPlaced == false)
+            {
+                // place the pickup
+                placePickup();
+
+                // flag as placed
+                pickupPlaced = true;
+
+            } // if
 
             // reset player move count
             player1Moved = false;
@@ -83,8 +91,6 @@ namespace MyoSnake
             int rowCount = boardSize;
             int colCount = boardSize;
 
-            // grid.Width = 400;
-            // grid.Height = 400;
             grid.Margin = new Thickness(20, 100, 20, 20);
             grid.HorizontalAlignment = HorizontalAlignment.Stretch;
             grid.VerticalAlignment = VerticalAlignment.Stretch;
@@ -107,7 +113,6 @@ namespace MyoSnake
                 grid.ColumnDefinitions.Insert(j, new ColumnDefinition());
             } // for
 
-           
             // build the grid
             for (int i = 0; i < grid.RowDefinitions.Count; i++)
             {
@@ -150,6 +155,7 @@ namespace MyoSnake
         {
 
             StackPanel sp = null;
+            Boolean increasePlayer1Size = false;
 
             // reset old last player body parts
 
@@ -180,8 +186,6 @@ namespace MyoSnake
             // loop through each body part
             foreach (var bodyPart in player1.Body)
             {
-
-                // check if head of snake as hit a wall
            
                 sp = null;
 
@@ -191,6 +195,19 @@ namespace MyoSnake
                 // if a panel is there
                 if(sp != null)
                 {
+
+                    // check of pickup is placed
+                    if(sp.Background == pickUpColour)
+                    {
+                        // increase score
+
+                        // flag player 1 for body size increase
+                        increasePlayer1Size = true;
+
+                        // place pickup
+                        placePickup();
+                    }
+
                     // draw the players body
                     sp.Background = player1BodyColour;
 
@@ -208,6 +225,17 @@ namespace MyoSnake
             {
                 // draw the players head
                 sp.Background = player1HeadColour;
+
+            } // if
+
+            // check if player needs to get bigger
+            if (increasePlayer1Size)
+            {
+                // increase player 1 size
+                player1.IncreaseBodySize();
+
+                // reset flag
+                increasePlayer1Size = false;
 
             } // if
 
