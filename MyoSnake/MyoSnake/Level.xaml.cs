@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI;
 using System.Diagnostics;
+using Windows.Storage;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -209,6 +210,9 @@ namespace MyoSnake
         {
 
             StackPanel sp = null;
+            Boolean isFree = false;
+            int posX;
+            int posY;
 
             // remove old pickup
            
@@ -222,37 +226,52 @@ namespace MyoSnake
                 sp.Background = backgroundColour;
 
             } // if
-          
-            // generate X coord
-            pickup.PosX = generateCoord();
 
-            // generate Y coord
-            pickup.PosY = generateCoord();
+            // generate pickup position until a free spot is generated
+            do
+            {
+                // generate X coord
+                posX = generateCoord();
 
-            // check that spot is not taken
+                // generate Y coord
+                posY = generateCoord();
+
+                // try and get the stackpanel at the position
+                gameBoard.TryGetValue(posY + "." + posX, out sp);
+
+                // if a panel is there
+                if (sp != null)
+                {
+                    // check if stackpanel is the background
+                    if (sp.Background == backgroundColour)
+                    {
+                        // set the coords
+                        pickup.PosX = posX;
+                        pickup.PosY = posY;
+
+                        // flag as free
+                        isFree = true;
+                    }
+                    else
+                    {
+                        // otherwise, position not free
+                        isFree = false;
+
+                        //Debug.WriteLine("Position not free!");
+       
+                    } // if
+
+                } // if
+
+            } while (isFree == false); // do while
+
 
             // place the pickup
-
-            // try and get the stackpanel at the position
-            gameBoard.TryGetValue(pickup.PosY + "." + pickup.PosX, out sp);
-
-            // if a panel is there
-            if (sp != null)
+            if(sp != null)
             {
-                if (sp.Background == backgroundColour)
-                {
-                    // draw the part
-                    sp.Background = new SolidColorBrush(Colors.Orange);
-                } else
-                {
-                    //Debug.WriteLine("Recursive method call!");
 
-                    // try place the pickup again
-                    placePickup();
-
-                   // Debug.WriteLine("Returning!");
-                    return;
-                } // if
+                // draw the part
+                sp.Background = new SolidColorBrush(Colors.Orange);
 
             } // if
 
