@@ -17,6 +17,8 @@ using System.Diagnostics;
 using Windows.Storage;
 using MyoSnake.Classes;
 using Windows.System;
+using MyoSharp.Device;
+using MyoSharp.Poses;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -57,6 +59,8 @@ namespace MyoSnake
         {
             // get instance of MyoManager
             myoManager = MyoManager.getInstance();
+
+            myoManager.connect();
 
             this.InitializeComponent();
 
@@ -206,6 +210,7 @@ namespace MyoSnake
         // draws the player on the screen
         private void drawPlayer()
         {
+            GetPose();
 
             StackPanel sp = null;
             Boolean increasePlayer1Size = false;
@@ -442,5 +447,37 @@ namespace MyoSnake
             moveP1Right();
 
         }
+
+        private void GetPose()
+        {
+            try
+            {
+                Pose p1 = myoManager._currentPoseP1.Pose;
+
+                Debug.WriteLine("Pose Changed to " + p1.ToString());
+
+                switch (p1)
+                {
+                    case Pose.WaveIn:
+                        moveP1Left();
+                        break;
+                    case Pose.WaveOut:
+                        moveP1Right();
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("Cannot get Pose ");
+
+            }
+   
+
+        }
+
+
     }
 }

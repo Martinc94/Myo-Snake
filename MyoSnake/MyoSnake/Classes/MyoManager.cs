@@ -4,6 +4,7 @@ using MyoSharp.Exceptions;
 using MyoSharp.Poses;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +27,9 @@ namespace MyoSnake.Classes
 
         List<string> playerId = new List<string>();
         Dictionary<string, string> playerName = new Dictionary<string, string>();
- 
+
+        public PoseEventArgs _currentPoseP1;
+        public PoseEventArgs _currentPoseP2;
 
         // private constructor to make object a singleton
         private MyoManager()
@@ -41,7 +44,7 @@ namespace MyoSnake.Classes
         } // getInstance()
 
         #region Myo Setup Methods
-        private void btnMyo_Click(object sender, RoutedEventArgs e)
+        public void connect()
         { // communication, device, exceptions, poses
             // create the channel
             _myoChannel = Channel.Create(ChannelDriver.Create(ChannelBridge.Create(),
@@ -88,12 +91,7 @@ namespace MyoSnake.Classes
             e.Myo.Vibrate(VibrationType.Long);
             playerId.Add(e.Myo.Handle.ToString());
 
-            //await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-            //{
-            //    //tblUpdates.Text +=  " - Myo Connected: " + e.Myo.Handle.ToString();
-            //    //tblUpdates.Text = playerId.Count.ToString();
-
-            //});
+            
 
             if (playerId.Count == 2)
             {
@@ -144,12 +142,11 @@ namespace MyoSnake.Classes
 
         }
 
-
         private async void Myo_PoseChanged(object sender, PoseEventArgs e)
         {
             Pose curr = e.Pose;
-            //await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-            //{
+            
+            
                 string pName = "";
 
                 if (curr.ToString() != "Rest")
@@ -168,28 +165,51 @@ namespace MyoSnake.Classes
                     //playerName.TryGetValue(e.Myo.Handle.ToString(), out str);
                 }
 
-                switch (curr)
+            playerName.TryGetValue(e.Myo.Handle.ToString(), out pName);
+
+            if (pName == "Player1")
+            {
+                PoseEventArgs p1Args = new PoseEventArgs(e.Myo, new DateTime(),e.Pose);
+                
+                _currentPoseP1 = p1Args;
+            }
+            else
+            {
+                //_currentPoseP2 = curr;
+                PoseEventArgs p1Args = new PoseEventArgs(e.Myo, new DateTime(), e.Pose);
+
+                _currentPoseP1 = p1Args;
+            }
+
+            //Debug.WriteLine("Pose Changed to "+e.Pose.ToString());
+
+            /*switch (curr)
                 {
                     case Pose.Rest:
                         // eMyo.Fill = new SolidColorBrush(Colors.Blue);
                         break;
                     case Pose.Fist:
-                        //eMyo.Fill = new SolidColorBrush(Colors.Red);                    
+                    //eMyo.Fill = new SolidColorBrush(Colors.Red);
+                        Debug.WriteLine("Fist");                
                         break;
                     case Pose.WaveIn:
+                        Debug.WriteLine("Wave right");
                         break;
                     case Pose.WaveOut:
+                        Debug.WriteLine("Wave Left");
                         break;
                     case Pose.FingersSpread:
+                        Debug.WriteLine("Fingers Spread");
                         break;
                     case Pose.DoubleTap:
-                        break;
+                        Debug.WriteLine("Double Tap");
+                        break; 
                     case Pose.Unknown:
                         break;
                     default:
                         break;
                 }
-            //});
+            //});*/
         }
         #endregion
 
