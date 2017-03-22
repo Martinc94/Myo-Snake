@@ -17,32 +17,32 @@ We had previously used a single myo in our labs and wanted to get two myo commun
 
 (Details about game here)
 
-##How To Play:
+## How To Play:
 
 (Explain here)
 
-##Technologies Used:
+## Technologies Used:
 
-###Localisation:
+### Localisation:
 The project has deStringifyed to the include Language Support for English (en-GB, en-US) and Irish (ga).
 All text is stored in .resw files for each language.
 Additional language support can be easily and quickly added to the App.
 
-###MVVM
+### MVVM
 Model-view View-model
 MVVM separates the responsibility for the appearance and layout of the UI from the responsibility for the presentation logic.
 
-####Model
+#### Model
 The model represents the data we are dealing with.
 
-####View 
+#### View 
 The view is what the end user sees and interacts with.
 
-####Viewmodel 
+#### Viewmodel 
 The Viewmodel connects the Model to the View.
 It allows for loose coupling and binding of data.
 
-###Local Storage
+### Local Storage
 This project uses local storage to save highscores in a Json Array.
 
 Initialise and get a handle on File
@@ -73,4 +73,35 @@ http://www.newtonsoft.com/json
 ##Project Management
 GitHub was used for managing the project's source control and issue tracking.
 
+## Cloud
+### Server
+The Server we chose to save the highscores is NodeJS.
+We chose NodeJS as its capable of Asynchronous I/O, its fast, lightweight, requires little setup, reliable and its use of javascript which allows handling and manipulation of the data such as determining rank of scores.
 
+### Database
+The database we chose is MongoDB. We chose mongoDB as it combines well with NodeJS with the use of the Mongoose connector.
+
+Example of Javascript code to connect to mongoDB and save document
+```
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/test');
+
+var Cat = mongoose.model('Cat', { name: String });
+
+var kitty = new Cat({ name: 'Zildjian' });
+kitty.save(function (err) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('meow');
+  }
+});
+```
+
+Example of Json Stored Object in MongoDB
+```json
+{
+  "Name": "Joe Bloggs",
+  "HighScore": "2000"
+}
+```

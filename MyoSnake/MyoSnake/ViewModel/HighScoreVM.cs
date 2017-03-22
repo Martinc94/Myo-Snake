@@ -13,7 +13,7 @@ using static MyoSnake.ViewModel.Helpers;
 namespace MyoSnake.ViewModel
 {
 
-    public class HighScoreVM : Helper.NotificationBase
+    public class HighScoreVM : Helper.NotificationBase<Score>
     {
         Scores myScore;
 
@@ -31,13 +31,14 @@ namespace MyoSnake.ViewModel
         }
 
         ObservableCollection<HighScoreViewModel> _Score = new ObservableCollection<HighScoreViewModel>();
+
         public ObservableCollection<HighScoreViewModel> highScores
         {
             get { return _Score; }
             set { SetProperty(ref _Score, value); }
         }
 
-        public String ScoreName
+        public String ScoreName 
         {
             get { return myScore.name; }
         }
@@ -60,7 +61,7 @@ namespace MyoSnake.ViewModel
 
         void Score_OnNotifyPropertyChanged(Object sender, PropertyChangedEventArgs e)
         {
-         
+            Debug.WriteLine("Property changed");
         }
     }
 
