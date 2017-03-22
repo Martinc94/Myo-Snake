@@ -29,6 +29,7 @@ namespace MyoSnake
     {
         MyoManager myoManager = null;
         Random ran = new Random();
+        Boolean gameIsPlaying = true;
         static int boardSize = 32;
         Grid grid = new Grid();
         Dictionary<string, StackPanel> gameBoard = new Dictionary<string, StackPanel>();
@@ -82,25 +83,36 @@ namespace MyoSnake
         // handler for tick event
         private void Timer_Tick(object sender, object e)
         {
-
-            // draw the player
-            drawPlayer();
-
-            if (pickupPlaced == false)
+            // controls if the game keeps playing
+            if (gameIsPlaying)
             {
-                // place the pickup
-                placePickup();
 
-                // flag as placed
-                pickupPlaced = true;
+
+                // draw the player
+                drawPlayer();
+
+                if (pickupPlaced == false)
+                {
+                    // place the pickup
+                    placePickup();
+
+                    // flag as placed
+                    pickupPlaced = true;
+
+                } // if
+
+                // reset player move count
+                player1Moved = false;
+
+                // update the score on the screen
+                player1ScoreTB.Text = player1Score.ToString();
+
+            } else
+            {
+
+                // show game over screen
 
             } // if
-
-            // reset player move count
-            player1Moved = false;
-
-            // update the score on the screen
-            player1ScoreTB.Text = player1Score.ToString();
 
         } // Timer_Tick()
 
@@ -260,7 +272,15 @@ namespace MyoSnake
 
                         // place pickup
                         placePickup();
-                    }
+
+                        // if the player is eating itself
+                    } else if (sp.Background == player1BodyColour || sp.Background == player1HeadColour)
+                    {
+
+                        // stop the game
+                        gameIsPlaying = false;
+
+                    } // if
 
                     // draw the players body
                     sp.Background = player1BodyColour;
