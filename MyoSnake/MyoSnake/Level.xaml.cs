@@ -33,6 +33,9 @@ namespace MyoSnake
         Dictionary<string, StackPanel> gameBoard = new Dictionary<string, StackPanel>();
         Snake player1 = new Snake(boardSize);
 
+        const int PICKUP_SCORE = 10;
+        int player1Score = 0;
+
         SolidColorBrush backgroundColour = new SolidColorBrush(Colors.SeaGreen);
        // SolidColorBrush backgroundColour = new SolidColorBrush(Colors.OliveDrab);
         SolidColorBrush pickUpColour = new SolidColorBrush(Colors.DarkOrange);
@@ -59,7 +62,7 @@ namespace MyoSnake
             // setup timer
 
             // set interval time
-            timer.Interval = TimeSpan.FromMilliseconds(400);
+            timer.Interval = TimeSpan.FromMilliseconds(300);
 
             // set tick handler
             timer.Tick += Timer_Tick;
@@ -94,6 +97,9 @@ namespace MyoSnake
 
             // reset player move count
             player1Moved = false;
+
+            // update the score on the screen
+            player1ScoreTB.Text = player1Score.ToString();
 
         } // Timer_Tick()
 
@@ -212,6 +218,7 @@ namespace MyoSnake
                     if(sp.Background == pickUpColour)
                     {
                         // increase score
+                        player1Score += PICKUP_SCORE;
 
                         // flag player 1 for body size increase
                         increasePlayer1Size = true;

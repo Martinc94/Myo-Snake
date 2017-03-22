@@ -29,7 +29,7 @@ namespace MyoSnake
             Body = new List<SnakeBody>();
 
             // set start size
-            StartSize = 30;
+            StartSize = 20;
 
             // set start PosX and PosY
             StartPosX = 10;
