@@ -13,7 +13,7 @@ using static MyoSnake.ViewModel.Helpers;
 namespace MyoSnake.ViewModel
 {
 
-    public class HighScoreVM : Helper.NotificationBase
+    public class HighScoreVM : Helper.NotificationBase<Score>
     {
         Scores myScore;
 
@@ -38,7 +38,7 @@ namespace MyoSnake.ViewModel
             set { SetProperty(ref _Score, value); }
         }
 
-        public String ScoreName
+        public String ScoreName 
         {
             get { return myScore.name; }
         }

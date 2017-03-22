@@ -31,12 +31,12 @@ namespace MyoSnake.Model
             if (scoreList.Count != 0)
             {    
                 await LoadData();
-                //scoreList = new List<Score>();
+                scoreList = new List<Score>();
                 HighScores = scoreList;
             }
             else
             {
-                await LoadData();
+                LoadData();
                 HighScores = scoreList;
             }
 
@@ -57,7 +57,10 @@ namespace MyoSnake.Model
             string Json = await Windows.Storage.FileIO.ReadTextAsync(scoreFile);
 
             //find localStorage
-            Debug.WriteLine(scoreFile.Path);
+            //Debug.WriteLine(scoreFile.Path);
+
+            Debug.WriteLine("Adding to array");
+
 
             var jScoreList = JsonArray.Parse(Json);
             CreateList(jScoreList);
@@ -169,8 +172,10 @@ namespace MyoSnake.Model
             //get file 
             file = await storageFolder.CreateFileAsync("HighScores.txt", CreationCollisionOption.OpenIfExists);
 
-            Debug.WriteLine("Response: " + jsonScoreArray);
+            //Debug.WriteLine("Response: " + jsonScoreArray);
             await FileIO.WriteTextAsync(file, jsonScoreArray);
+
+            Debug.WriteLine("Saved Results from server ");
 
         }//end add
 
