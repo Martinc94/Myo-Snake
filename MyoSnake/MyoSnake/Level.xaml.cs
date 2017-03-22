@@ -16,6 +16,7 @@ using Windows.UI;
 using System.Diagnostics;
 using Windows.Storage;
 using MyoSnake.Classes;
+using Windows.System;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -167,6 +168,40 @@ namespace MyoSnake
             timer.Start();
 
         } // Init()
+
+        // handle key presses
+        protected override void OnKeyDown(KeyRoutedEventArgs e)
+        {
+            e.Handled = true;
+
+            switch (e.Key)
+            {
+                // To handle player One controls
+                case VirtualKey.Left:
+
+                    // move player 1 left
+                    moveP1Left();
+                    break;
+                case VirtualKey.Right:
+
+                    // move player 1 right
+                    moveP1Right();
+                    break;
+
+                // to handle player 2 controls
+                case VirtualKey.A:
+
+                    // move player 2 left
+                    moveP2Left();
+                    break;
+                case VirtualKey.D:
+
+                    // move player 2 right
+                    moveP2Right();
+                    break;
+
+            } // switch
+        } // OnKeyDown()
 
         // draws the player on the screen
         private void drawPlayer()
@@ -342,7 +377,20 @@ namespace MyoSnake
 
         } // generateCoord()
 
-        private void leftBtn_Click(object sender, RoutedEventArgs e)
+        private void moveP1Right()
+        {
+            if (player1Moved == false)
+            {
+                // move the player
+                player1.MoveRight();
+
+                // decrease move count
+                player1Moved = true;
+
+            } // if
+        } // moveP1Right()
+
+        private void moveP1Left()
         {
             if (player1Moved == false)
             {
@@ -353,21 +401,46 @@ namespace MyoSnake
                 player1Moved = true;
 
             } // if
+        } // moveP1Left()
+
+        private void moveP2Right()
+        {
+            //if (player1Moved == false)
+            //{
+            //    // move the player
+            //    player1.MoveRight();
+
+            //    // decrease move count
+            //    player1Moved = true;
+
+            //} // if
+        } // moveP2Right()
+
+        private void moveP2Left()
+        {
+            //if (player1Moved == false)
+            //{
+            //    // move the player
+            //    player1.MoveLeft();
+
+            //    // decrease move count
+            //    player1Moved = true;
+
+            //} // if
+        } // moveP2Left()
+
+        private void leftBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // move player 1 left
+            moveP1Left();
 
         }
 
         private void rightBtn_Click(object sender, RoutedEventArgs e)
         {
+            // move player 1 right
+            moveP1Right();
 
-            if (player1Moved == false)
-            {
-                // move the player
-                player1.MoveRight();
-
-                // decrease move count
-                player1Moved = true;
-
-            } // if
         }
     }
 }
