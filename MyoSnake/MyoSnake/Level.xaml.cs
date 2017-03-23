@@ -453,8 +453,10 @@ namespace MyoSnake
             try
             {
                 Pose p1 = myoManager._currentPoseP1.Pose;
+                Pose p2 = myoManager._currentPoseP2.Pose;
 
-                Debug.WriteLine("Pose Changed to " + p1.ToString());
+                Debug.WriteLine("P1 Pose" + p1.ToString());
+                Debug.WriteLine("P2 Pose" + p2.ToString());
 
                 switch (p1)
                 {
@@ -468,11 +470,22 @@ namespace MyoSnake
                         break;
                 }
 
+                switch (p2)
+                {
+                    case Pose.WaveIn:
+                        moveP2Left();
+                        break;
+                    case Pose.WaveOut:
+                        moveP2Right();
+                        break;
+                    default:
+                        break;
+                }
+
             }
             catch (Exception)
             {
-                Debug.WriteLine("Cannot get Pose ");
-
+                //Debug.WriteLine("Cannot get Pose ");
             }
    
 

@@ -145,74 +145,30 @@ namespace MyoSnake.Classes
         private async void Myo_PoseChanged(object sender, PoseEventArgs e)
         {
             Pose curr = e.Pose;
-            
-            
-                string pName = "";
-
-                if (curr.ToString() != "Rest")
-                {
-                    playerName.TryGetValue(e.Myo.Handle.ToString(), out pName);
-
-                    if (pName == "Player1")
-                    {
-                        //tblposeP1.Text = curr.ToString();
-                    }
-                    else
-                    {
-                        //tblposeP2.Text = curr.ToString();
-                    }
-
-                    //playerName.TryGetValue(e.Myo.Handle.ToString(), out str);
-                }
+                
+            string pName = "";
 
             playerName.TryGetValue(e.Myo.Handle.ToString(), out pName);
 
             if (pName == "Player1")
             {
+                Debug.WriteLine("Setting pose for player one:");
                 PoseEventArgs p1Args = new PoseEventArgs(e.Myo, new DateTime(),e.Pose);
-                
                 _currentPoseP1 = p1Args;
+            }
+            if(pName == "Player2")
+            {
+                Debug.WriteLine("Setting pose for player two:");
+                PoseEventArgs p2Args = new PoseEventArgs(e.Myo, new DateTime(), e.Pose);
+                _currentPoseP2 = p2Args;
             }
             else
             {
-                //_currentPoseP2 = curr;
-                PoseEventArgs p1Args = new PoseEventArgs(e.Myo, new DateTime(), e.Pose);
-
-                _currentPoseP1 = p1Args;
+                Debug.WriteLine("No player name");
+                Debug.WriteLine(pName);
             }
-
-            //Debug.WriteLine("Pose Changed to "+e.Pose.ToString());
-
-            /*switch (curr)
-                {
-                    case Pose.Rest:
-                        // eMyo.Fill = new SolidColorBrush(Colors.Blue);
-                        break;
-                    case Pose.Fist:
-                    //eMyo.Fill = new SolidColorBrush(Colors.Red);
-                        Debug.WriteLine("Fist");                
-                        break;
-                    case Pose.WaveIn:
-                        Debug.WriteLine("Wave right");
-                        break;
-                    case Pose.WaveOut:
-                        Debug.WriteLine("Wave Left");
-                        break;
-                    case Pose.FingersSpread:
-                        Debug.WriteLine("Fingers Spread");
-                        break;
-                    case Pose.DoubleTap:
-                        Debug.WriteLine("Double Tap");
-                        break; 
-                    case Pose.Unknown:
-                        break;
-                    default:
-                        break;
-                }
-            //});*/
         }
         #endregion
-
 
     } // class
 } // namespace
