@@ -7,10 +7,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" >
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="Green">
+        
         <Grid x:Name="mainGrid"></Grid>
+      
 
-            <StackPanel HorizontalAlignment="Left" Margin="10 10 0 0">
+        <StackPanel HorizontalAlignment="Left" Margin="10 10 0 0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBlock Text="Player One Score:" />
                     <TextBlock x:Name="player1ScoreTB" Text="0" Margin="10 0 0 0" />
@@ -18,8 +20,8 @@
             </StackPanel>
         <StackPanel HorizontalAlignment="Center">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button x:Name="leftBtn" Content="Left" Width="60" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" Click="leftBtn_Click"/>
-                <Button x:Name="rightBtn" Content="Right" Width="60" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" Click="rightBtn_Click"/>
+                <Button x:Name="leftBtn" Background="DarkOrange" FontFamily="arial" Content="Left" Width="60" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" Click="leftBtn_Click"/>
+                <Button x:Name="rightBtn" Background="DarkOrange" FontFamily="arial" Content="Right" Width="60" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" Click="rightBtn_Click"/>
             </StackPanel>
         </StackPanel>
 

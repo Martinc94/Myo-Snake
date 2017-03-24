@@ -40,7 +40,7 @@
 
         <StackPanel Grid.Row="3" Margin="0">
             <Button x:Uid="btnHighScore" Background="DarkOrange" FontSize="40" FontFamily="arial" VerticalAlignment="Center" HorizontalAlignment="Center" Click="HighScore_Click" Content="btnHighScore"></Button>
-            <CheckBox x:Name="dontUseMyoCB" Content="I Don't want to use Myo" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="360" Margin="10,0,0,10"/>
+            <CheckBox x:Name="dontUseMyoCB" Content="I Don't want to use Myo" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="200" Margin="0 20 0 0" />
         </StackPanel>
         
     </Grid>

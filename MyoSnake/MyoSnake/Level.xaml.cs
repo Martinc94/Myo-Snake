@@ -61,6 +61,9 @@ namespace MyoSnake
 
         public Level()
         {
+            // setup event handler for window size changing to update the grid
+            Window.Current.SizeChanged += Current_SizeChanged;
+
             // get instance of MyoManager
             myoManager = MyoManager.getInstance();
 
@@ -180,9 +183,31 @@ namespace MyoSnake
             int rowCount = boardSize;
             int colCount = boardSize;
 
+            // set the width and height of the grid using screen size
+            if (Window.Current.Bounds.Height < Window.Current.Bounds.Width)
+            {
+                grid.Width = Window.Current.Bounds.Height;
+                grid.Height = Window.Current.Bounds.Height - 126;
+
+            }
+            else
+            {
+                grid.Height = Window.Current.Bounds.Width - 126;
+                grid.Width = Window.Current.Bounds.Width;
+
+            } // if
+
+            // Fix clipping issues by using the smaller number for width and height
+            if (grid.Height > grid.Width)
+            {
+                grid.Height = grid.Width;
+            }
+            else
+            {
+                grid.Width = grid.Height;
+            } // if
+            
             grid.Margin = new Thickness(20, 100, 20, 20);
-            grid.HorizontalAlignment = HorizontalAlignment.Stretch;
-            grid.VerticalAlignment = VerticalAlignment.Stretch;
             grid.BorderThickness = new Thickness(4);
             grid.BorderBrush = new SolidColorBrush(Colors.Black);
             
@@ -209,8 +234,6 @@ namespace MyoSnake
                 {
                     
                     sp = new StackPanel();
-                    //sp.Width = spWidth;
-                    //sp.Height = spHeight;
                     sp.BorderThickness = new Thickness(2);
                     sp.BorderBrush = backgroundColour;
                     sp.Background = backgroundColour;
@@ -230,7 +253,7 @@ namespace MyoSnake
 
                 } // for
             } // for
-
+            
             // add grid to page
             mainGrid.Children.Add(grid);
 
@@ -572,6 +595,38 @@ namespace MyoSnake
            
         }
 
+        // gets called when the window size changes
+        private void Current_SizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
+        {
+            // update the width and height of the grid
+            if (e.Size.Height == e.Size.Width)
+            {
+                // do nothing
+                return;
+            }
+            else if (e.Size.Height  < e.Size.Width)
+            {
+                grid.Width = e.Size.Height;
+                grid.Height = e.Size.Height - 126;
+                
+            }
+            else
+            {
+                grid.Height = e.Size.Width - 126;
+                grid.Width = e.Size.Width;
+                
+            } // if
+
+            // Fix clipping issues by using the smaller number for width and height
+            if(grid.Height > grid.Width)
+            {
+                grid.Height = grid.Width;
+            }
+            else
+            {
+                grid.Width = grid.Height;
+            } // if
+        }
 
     }
 }
