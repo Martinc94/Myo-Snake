@@ -12,9 +12,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
-using MyoUWP.Classes;
-
 using MyoSharp.Communication;
 using MyoSharp.Device;
 using MyoSharp.Exceptions;
