@@ -50,6 +50,16 @@ namespace MyoUWP
         {
             base.OnNavigatedFrom(e);
 
+            // save if using myo
+            if (dontUseMyoCB.IsChecked == true) // don't use the myo
+            {
+                myoManager.UseMyo = false;
+
+            }
+            else // use the myo
+            {
+                myoManager.UseMyo = true;
+            } // if
 
         }
     }
