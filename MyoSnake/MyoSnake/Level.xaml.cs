@@ -17,6 +17,7 @@ using System.Diagnostics;
 using Windows.Storage;
 using MyoSnake.Classes;
 using Windows.System;
+using Windows.UI.Popups;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -81,12 +82,11 @@ namespace MyoSnake
         }
 
         // handler for tick event
-        private void Timer_Tick(object sender, object e)
+        private async void Timer_Tick(object sender, object e)
         {
             // controls if the game keeps playing
             if (gameIsPlaying)
             {
-
 
                 // draw the player
                 drawPlayer();
@@ -110,11 +110,46 @@ namespace MyoSnake
             } else
             {
 
+                // stop the game timer
+                timer.Stop();
+
                 // show game over screen
+                // Create the message dialog and set its content
+                var messageDialog = new MessageDialog("Game Over! Your Score is: " + player1Score);
+
+                // Add commands and set their callbacks; both buttons use the same callback function instead of inline event handlers
+                //messageDialog.Commands.Add(new UICommand(
+                //    "Try again",
+                //    new UICommandInvokedHandler(this.CommandInvokedHandler)));
+                messageDialog.Commands.Add(new UICommand(
+                    "OK",
+                    new UICommandInvokedHandler(this.CommandInvokedHandler)));
+
+                // Set the command that will be invoked by default
+                //messageDialog.DefaultCommandIndex = 0;
+
+                // Set the command to be invoked when escape is pressed
+                messageDialog.CancelCommandIndex = 0;
+
+                // Show the message dialog
+                await messageDialog.ShowAsync();
 
             } // if
 
         } // Timer_Tick()
+
+        private void CommandInvokedHandler(IUICommand command)
+        {
+
+            switch (command.Label)
+            {
+                case "OK":
+
+                    Frame.Navigate(typeof(PostGame));
+                    break;
+            }
+           
+        }
 
         private void Init()
         {

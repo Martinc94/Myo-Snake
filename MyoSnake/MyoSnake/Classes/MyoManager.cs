@@ -81,6 +81,7 @@ namespace MyoSnake.Classes
             //});
             _myoHub.MyoConnected -= _myoHub_MyoConnected;
             _myoHub.MyoDisconnected -= _myoHub_MyoDisconnected;
+       
         }
 
         private async void _myoHub_MyoConnected(object sender, MyoEventArgs e)
