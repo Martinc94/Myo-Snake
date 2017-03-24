@@ -44,23 +44,33 @@ namespace MyoSnake.Classes
         #region Myo Setup Methods
         public void connect()
         { // communication, device, exceptions, poses
-            // create the channel
-            _myoChannel = Channel.Create(ChannelDriver.Create(ChannelBridge.Create(),
-                                    MyoErrorHandlerDriver.Create(MyoErrorHandlerBridge.Create())));
 
-            // create the hub with the channel
-            _myoHub = MyoSharp.Device.Hub.Create(_myoChannel);
+            try
+            {
+                // create the channel
+                _myoChannel = Channel.Create(ChannelDriver.Create(ChannelBridge.Create(), MyoErrorHandlerDriver.Create(MyoErrorHandlerBridge.Create())));
 
-            // create the event handlers for connect and disconnect
-            _myoHub.MyoConnected += _myoHub_MyoConnected;
-            _myoHub.MyoDisconnected += _myoHub_MyoDisconnected;
+                // create the hub with the channel
+                _myoHub = MyoSharp.Device.Hub.Create(_myoChannel);
 
-            // start listening 
-            _myoChannel.StartListening();
+                // create the event handlers for connect and disconnect
+                _myoHub.MyoConnected += _myoHub_MyoConnected;
+                _myoHub.MyoDisconnected += _myoHub_MyoDisconnected;
 
-            // create the channel
-            _myoChannel1 = Channel.Create(ChannelDriver.Create(ChannelBridge.Create(),
-                                    MyoErrorHandlerDriver.Create(MyoErrorHandlerBridge.Create())));
+                // start listening 
+                _myoChannel.StartListening();
+
+                // create the channel
+                _myoChannel1 = Channel.Create(ChannelDriver.Create(ChannelBridge.Create(),
+                                        MyoErrorHandlerDriver.Create(MyoErrorHandlerBridge.Create())));
+
+            }
+            catch (System.InvalidOperationException e)
+            {
+                Debug.WriteLine(e.StackTrace);
+
+                return;
+            }
 
         }
 

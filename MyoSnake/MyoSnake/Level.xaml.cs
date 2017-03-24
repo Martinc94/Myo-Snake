@@ -76,15 +76,15 @@ namespace MyoSnake
             // set tick handler
             timer.Tick += Timer_Tick;
 
-            // initialise level
-            Init();
-
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             settings = (gameSettings)e.Parameter;
+
+            // initialise level
+            Init();
         }
 
         // handler for tick event
@@ -152,7 +152,9 @@ namespace MyoSnake
         } // CommandInvokedHandler()
 
         private void Init()
-        {   
+        {
+            gameIsPlaying = false;
+
             var consumer = Task.Factory.StartNew(() => {
                while (myoManager.MyoEventArgsList.Count!=1){}
 
@@ -225,6 +227,7 @@ namespace MyoSnake
             // start the timer to draw the player
             timer.Start();
 
+            gameIsPlaying = true;
         } // Init()
 
         // handle key presses

@@ -18,6 +18,7 @@ using MyoSharp.Exceptions;
 using MyoSharp.Poses;
 using Windows.UI;
 using System.Diagnostics;
+using MyoSnake.Classes;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -28,6 +29,8 @@ namespace MyoUWP
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private MyoManager myoManager = MyoManager.getInstance();
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -41,6 +44,13 @@ namespace MyoUWP
         private void HighScore_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(MyoSnake.HighScores));
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+
+
         }
     }
 }
