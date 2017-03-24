@@ -19,6 +19,7 @@ using MyoSnake.Classes;
 using Windows.System;
 using MyoSharp.Device;
 using MyoSharp.Poses;
+using System.Threading.Tasks;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -109,8 +110,19 @@ namespace MyoSnake
         } // Timer_Tick()
 
         private void Init()
-        {
+        {   
+            var consumer = Task.Factory.StartNew(() => {
+               while (myoManager.MyoEventArgsList.Count!=1){}
 
+                foreach (var myo in myoManager.MyoEventArgsList)
+                {
+                   myo.Myo.PoseChanged += Myo_PoseChanged;
+                }
+
+                Debug.WriteLine("Closing Thread");
+
+            });
+            
             int rowCount = boardSize;
             int colCount = boardSize;
 
@@ -210,8 +222,6 @@ namespace MyoSnake
         // draws the player on the screen
         private void drawPlayer()
         {
-            GetPose();
-
             StackPanel sp = null;
             Boolean increasePlayer1Size = false;
 
@@ -448,47 +458,52 @@ namespace MyoSnake
 
         }
 
-        private void GetPose()
+        private async void Myo_PoseChanged(object sender, PoseEventArgs e)
         {
-            try
+            Pose curr = e.Pose;
+
+            string pName = "";
+
+            pName = myoManager.getPlayerName(e.Myo.Handle.ToString());
+
+            switch (curr)
             {
-                Pose p1 = myoManager._currentPoseP1.Pose;
-                Pose p2 = myoManager._currentPoseP2.Pose;
-
-                Debug.WriteLine("P1 Pose" + p1.ToString());
-                Debug.WriteLine("P2 Pose" + p2.ToString());
-
-                switch (p1)
-                {
-                    case Pose.WaveIn:
+                case Pose.Rest:
+                    // eMyo.Fill = new SolidColorBrush(Colors.Blue);
+                    break;
+                case Pose.Fist:
+                    //eMyo.Fill = new SolidColorBrush(Colors.Red);                    
+                    break;
+                case Pose.WaveIn:
+                    if (pName == "Player1")
+                    {
                         moveP1Left();
-                        break;
-                    case Pose.WaveOut:
-                        moveP1Right();
-                        break;
-                    default:
-                        break;
-                }
-
-                switch (p2)
-                {
-                    case Pose.WaveIn:
+                    }
+                    if (pName == "Player2")
+                    {
                         moveP2Left();
-                        break;
-                    case Pose.WaveOut:
+                    }
+                    break;
+                case Pose.WaveOut:
+                    if (pName == "Player1")
+                    {
+                        moveP1Right();
+                    }
+                    if (pName == "Player2")
+                    {
                         moveP2Right();
-                        break;
-                    default:
-                        break;
-                }
-
+                    }
+                    break;
+                case Pose.FingersSpread:
+                    break;
+                case Pose.DoubleTap:
+                    break;
+                case Pose.Unknown:
+                    break;
+                default:
+                    break;
             }
-            catch (Exception)
-            {
-                //Debug.WriteLine("Cannot get Pose ");
-            }
-   
-
+           
         }
 
 
