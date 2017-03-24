@@ -17,6 +17,8 @@ namespace MyoSnake.Classes
     {
         private static MyoManager myoManager = new MyoManager();
 
+        public bool UseMyo = true;
+
         IChannel _myoChannel;
         IChannel _myoChannel1;
         IHub _myoHub;
