@@ -86,7 +86,7 @@ namespace MyoSnake
             settings = (gameSettings)e.Parameter;
 
             // initialise level
-            Init();
+            Init(settings);
         }
 
         // handler for tick event
@@ -95,7 +95,6 @@ namespace MyoSnake
             // controls if the game keeps playing
             if (gameIsPlaying)
             {
-
                 // draw the player
                 drawPlayer();
 
@@ -153,21 +152,30 @@ namespace MyoSnake
 
         } // CommandInvokedHandler()
 
-        private void Init()
+        private void Init(gameSettings settings)
         {
-            gameIsPlaying = false;
 
-            var consumer = Task.Factory.StartNew(() => {
-               while (myoManager.MyoEventArgsList.Count!=1){}
-
-                foreach (var myo in myoManager.MyoEventArgsList)
+            // only setup the myo if it's being used
+            if (myoManager.UseMyo == true)
+            {
+                var consumer = Task.Factory.StartNew(() =>
                 {
-                   myo.Myo.PoseChanged += Myo_PoseChanged;
-                }
+                    while (myoManager.MyoEventArgsList.Count != settings.Players) { }
 
-                Debug.WriteLine("Closing Thread");
+                    foreach (var myo in myoManager.MyoEventArgsList)
+                    {
+                        myo.Myo.PoseChanged += Myo_PoseChanged;
+                    }
 
-            });
+                    // players myos are loaded
+                    // start the game loop
+                    timer.Start();
+
+                    Debug.WriteLine("Closing Thread");
+
+                });
+
+            } // if
             
             int rowCount = boardSize;
             int colCount = boardSize;
@@ -226,10 +234,13 @@ namespace MyoSnake
             // add grid to page
             mainGrid.Children.Add(grid);
 
-            // start the timer to draw the player
-            timer.Start();
+            // if myos are not being used
+            if (myoManager.UseMyo == false)
+            {
+                // start the game
+                timer.Start();
+            } // if
 
-            gameIsPlaying = true;
         } // Init()
 
         // handle key presses
@@ -524,10 +535,10 @@ namespace MyoSnake
             switch (curr)
             {
                 case Pose.Rest:
-                    // eMyo.Fill = new SolidColorBrush(Colors.Blue);
+                    
                     break;
                 case Pose.Fist:
-                    //eMyo.Fill = new SolidColorBrush(Colors.Red);                    
+                                       
                     break;
                 case Pose.WaveIn:
                     if (pName == "Player1")
