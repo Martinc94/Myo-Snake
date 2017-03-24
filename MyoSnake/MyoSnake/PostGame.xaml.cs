@@ -26,6 +26,7 @@ namespace MyoSnake
         public PostGame()
         {
             this.InitializeComponent();
+
         }
 
         private void btnReplay_Click(object sender, RoutedEventArgs e)
