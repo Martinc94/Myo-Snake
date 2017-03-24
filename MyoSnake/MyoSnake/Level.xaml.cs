@@ -18,6 +18,10 @@ using Windows.Storage;
 using MyoSnake.Classes;
 using Windows.System;
 using Windows.UI.Popups;
+using MyoSharp.Device;
+using MyoSharp.Poses;
+using System.Threading.Tasks;
+
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -59,6 +63,8 @@ namespace MyoSnake
         {
             // get instance of MyoManager
             myoManager = MyoManager.getInstance();
+
+            myoManager.connect();
 
             this.InitializeComponent();
 
@@ -146,8 +152,19 @@ namespace MyoSnake
         } // CommandInvokedHandler()
 
         private void Init()
-        {
+        {   
+            var consumer = Task.Factory.StartNew(() => {
+               while (myoManager.MyoEventArgsList.Count!=1){}
 
+                foreach (var myo in myoManager.MyoEventArgsList)
+                {
+                   myo.Myo.PoseChanged += Myo_PoseChanged;
+                }
+
+                Debug.WriteLine("Closing Thread");
+
+            });
+            
             int rowCount = boardSize;
             int colCount = boardSize;
 
@@ -247,7 +264,6 @@ namespace MyoSnake
         // draws the player on the screen
         private void drawPlayer()
         {
-
             StackPanel sp = null;
             Boolean increasePlayer1Size = false;
 
@@ -491,5 +507,55 @@ namespace MyoSnake
             moveP1Right();
 
         }
+
+        private async void Myo_PoseChanged(object sender, PoseEventArgs e)
+        {
+            Pose curr = e.Pose;
+
+            string pName = "";
+
+            pName = myoManager.getPlayerName(e.Myo.Handle.ToString());
+
+            switch (curr)
+            {
+                case Pose.Rest:
+                    // eMyo.Fill = new SolidColorBrush(Colors.Blue);
+                    break;
+                case Pose.Fist:
+                    //eMyo.Fill = new SolidColorBrush(Colors.Red);                    
+                    break;
+                case Pose.WaveIn:
+                    if (pName == "Player1")
+                    {
+                        moveP1Left();
+                    }
+                    if (pName == "Player2")
+                    {
+                        moveP2Left();
+                    }
+                    break;
+                case Pose.WaveOut:
+                    if (pName == "Player1")
+                    {
+                        moveP1Right();
+                    }
+                    if (pName == "Player2")
+                    {
+                        moveP2Right();
+                    }
+                    break;
+                case Pose.FingersSpread:
+                    break;
+                case Pose.DoubleTap:
+                    break;
+                case Pose.Unknown:
+                    break;
+                default:
+                    break;
+            }
+           
+        }
+
+
     }
 }
