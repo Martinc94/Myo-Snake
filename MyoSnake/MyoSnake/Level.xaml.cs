@@ -64,7 +64,9 @@ namespace MyoSnake
             // get instance of MyoManager
             myoManager = MyoManager.getInstance();
 
-            myoManager.connect();
+            if (myoManager.UseMyo) {
+                myoManager.connect();
+            }
 
             this.InitializeComponent();
 
