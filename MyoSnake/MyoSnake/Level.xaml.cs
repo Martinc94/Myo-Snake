@@ -117,16 +117,9 @@ namespace MyoSnake
                 // Create the message dialog and set its content
                 var messageDialog = new MessageDialog("Game Over! Your Score is: " + player1Score);
 
-                // Add commands and set their callbacks; both buttons use the same callback function instead of inline event handlers
-                //messageDialog.Commands.Add(new UICommand(
-                //    "Try again",
-                //    new UICommandInvokedHandler(this.CommandInvokedHandler)));
                 messageDialog.Commands.Add(new UICommand(
                     "OK",
                     new UICommandInvokedHandler(this.CommandInvokedHandler)));
-
-                // Set the command that will be invoked by default
-                //messageDialog.DefaultCommandIndex = 0;
 
                 // Set the command to be invoked when escape is pressed
                 messageDialog.CancelCommandIndex = 0;
@@ -138,6 +131,7 @@ namespace MyoSnake
 
         } // Timer_Tick()
 
+        // handler for message dialog
         private void CommandInvokedHandler(IUICommand command)
         {
 
@@ -147,9 +141,9 @@ namespace MyoSnake
 
                     Frame.Navigate(typeof(PostGame));
                     break;
-            }
-           
-        }
+            } // switch
+
+        } // CommandInvokedHandler()
 
         private void Init()
         {
