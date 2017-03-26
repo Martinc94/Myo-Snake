@@ -331,15 +331,13 @@ namespace MyoSnake
         {
             StackPanel sp = null;
             Boolean increasePlayer1Size = false;
+            Boolean gotPickup = false;
 
             // reset old last player body parts
 
             // loop through each body part
             foreach (var bodyPart in player1.Body)
             {
-
-                // check if head of snake as hit a wall
-
                 sp = null;
 
                 // try and get the stackpanel at the position the body part is at
@@ -352,7 +350,6 @@ namespace MyoSnake
                     sp.Background = backgroundColour;
 
                 } // if
-
             } // for
 
             // move the player
@@ -361,7 +358,6 @@ namespace MyoSnake
             // loop through each body part
             foreach (var bodyPart in player1.Body)
             {
-           
                 sp = null;
 
                 // try and get the stackpanel at the position the body part is at
@@ -370,7 +366,6 @@ namespace MyoSnake
                 // if a panel is there
                 if(sp != null)
                 {
-
                     // check of pickup is placed
                     if(sp.Background == pickUpColour)
                     {
@@ -380,13 +375,12 @@ namespace MyoSnake
                         // flag player 1 for body size increase
                         increasePlayer1Size = true;
 
-                        // place pickup
-                        placePickup();
+                        // remove pickup
+                        removePickup();
 
-                        // if the player is eating itself
-                    } else if (sp.Background == player1BodyColour || sp.Background == player1HeadColour)
+                    }
+                    else if (sp.Background == player1BodyColour || sp.Background == player1HeadColour) // if the player is eating itself
                     {
-
                         // stop the game
                         gameIsPlaying = false;
 
@@ -396,7 +390,6 @@ namespace MyoSnake
                     sp.Background = player1BodyColour;
 
                 } // if
-
             } // for
 
             sp = null;
@@ -425,17 +418,14 @@ namespace MyoSnake
 
         } // drawPlayer()
 
-        // places the pickup for the player
-        private void placePickup()
-        {
 
+        // removes pickup
+        private void removePickup()
+        {
             StackPanel sp = null;
-            Boolean isFree = false;
-            int posX;
-            int posY;
 
             // remove old pickup
-           
+
             // try and get the stackpanel at the position
             gameBoard.TryGetValue(pickup.PosY + "." + pickup.PosX, out sp);
 
@@ -445,7 +435,20 @@ namespace MyoSnake
                 // draw the part
                 sp.Background = backgroundColour;
 
+                // flag pickup as removed
+                pickupPlaced = false;
+
             } // if
+        } // removePickup()
+
+        // places the pickup for the player
+        private void placePickup()
+        {
+
+            StackPanel sp = null;
+            Boolean isFree = false;
+            int posX;
+            int posY;
 
             // generate pickup position until a free spot is generated
             do
