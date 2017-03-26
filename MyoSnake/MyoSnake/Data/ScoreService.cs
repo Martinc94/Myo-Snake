@@ -7,12 +7,6 @@ using System.Diagnostics;
 
 namespace MyoSnake.Data
 {
-    public class HighScore
-    {
-        public String Name { get; set; }
-        public int Score { get; set; }
-    }
-
     public class ScoreService
     {
         public static String Name = "Score Service.";

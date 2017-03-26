@@ -114,7 +114,7 @@
     <Compile Include="Classes\gameSettings.cs" />
     <Compile Include="Classes\MyoManager.cs" />
     <Compile Include="Converters\ObjectExistsToVisible.cs" />
-    <Compile Include="Data\Score.cs" />
+    <Compile Include="Data\HighScore.cs" />
     <Compile Include="Data\ScoreService.cs" />
     <Compile Include="DifficultySelection.xaml.cs">
       <DependentUpon>DifficultySelection.xaml</DependentUpon>
@@ -129,7 +129,6 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Organisation.cs" />
-    <Compile Include="Model\Score.cs" />
     <Compile Include="Classes\Pickup.cs" />
     <Compile Include="PostGame.xaml.cs">
       <DependentUpon>PostGame.xaml</DependentUpon>
@@ -140,9 +139,6 @@
     </Compile>
     <Compile Include="Classes\Snake.cs" />
     <Compile Include="Classes\SnakeBody.cs" />
-    <Compile Include="ViewModel\Helpers.cs" />
-    <Compile Include="ViewModel\HighScoreViewModel.cs" />
-    <Compile Include="ViewModel\HighScoreVM.cs" />
     <Compile Include="ViewModel\OrganizationViewModel.cs" />
     <Compile Include="ViewModel\PersonViewModel.cs" />
     <Compile Include="ViewModel\ViewModelHelpers.cs" />
