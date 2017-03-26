@@ -35,19 +35,21 @@ namespace MyoSnake
         MyoManager myoManager = null;
         Random ran = new Random();
         Boolean gameIsPlaying = true;
+        Boolean isTwoPlayer;
         static int boardSize = 32;
         Grid grid = new Grid();
         Dictionary<string, StackPanel> gameBoard = new Dictionary<string, StackPanel>();
-        Snake player1 = new Snake(boardSize);
+        Snake player1 = new Snake("Player1", boardSize, 10, 10);
+        Snake player2 = new Snake("Player2", boardSize, 20, 10);
 
         const int EASY_GAME_SPEED = 300;
         const int NORMAL_GAME_SPEED = 250;
         const int HARD_GAME_SPEED = 200;
         const int PICKUP_SCORE = 10;
         int player1Score = 0;
+        int player2Score = 0;
 
         SolidColorBrush backgroundColour = new SolidColorBrush(Colors.SeaGreen);
-       // SolidColorBrush backgroundColour = new SolidColorBrush(Colors.OliveDrab);
         SolidColorBrush pickUpColour = new SolidColorBrush(Colors.DarkOrange);
 
         SolidColorBrush player1BodyColour = new SolidColorBrush(Colors.LimeGreen);
@@ -55,10 +57,13 @@ namespace MyoSnake
         SolidColorBrush player2BodyColour = new SolidColorBrush(Colors.Green);
         SolidColorBrush player2HeadColour = new SolidColorBrush(Colors.Yellow);
 
-        Pickup pickup = new Pickup();
+        Pickup p1Pickup = new Pickup();
+        Pickup p2Pickup = new Pickup();
         Boolean player1Moved = false;
-        Boolean pickupPlaced = false;
-       
+        Boolean player2Moved = false;
+        Boolean p1PickupPlaced = false;
+        Boolean p2PickupPlaced = false;
+
         DispatcherTimer timer = new DispatcherTimer();
         gameSettings settings = null;
 
@@ -103,15 +108,15 @@ namespace MyoSnake
             if (gameIsPlaying)
             {
                 // draw the player
-                drawPlayer();
+                drawPlayer(player1);
 
-                if (pickupPlaced == false)
+                if (p1PickupPlaced == false)
                 {
                     // place the pickup
-                    placePickup();
+                    placePickup(p1Pickup);
 
                     // flag as placed
-                    pickupPlaced = true;
+                    p1PickupPlaced = true;
 
                 } // if
 
@@ -162,6 +167,15 @@ namespace MyoSnake
 
         private void Init(gameSettings settings)
         {
+            // flag weather the game is single player or two player
+            if(settings.Players == 2)
+            {
+                isTwoPlayer = true;
+            } else
+            {
+                isTwoPlayer = false;
+            } // if
+
             // set the speed that the game goes at based on difficulty
             switch (settings.Diff)
             {
@@ -326,14 +340,14 @@ namespace MyoSnake
         } // OnKeyDown()
 
         // draws the player on the screen
-        private void drawPlayer()
+        private void drawPlayer(Snake player)
         {
             StackPanel sp = null;
-            Boolean increasePlayer1Size = false;
+            Boolean increasePlayerSize = false;
 
             // reset old last player body parts
             // loop through each body part
-            foreach (var bodyPart in player1.Body)
+            foreach (var bodyPart in player.Body)
             {
                 sp = null;
 
@@ -350,10 +364,10 @@ namespace MyoSnake
             } // for
 
             // move the player
-            player1.Move();
+            player.Move();
 
             // loop through each body part
-            foreach (var bodyPart in player1.Body)
+            foreach (var bodyPart in player.Body)
             {
                 sp = null;
 
@@ -370,10 +384,10 @@ namespace MyoSnake
                         player1Score += PICKUP_SCORE;
 
                         // flag player 1 for body size increase
-                        increasePlayer1Size = true;
+                        increasePlayerSize = true;
 
                         // remove pickup
-                        removePickup();
+                        removePickup(player.PlayerName);
 
                     }
                     else if (sp.Background == player1BodyColour || sp.Background == player1HeadColour) // if the player is eating itself
@@ -392,7 +406,7 @@ namespace MyoSnake
             sp = null;
 
             // try and get the stackpanel at the position the body part is at
-            gameBoard.TryGetValue(player1.Head.PosY + "." + player1.Head.PosX, out sp);
+            gameBoard.TryGetValue(player.Head.PosY + "." + player.Head.PosX, out sp);
 
             // if a panel is there
             if (sp != null)
@@ -403,27 +417,35 @@ namespace MyoSnake
             } // if
 
             // check if player needs to get bigger
-            if (increasePlayer1Size)
+            if (increasePlayerSize)
             {
                 // increase player 1 size
-                player1.IncreaseBodySize();
+                player.IncreaseBodySize();
 
                 // reset flag
-                increasePlayer1Size = false;
+                increasePlayerSize = false;
 
             } // if
 
         } // drawPlayer()
 
         // removes pickup
-        private void removePickup()
+        private void removePickup(string playerName)
         {
             StackPanel sp = null;
 
             // remove old pickup
             // try and get the stackpanel at the position
-            gameBoard.TryGetValue(pickup.PosY + "." + pickup.PosX, out sp);
+            if (playerName == "Player1")
+            {
 
+                gameBoard.TryGetValue(p1Pickup.PosY + "." + p1Pickup.PosX, out sp);
+            }
+            else
+            {
+                gameBoard.TryGetValue(p2Pickup.PosY + "." + p2Pickup.PosX, out sp);
+            } // if
+          
             // if a panel is there
             if (sp != null)
             {
@@ -431,13 +453,18 @@ namespace MyoSnake
                 sp.Background = backgroundColour;
 
                 // flag pickup as removed
-                pickupPlaced = false;
-
+                if(playerName == "Player1")
+                {
+                    p1PickupPlaced = false;
+                } else
+                {
+                    p2PickupPlaced = false;
+                }
             } // if
         } // removePickup()
 
         // places the pickup for the player
-        private void placePickup()
+        private void placePickup(Pickup pickup)
         {
             StackPanel sp = null;
             Boolean isFree = false;
