@@ -40,6 +40,9 @@ namespace MyoSnake
         Dictionary<string, StackPanel> gameBoard = new Dictionary<string, StackPanel>();
         Snake player1 = new Snake(boardSize);
 
+        const int EASY_GAME_SPEED = 300;
+        const int NORMAL_GAME_SPEED = 250;
+        const int HARD_GAME_SPEED = 200;
         const int PICKUP_SCORE = 10;
         int player1Score = 0;
 
@@ -74,9 +77,6 @@ namespace MyoSnake
             this.InitializeComponent();
 
             // setup timer
-
-            // set interval time
-            timer.Interval = TimeSpan.FromMilliseconds(300);
 
             // set tick handler
             timer.Tick += Timer_Tick;
@@ -163,15 +163,36 @@ namespace MyoSnake
         private void Init(gameSettings settings)
         {
 
+            // set the speed that the game goes at based on difficulty
+            switch (settings.Diff)
+            {
+                case 0: // easy
+                        // set interval time
+                    timer.Interval = TimeSpan.FromMilliseconds(EASY_GAME_SPEED);
+
+                    break;
+                case 1: // normal
+                        // set interval time
+                    timer.Interval = TimeSpan.FromMilliseconds(NORMAL_GAME_SPEED);
+                    break;
+                case 2: // hard
+                        // set interval time
+                    timer.Interval = TimeSpan.FromMilliseconds(HARD_GAME_SPEED);
+                    break;
+            } // switch
+
             // only setup the myo if it's being used
             if (myoManager.UseMyo == true)
             {
                 var consumer = Task.Factory.StartNew(() =>
                 {
+                    // wait for the selected number of player myos to connect
                     while (myoManager.MyoEventArgsList.Count != settings.Players) { }
 
+                    // for each connected myo
                     foreach (var myo in myoManager.MyoEventArgsList)
                     {
+                        // set the post changed event handler
                         myo.Myo.PoseChanged += Myo_PoseChanged;
                     }
 
