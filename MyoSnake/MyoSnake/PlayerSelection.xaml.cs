@@ -34,7 +34,7 @@ namespace MyoSnake
             var settings = new gameSettings();
             settings.Players = 1;
 
-            this.Frame.Navigate(typeof(MyoSnake.DifficultySelection),settings);
+            Frame.Navigate(typeof(DifficultySelection), settings);
         }
 
         private void btnTwoPlayer_Click(object sender, RoutedEventArgs e)
@@ -43,7 +43,7 @@ namespace MyoSnake
             var settings = new gameSettings();
             settings.Players = 2;
 
-            this.Frame.Navigate(typeof(MyoSnake.DifficultySelection),settings);
+            Frame.Navigate(typeof(DifficultySelection), settings);
         }
     }
 }

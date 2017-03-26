@@ -86,7 +86,11 @@ namespace MyoSnake
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+
+            // get the settings passed by the previous page
             settings = (gameSettings)e.Parameter;
+
+            Debug.WriteLine(settings.Diff + " - " + settings.Players);
 
             // initialise level
             Init(settings);
@@ -149,7 +153,8 @@ namespace MyoSnake
             {
                 case "OK":
 
-                    Frame.Navigate(typeof(PostGame));
+                    // navigate to the next page with the current game settings
+                    Frame.Navigate(typeof(PostGame), settings);
                     break;
             } // switch
 

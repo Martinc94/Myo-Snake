@@ -34,21 +34,21 @@ namespace MyoSnake
         {
             //pass player argument and difficulty argument
             settings.Diff = 0;
-            this.Frame.Navigate(typeof(Level), settings);
+            Frame.Navigate(typeof(Level), settings);
         }
 
         private void btnNormal_Click(object sender, RoutedEventArgs e)
         {
             //pass player argument and difficulty argument
             settings.Diff = 1;
-            //this.Frame.Navigate(typeof(MyoSnake.Level));
+            Frame.Navigate(typeof(Level), settings);
         }
 
         private void btnHard_Click(object sender, RoutedEventArgs e)
         {
             //pass player argument and difficulty argument
             settings.Diff = 2;
-            //this.Frame.Navigate(typeof(MyoSnake.Level));
+            Frame.Navigate(typeof(Level), settings);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
