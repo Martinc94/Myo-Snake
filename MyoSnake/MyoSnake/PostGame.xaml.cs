@@ -1,4 +1,5 @@
-﻿using MyoUWP;
+﻿using MyoSnake.Classes;
+using MyoUWP;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,10 +24,20 @@ namespace MyoSnake
     /// </summary>
     public sealed partial class PostGame : Page
     {
+        private gameSettings settings;
+
         public PostGame()
         {
             this.InitializeComponent();
 
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            // get the settings passed
+            settings = (gameSettings)e.Parameter;
         }
 
         private void btnReplay_Click(object sender, RoutedEventArgs e)

@@ -40,6 +40,9 @@ namespace MyoSnake
         Dictionary<string, StackPanel> gameBoard = new Dictionary<string, StackPanel>();
         Snake player1 = new Snake(boardSize);
 
+        const int EASY_GAME_SPEED = 300;
+        const int NORMAL_GAME_SPEED = 250;
+        const int HARD_GAME_SPEED = 200;
         const int PICKUP_SCORE = 10;
         int player1Score = 0;
 
@@ -75,9 +78,6 @@ namespace MyoSnake
 
             // setup timer
 
-            // set interval time
-            timer.Interval = TimeSpan.FromMilliseconds(300);
-
             // set tick handler
             timer.Tick += Timer_Tick;
 
@@ -86,7 +86,11 @@ namespace MyoSnake
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+
+            // get the settings passed by the previous page
             settings = (gameSettings)e.Parameter;
+
+            Debug.WriteLine(settings.Diff + " - " + settings.Players);
 
             // initialise level
             Init(settings);
@@ -149,7 +153,8 @@ namespace MyoSnake
             {
                 case "OK":
 
-                    Frame.Navigate(typeof(PostGame));
+                    // navigate to the next page with the current game settings
+                    Frame.Navigate(typeof(PostGame), settings);
                     break;
             } // switch
 
@@ -158,15 +163,36 @@ namespace MyoSnake
         private void Init(gameSettings settings)
         {
 
+            // set the speed that the game goes at based on difficulty
+            switch (settings.Diff)
+            {
+                case 0: // easy
+                        // set interval time
+                    timer.Interval = TimeSpan.FromMilliseconds(EASY_GAME_SPEED);
+
+                    break;
+                case 1: // normal
+                        // set interval time
+                    timer.Interval = TimeSpan.FromMilliseconds(NORMAL_GAME_SPEED);
+                    break;
+                case 2: // hard
+                        // set interval time
+                    timer.Interval = TimeSpan.FromMilliseconds(HARD_GAME_SPEED);
+                    break;
+            } // switch
+
             // only setup the myo if it's being used
             if (myoManager.UseMyo == true)
             {
                 var consumer = Task.Factory.StartNew(() =>
                 {
+                    // wait for the selected number of player myos to connect
                     while (myoManager.MyoEventArgsList.Count != settings.Players) { }
 
+                    // for each connected myo
                     foreach (var myo in myoManager.MyoEventArgsList)
                     {
+                        // set the post changed event handler
                         myo.Myo.PoseChanged += Myo_PoseChanged;
                     }
 
@@ -305,15 +331,13 @@ namespace MyoSnake
         {
             StackPanel sp = null;
             Boolean increasePlayer1Size = false;
+            Boolean gotPickup = false;
 
             // reset old last player body parts
 
             // loop through each body part
             foreach (var bodyPart in player1.Body)
             {
-
-                // check if head of snake as hit a wall
-
                 sp = null;
 
                 // try and get the stackpanel at the position the body part is at
@@ -326,7 +350,6 @@ namespace MyoSnake
                     sp.Background = backgroundColour;
 
                 } // if
-
             } // for
 
             // move the player
@@ -335,7 +358,6 @@ namespace MyoSnake
             // loop through each body part
             foreach (var bodyPart in player1.Body)
             {
-           
                 sp = null;
 
                 // try and get the stackpanel at the position the body part is at
@@ -344,7 +366,6 @@ namespace MyoSnake
                 // if a panel is there
                 if(sp != null)
                 {
-
                     // check of pickup is placed
                     if(sp.Background == pickUpColour)
                     {
@@ -354,13 +375,12 @@ namespace MyoSnake
                         // flag player 1 for body size increase
                         increasePlayer1Size = true;
 
-                        // place pickup
-                        placePickup();
+                        // remove pickup
+                        removePickup();
 
-                        // if the player is eating itself
-                    } else if (sp.Background == player1BodyColour || sp.Background == player1HeadColour)
+                    }
+                    else if (sp.Background == player1BodyColour || sp.Background == player1HeadColour) // if the player is eating itself
                     {
-
                         // stop the game
                         gameIsPlaying = false;
 
@@ -370,7 +390,6 @@ namespace MyoSnake
                     sp.Background = player1BodyColour;
 
                 } // if
-
             } // for
 
             sp = null;
@@ -399,17 +418,14 @@ namespace MyoSnake
 
         } // drawPlayer()
 
-        // places the pickup for the player
-        private void placePickup()
-        {
 
+        // removes pickup
+        private void removePickup()
+        {
             StackPanel sp = null;
-            Boolean isFree = false;
-            int posX;
-            int posY;
 
             // remove old pickup
-           
+
             // try and get the stackpanel at the position
             gameBoard.TryGetValue(pickup.PosY + "." + pickup.PosX, out sp);
 
@@ -419,7 +435,20 @@ namespace MyoSnake
                 // draw the part
                 sp.Background = backgroundColour;
 
+                // flag pickup as removed
+                pickupPlaced = false;
+
             } // if
+        } // removePickup()
+
+        // places the pickup for the player
+        private void placePickup()
+        {
+
+            StackPanel sp = null;
+            Boolean isFree = false;
+            int posX;
+            int posY;
 
             // generate pickup position until a free spot is generated
             do
