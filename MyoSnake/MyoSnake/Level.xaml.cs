@@ -32,22 +32,22 @@ namespace MyoSnake
     /// </summary>
     public sealed partial class Level : Page
     {
-        MyoManager myoManager = null;
-        Random ran = new Random();
-        Boolean gameIsPlaying = true;
-        Boolean isTwoPlayer;
-        static int boardSize = 32;
-        Grid grid = new Grid();
-        Dictionary<string, StackPanel> gameBoard = new Dictionary<string, StackPanel>();
-        Snake player1 = new Snake("Player1", boardSize, 10, 10);
-        Snake player2 = new Snake("Player2", boardSize, 20, 10);
-
         const int EASY_GAME_SPEED = 300;
         const int NORMAL_GAME_SPEED = 250;
         const int HARD_GAME_SPEED = 200;
         const int PICKUP_SCORE = 10;
-        int player1Score = 0;
-        int player2Score = 0;
+        const string PLAYER_ONE = "Player1";
+        const string PLAYER_TWO = "Player2";
+
+        MyoManager myoManager = null;
+        Random ran = new Random();
+        Boolean gameIsPlaying = true;
+        Boolean isTwoPlayer = false;
+        static int boardSize = 32;
+        Grid grid = new Grid();
+        Dictionary<string, StackPanel> gameBoard = new Dictionary<string, StackPanel>();
+        Snake player1 = new Snake(PLAYER_ONE, boardSize, 10, 10);
+        Snake player2 = new Snake(PLAYER_TWO, boardSize, 20, 10);
 
         SolidColorBrush backgroundColour = new SolidColorBrush(Colors.SeaGreen);
         SolidColorBrush pickUpColour = new SolidColorBrush(Colors.DarkOrange);
@@ -57,8 +57,8 @@ namespace MyoSnake
         SolidColorBrush player2BodyColour = new SolidColorBrush(Colors.Green);
         SolidColorBrush player2HeadColour = new SolidColorBrush(Colors.Yellow);
 
-        Pickup p1Pickup = new Pickup();
-        Pickup p2Pickup = new Pickup();
+        Pickup p1Pickup = new Pickup(PLAYER_ONE);
+        Pickup p2Pickup = new Pickup(PLAYER_TWO);
         Boolean player1Moved = false;
         Boolean player2Moved = false;
         Boolean p1PickupPlaced = false;
@@ -121,10 +121,11 @@ namespace MyoSnake
                 } // if
 
                 // reset player move count
-                player1Moved = false;
+                player1.Moved = false;
+                player2.Moved = false;
 
                 // update the score on the screen
-                player1ScoreTB.Text = player1Score.ToString();
+                player1ScoreTB.Text = player1.Score.ToString();
 
             } else
             {
@@ -134,7 +135,7 @@ namespace MyoSnake
 
                 // show game over screen
                 // Create the message dialog and set its content
-                var messageDialog = new MessageDialog("Game Over! Your Score is: " + player1Score);
+                var messageDialog = new MessageDialog("Game Over! Your Score is: " + player1.Score);
 
                 messageDialog.Commands.Add(new UICommand(
                     "OK",
@@ -316,24 +317,24 @@ namespace MyoSnake
                 case VirtualKey.Left:
 
                     // move player 1 left
-                    moveP1Left();
+                    movePlayerLeft(PLAYER_ONE);
                     break;
                 case VirtualKey.Right:
 
                     // move player 1 right
-                    moveP1Right();
+                    movePlayerRight(PLAYER_ONE);
                     break;
 
                 // to handle player 2 controls
                 case VirtualKey.A:
 
                     // move player 2 left
-                    moveP2Left();
+                    movePlayerLeft(PLAYER_TWO);
                     break;
                 case VirtualKey.D:
 
                     // move player 2 right
-                    moveP2Right();
+                    movePlayerRight(PLAYER_TWO);
                     break;
 
             } // switch
@@ -381,7 +382,7 @@ namespace MyoSnake
                     if(sp.Background == pickUpColour)
                     {
                         // increase score
-                        player1Score += PICKUP_SCORE;
+                        player.Score += PICKUP_SCORE;
 
                         // flag player 1 for body size increase
                         increasePlayerSize = true;
@@ -436,7 +437,7 @@ namespace MyoSnake
 
             // remove old pickup
             // try and get the stackpanel at the position
-            if (playerName == "Player1")
+            if (playerName == PLAYER_ONE)
             {
 
                 gameBoard.TryGetValue(p1Pickup.PosY + "." + p1Pickup.PosX, out sp);
@@ -453,7 +454,7 @@ namespace MyoSnake
                 sp.Background = backgroundColour;
 
                 // flag pickup as removed
-                if(playerName == "Player1")
+                if(playerName == PLAYER_ONE)
                 {
                     p1PickupPlaced = false;
                 } else
@@ -500,9 +501,7 @@ namespace MyoSnake
                     {
                         // otherwise, position not free
                         isFree = false;
-
-                        //Debug.WriteLine("Position not free!");
-       
+                      
                     } // if
                 } // if
 
@@ -530,69 +529,77 @@ namespace MyoSnake
 
         } // generateCoord()
 
-        private void moveP1Right()
+        private void movePlayerRight(string playerName)
         {
-            if (player1Moved == false)
+            if(playerName == PLAYER_ONE)    // if player one
             {
-                // move the player
-                player1.MoveRight();
 
-                // decrease move count
-                player1Moved = true;
+                if (player1.Moved == false)
+                {
+                    // move the player
+                    player1.MoveRight();
 
-            } // if
-        } // moveP1Right()
+                    // decrease move count
+                    player1.Moved = true;
 
-        private void moveP1Left()
-        {
-            if (player1Moved == false)
+                } // if
+            }
+            else // if player two
             {
-                // move the player
-                player1.MoveLeft();
+                if (player2.Moved == false)
+                {
+                    // move the player
+                    player2.MoveRight();
 
-                // decrease move count
-                player1Moved = true;
+                    // decrease move count
+                    player2.Moved = true;
 
-            } // if
-        } // moveP1Left()
+                } // if
+            } // f
 
-        private void moveP2Right()
+        } // movePlayerRight()
+
+        private void movePlayerLeft(string playerName)
         {
-            //if (player1Moved == false)
-            //{
-            //    // move the player
-            //    player1.MoveRight();
+            if (playerName == PLAYER_ONE)    // if player one
+            {
 
-            //    // decrease move count
-            //    player1Moved = true;
+                if (player1.Moved == false)
+                {
+                    // move the player
+                    player1.MoveLeft();
 
-            //} // if
-        } // moveP2Right()
+                    // decrease move count
+                    player1.Moved = true;
 
-        private void moveP2Left()
-        {
-            //if (player1Moved == false)
-            //{
-            //    // move the player
-            //    player1.MoveLeft();
+                } // if
+            }
+            else // if player two
+            {
+                if (player2.Moved == false)
+                {
+                    // move the player
+                    player2.MoveLeft();
 
-            //    // decrease move count
-            //    player1Moved = true;
+                    // decrease move count
+                    player2.Moved = true;
 
-            //} // if
-        } // moveP2Left()
+                } // if
+            } // f
+
+        } // movePlayerLeft()
 
         private void leftBtn_Click(object sender, RoutedEventArgs e)
         {
             // move player 1 left
-            moveP1Left();
+            movePlayerLeft(PLAYER_ONE);
 
         }
 
         private void rightBtn_Click(object sender, RoutedEventArgs e)
         {
             // move player 1 right
-            moveP1Right();
+            movePlayerRight(PLAYER_ONE);
 
         }
 
@@ -613,24 +620,13 @@ namespace MyoSnake
                                        
                     break;
                 case Pose.WaveIn:
-                    if (pName == "Player1")
-                    {
-                        moveP1Left();
-                    }
-                    if (pName == "Player2")
-                    {
-                        moveP2Left();
-                    }
+
+                    movePlayerLeft(pName);
                     break;
                 case Pose.WaveOut:
-                    if (pName == "Player1")
-                    {
-                        moveP1Right();
-                    }
-                    if (pName == "Player2")
-                    {
-                        moveP2Right();
-                    }
+
+                    movePlayerRight(pName);
+               
                     break;
                 case Pose.FingersSpread:
                     break;

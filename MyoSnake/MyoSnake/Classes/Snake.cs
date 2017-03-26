@@ -9,11 +9,11 @@ namespace MyoSnake
     class Snake
     {
         public string PlayerName { get; set; }
+        public int Score { get; set; }
         public List<SnakeBody> Body { get; set; }
-
         public SnakeBody Head { get; set; }
         public SnakeBody Tail { get; set; }
-
+        public Boolean Moved { get; set; }
         public int StartSize { get; set; }
         public int StartPosX { get; set; }
         public int StartPosY { get; set; }
@@ -43,6 +43,9 @@ namespace MyoSnake
             {
                 IncreaseBodySize();
             } // for
+
+            Score = 0;
+            Moved = false;
 
         } // constructor
 

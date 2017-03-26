@@ -11,7 +11,12 @@ namespace MyoSnake
 
         public int PosX { get; set; }
         public int PosY { get; set; }
-        public string Player { get; set; }
+        public string PlayerName { get; set; }
+
+        public Pickup(string playerName)
+        {
+            this.PlayerName = playerName;
+        }
 
     } // class
 } //namespace
