@@ -6,61 +6,50 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    xmlns:viewModel="using:MyoSnake.ViewModel"
-    xmlns:converters="using:MyoSnake.Converters">
-
-    <Page.Resources>
-        <converters:ObjectExistsToVisible x:Key="ObjectExistsToVisible" />
-    </Page.Resources>
+    xmlns:ViewModel="using:MyoSnake.ViewModel"
+    >
 
     <Grid Background="Green">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
-            <RowDefinition Height="3*" />
+            <RowDefinition Height="4*" />
         </Grid.RowDefinitions>
-        
+
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+        <StackPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2">
             <TextBlock x:Uid="lblHighscore" FontSize="70" Foreground="White" FontStyle="Italic" FontFamily="arial" VerticalAlignment="Center" HorizontalAlignment="Center" Text="lblHighscore"></TextBlock>
         </StackPanel>
-
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1">
-            <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center">
+          
+        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" >
                 <ListView  x:Name="MainList" 
-              ItemsSource="{x:Bind viewHighScores.highScores, Mode=OneWay}"  
-              SelectedIndex="{x:Bind viewHighScores.SelectedIndex, Mode=TwoWay}" 
-              MinWidth="250" Margin="5">
+            ItemsSource="{x:Bind Organization.People, Mode=OneWay}"  
+            SelectedIndex="{x:Bind Organization.SelectedIndex, Mode=TwoWay}" 
+            MinWidth="250" Margin="5">
                     <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="viewModel:HighScoreViewModel" >
-                            <TextBlock Text="">
-                                <Run Text="{x:Bind Name, Mode=OneWay}"/>
-                                <Run Text=" : "/>
-                                <Run Text="{x:Bind HighScore, Mode=OneWay}"/>
-                            </TextBlock>
+                        <DataTemplate x:DataType="ViewModel:PersonViewModel" >
+                            <TextBlock Text="{x:Bind Name, Mode=OneWay}" />
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-            </StackPanel>
-        </ScrollViewer>
+            </ScrollViewer>
+        </StackPanel>
 
-        <ScrollViewer HorizontalAlignment="Center" VerticalScrollBarVisibility="Auto" Grid.Column="1" Grid.Row="1">
-            <StackPanel x:Name="myPanel" Grid.Column="1" Grid.Row="1" Orientation="Vertical" Visibility="{x:Bind viewHighScores.Selected, Mode=OneWay,Converter={StaticResource ObjectExistsToVisible}}" >
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Margin="5" MinWidth="70">Name:</TextBlock>
-                    <TextBlock Text="{x:Bind viewHighScores.Selected.Name, Mode=TwoWay, FallbackValue=''}" Margin="5" />
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Margin="5" MinWidth="70">Score:</TextBlock>
-                    <TextBlock Text="{x:Bind viewHighScores.Selected.HighScore, Mode=TwoWay, FallbackValue='0'}"  Margin="5" />
-                </StackPanel>
-            </StackPanel>
-        </ScrollViewer>
-        
+        <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Vertical">
+            <TextBlock 
+            Text="{x:Bind Organization.SelectedPerson.Name, Mode=TwoWay, FallbackValue=''}" 
+            Margin="5" />
+            <TextBlock 
+            Text="{x:Bind Organization.SelectedPerson.Score, Mode=TwoWay, FallbackValue='0'}" 
+            Margin="5" />
+        </StackPanel>
+             
     </Grid>
 </Page>

@@ -115,6 +115,7 @@
     <Compile Include="Classes\MyoManager.cs" />
     <Compile Include="Converters\ObjectExistsToVisible.cs" />
     <Compile Include="Data\Score.cs" />
+    <Compile Include="Data\ScoreService.cs" />
     <Compile Include="DifficultySelection.xaml.cs">
       <DependentUpon>DifficultySelection.xaml</DependentUpon>
     </Compile>
@@ -127,6 +128,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Organisation.cs" />
     <Compile Include="Model\Score.cs" />
     <Compile Include="Classes\Pickup.cs" />
     <Compile Include="PostGame.xaml.cs">
@@ -141,6 +143,9 @@
     <Compile Include="ViewModel\Helpers.cs" />
     <Compile Include="ViewModel\HighScoreViewModel.cs" />
     <Compile Include="ViewModel\HighScoreVM.cs" />
+    <Compile Include="ViewModel\OrganizationViewModel.cs" />
+    <Compile Include="ViewModel\PersonViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

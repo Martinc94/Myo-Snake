@@ -21,8 +21,9 @@ namespace MyoSnake
         public HighScores()
         {
             this.InitializeComponent();
-            viewHighScores = new HighScoreVM();
+            Organization = new OrganizationViewModel("");
         }
-        public HighScoreVM viewHighScores { get; set; }
+
+        public OrganizationViewModel Organization { get; set; }
     }
 }
