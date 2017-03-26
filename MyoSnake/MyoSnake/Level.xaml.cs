@@ -50,17 +50,13 @@ namespace MyoSnake
         Snake player2 = new Snake(PLAYER_TWO, boardSize, 20, 10);
 
         SolidColorBrush backgroundColour = new SolidColorBrush(Colors.SeaGreen);
-        SolidColorBrush pickUpColour = new SolidColorBrush(Colors.DarkOrange);
-
         SolidColorBrush player1BodyColour = new SolidColorBrush(Colors.LimeGreen);
         SolidColorBrush player1HeadColour = new SolidColorBrush(Colors.Lime);
-        SolidColorBrush player2BodyColour = new SolidColorBrush(Colors.Green);
+        SolidColorBrush player2BodyColour = new SolidColorBrush(Colors.Orange);
         SolidColorBrush player2HeadColour = new SolidColorBrush(Colors.Yellow);
 
         Pickup p1Pickup = new Pickup(PLAYER_ONE);
         Pickup p2Pickup = new Pickup(PLAYER_TWO);
-        Boolean player1Moved = false;
-        Boolean player2Moved = false;
         Boolean p1PickupPlaced = false;
         Boolean p2PickupPlaced = false;
 
@@ -118,6 +114,22 @@ namespace MyoSnake
                     // flag as placed
                     p1PickupPlaced = true;
 
+                } // if
+
+                if (isTwoPlayer)
+                {
+                    // draw second player
+                    drawPlayer(player2);
+
+                    if (p2PickupPlaced == false)
+                    {
+                        // place the pickup
+                        placePickup(p2Pickup);
+
+                        // flag as placed
+                        p2PickupPlaced = true;
+
+                    } // if
                 } // if
 
                 // reset player move count
@@ -272,7 +284,6 @@ namespace MyoSnake
             {
                 for (int j = 0; j < grid.ColumnDefinitions.Count; j++)
                 {
-                    
                     sp = new StackPanel();
                     sp.BorderThickness = new Thickness(2);
                     sp.BorderBrush = backgroundColour;
@@ -345,6 +356,20 @@ namespace MyoSnake
         {
             StackPanel sp = null;
             Boolean increasePlayerSize = false;
+            SolidColorBrush bodyColour = null;
+            SolidColorBrush headColour = null;
+
+            // set the colours, based on the player
+            if(player.PlayerName == PLAYER_ONE)
+            {
+                bodyColour = player1BodyColour;
+                headColour = player1HeadColour;
+            }
+            else
+            {
+                bodyColour = player2BodyColour;
+                headColour = player2HeadColour;
+            } // if
 
             // reset old last player body parts
             // loop through each body part
@@ -379,7 +404,7 @@ namespace MyoSnake
                 if(sp != null)
                 {
                     // check of pickup is placed
-                    if(sp.Background == pickUpColour)
+                    if(sp.Background == headColour)
                     {
                         // increase score
                         player.Score += PICKUP_SCORE;
@@ -391,7 +416,7 @@ namespace MyoSnake
                         removePickup(player.PlayerName);
 
                     }
-                    else if (sp.Background == player1BodyColour || sp.Background == player1HeadColour) // if the player is eating itself
+                    else if (sp.Background == bodyColour || sp.Background == headColour) // if the player is eating itself
                     {
                         // stop the game
                         gameIsPlaying = false;
@@ -399,7 +424,7 @@ namespace MyoSnake
                     } // if
 
                     // draw the players body
-                    sp.Background = player1BodyColour;
+                    sp.Background = bodyColour;
 
                 } // if
             } // for
@@ -413,7 +438,7 @@ namespace MyoSnake
             if (sp != null)
             {
                 // draw the players head
-                sp.Background = player1HeadColour;
+                sp.Background = headColour;
 
             } // if
 
@@ -469,8 +494,18 @@ namespace MyoSnake
         {
             StackPanel sp = null;
             Boolean isFree = false;
+            SolidColorBrush pickupColour = null;
             int posX;
             int posY;
+
+            if(pickup.PlayerName == PLAYER_ONE)
+            {
+                pickupColour = player1HeadColour;
+            }
+            else
+            {
+                pickupColour = player2HeadColour;
+            }
 
             // generate pickup position until a free spot is generated
             do
@@ -510,9 +545,8 @@ namespace MyoSnake
             // place the pickup
             if(sp != null)
             {
-
                 // draw the pickup
-                sp.Background = pickUpColour;
+                sp.Background = pickupColour;
 
             } // if
 
