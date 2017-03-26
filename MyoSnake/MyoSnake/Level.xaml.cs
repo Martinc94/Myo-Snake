@@ -90,7 +90,7 @@ namespace MyoSnake
             // get the settings passed by the previous page
             settings = (gameSettings)e.Parameter;
 
-            Debug.WriteLine(settings.Diff + " - " + settings.Players);
+           // Debug.WriteLine(settings.Diff + " - " + settings.Players);
 
             // initialise level
             Init(settings);
@@ -162,7 +162,6 @@ namespace MyoSnake
 
         private void Init(gameSettings settings)
         {
-
             // set the speed that the game goes at based on difficulty
             switch (settings.Diff)
             {
@@ -331,10 +330,8 @@ namespace MyoSnake
         {
             StackPanel sp = null;
             Boolean increasePlayer1Size = false;
-            Boolean gotPickup = false;
 
             // reset old last player body parts
-
             // loop through each body part
             foreach (var bodyPart in player1.Body)
             {
@@ -346,7 +343,7 @@ namespace MyoSnake
                 // if a panel is there
                 if (sp != null)
                 {
-                    // draw the part
+                    // draw the background to replace player
                     sp.Background = backgroundColour;
 
                 } // if
@@ -418,14 +415,12 @@ namespace MyoSnake
 
         } // drawPlayer()
 
-
         // removes pickup
         private void removePickup()
         {
             StackPanel sp = null;
 
             // remove old pickup
-
             // try and get the stackpanel at the position
             gameBoard.TryGetValue(pickup.PosY + "." + pickup.PosX, out sp);
 
@@ -444,7 +439,6 @@ namespace MyoSnake
         // places the pickup for the player
         private void placePickup()
         {
-
             StackPanel sp = null;
             Boolean isFree = false;
             int posX;
@@ -483,7 +477,6 @@ namespace MyoSnake
                         //Debug.WriteLine("Position not free!");
        
                     } // if
-
                 } // if
 
             } while (isFree == false); // do while
@@ -655,7 +648,7 @@ namespace MyoSnake
             {
                 grid.Width = grid.Height;
             } // if
-        }
+        } // Current_SizeChanged()
 
     }
 }
