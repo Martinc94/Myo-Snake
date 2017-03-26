@@ -1,21 +1,24 @@
-﻿using System;
+﻿using MyoSnake.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MyoSnake.Data;
 
-namespace MyoSnake.ViewModel
+
+namespace MyoSnake.ViewModels
 {
-    public class PersonViewModel : NotificationBase<HighScore>
+    public class HighScoreViewModel : NotificationBase<HighScore>
     {
-        public PersonViewModel(HighScore person = null) : base(person) { }
-        public String Name
+        public HighScoreViewModel(HighScore score = null) : base(score) { }
+
+        public string Name
         {
             get { return This.Name; }
             set { SetProperty(This.Name, value, () => This.Name = value); }
         }
-        public int Score
+
+        public string Score
         {
             get { return This.Score; }
             set { SetProperty(This.Score, value, () => This.Score = value); }

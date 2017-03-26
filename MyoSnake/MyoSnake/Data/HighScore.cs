@@ -9,6 +9,6 @@ namespace MyoSnake.Data
     public class HighScore
     {
         public String Name { get; set; }
-        public int Score { get; set; }
+        public String Score { get; set; }
     }
 }

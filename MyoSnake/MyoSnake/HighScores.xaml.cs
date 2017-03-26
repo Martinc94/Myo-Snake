@@ -1,4 +1,4 @@
-﻿using MyoSnake.ViewModel;
+﻿using MyoSnake.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,12 +18,21 @@ namespace MyoSnake
 {
     public sealed partial class HighScores : Page
     {
+        HighScoresViewModel highscores { get; set; }
+
         public HighScores()
         {
             this.InitializeComponent();
-            Organization = new OrganizationViewModel("");
         }
 
-        public OrganizationViewModel Organization { get; set; }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            // initialise viewModel
+            // need to pass in the users ID
+            highscores = new HighScoresViewModel();
+
+        }
     }
 }
