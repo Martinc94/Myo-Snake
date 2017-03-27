@@ -41,8 +41,12 @@ namespace MyoSnake.Models
 
             try
             {
+                var httpFilter = new Windows.Web.Http.Filters.HttpBaseProtocolFilter();
+                httpFilter.CacheControl.ReadBehavior =
+                    Windows.Web.Http.Filters.HttpCacheReadBehavior.MostRecent;
+
                 //Create an HTTP client object
-                Windows.Web.Http.HttpClient httpClient = new Windows.Web.Http.HttpClient();
+                Windows.Web.Http.HttpClient httpClient = new Windows.Web.Http.HttpClient(httpFilter);
 
                 //Add a user-agent header to the GET request. 
                 var headers = httpClient.DefaultRequestHeaders;
@@ -65,6 +69,8 @@ namespace MyoSnake.Models
 
                 //Send the GET request asynchronously and retrieve the response as a string.
                 Windows.Web.Http.HttpResponseMessage httpResponse = new Windows.Web.Http.HttpResponseMessage();
+     
+
                 string httpResponseBody = "";
 
                 try
