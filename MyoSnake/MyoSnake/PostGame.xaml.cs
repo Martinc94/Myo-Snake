@@ -38,6 +38,7 @@ namespace MyoSnake
 
             // get the settings passed
             settings = (gameSettings)e.Parameter;
+            lblMessage.Text = settings.Message;
         }
 
         private void btnReplay_Click(object sender, RoutedEventArgs e)

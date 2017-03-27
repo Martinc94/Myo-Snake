@@ -25,7 +25,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1">
-            <TextBlock x:Uid="lblMessage" FontSize="50" Margin="0,50" Foreground="White" FontStyle="Italic" FontFamily="arial" VerticalAlignment="Center" HorizontalAlignment="Center" Text="lblMessage"></TextBlock>
+            <TextBlock x:Uid="lblMessage" x:Name="lblMessage" Margin="20,20" Foreground="White" FontStyle="Italic" FontFamily="arial" VerticalAlignment="Center" HorizontalAlignment="Center" Text="lblMessage" FontSize="18"></TextBlock>
         </StackPanel>
         
         <StackPanel Grid.Row="2">

@@ -10,5 +10,8 @@ namespace MyoSnake.Classes
     {
         public int Players { get; set; }
         public int Diff { get; set; }
+        public string Message { get; set; }
+        public int Player1Score { get; set; }
+        public int Player2Score { get; set; }
     }
 }

@@ -149,6 +149,10 @@ namespace MyoSnake
                 // stop the game timer
                 timer.Stop();
 
+                // save the players score
+                settings.Player1Score = player1.Score;
+                settings.Player2Score = player2.Score;
+
                 // show game over screen
                 // Create the message dialog and set its content
                 string mesg = "";
@@ -162,6 +166,8 @@ namespace MyoSnake
                 {
                     mesg = "Game Over! \n\nPlayer One Score is: " + player1.Score;
                 } // if
+
+                settings.Message = mesg;
 
                 var messageDialog = new MessageDialog(mesg);
 
