@@ -138,6 +138,7 @@ namespace MyoSnake
 
                 // update the score on the screen
                 player1ScoreTB.Text = player1.Score.ToString();
+                player2ScoreTB.Text = player2.Score.ToString();
 
             } else
             {
@@ -166,7 +167,6 @@ namespace MyoSnake
         // handler for message dialog
         private void CommandInvokedHandler(IUICommand command)
         {
-
             switch (command.Label)
             {
                 case "OK":
@@ -184,9 +184,13 @@ namespace MyoSnake
             if(settings.Players == 2)
             {
                 isTwoPlayer = true;
+                player2ScoreSP.Visibility = Visibility.Visible;
+                p2ButtonControlsSP.Visibility = Visibility.Visible;
             } else
             {
                 isTwoPlayer = false;
+                player2ScoreSP.Visibility = Visibility.Collapsed;
+                p2ButtonControlsSP.Visibility = Visibility.Collapsed;
             } // if
 
             // set the speed that the game goes at based on difficulty
@@ -634,20 +638,6 @@ namespace MyoSnake
 
         } // movePlayerLeft()
 
-        private void leftBtn_Click(object sender, RoutedEventArgs e)
-        {
-            // move player 1 left
-            movePlayerLeft(PLAYER_ONE);
-
-        }
-
-        private void rightBtn_Click(object sender, RoutedEventArgs e)
-        {
-            // move player 1 right
-            movePlayerRight(PLAYER_ONE);
-
-        }
-
         private async void Myo_PoseChanged(object sender, PoseEventArgs e)
         {
             Pose curr = e.Pose;
@@ -718,5 +708,30 @@ namespace MyoSnake
             } // if
         } // Current_SizeChanged()
 
+        private void leftBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // move player 1 left
+            movePlayerLeft(PLAYER_ONE);
+
+        }
+
+        private void rightBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // move player 1 right
+            movePlayerRight(PLAYER_ONE);
+
+        }
+
+        private void p2leftBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // move player 1 left
+            movePlayerLeft(PLAYER_TWO);
+        }
+
+        private void p2rightBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // move player 1 right
+            movePlayerRight(PLAYER_TWO);
+        }
     }
 }
