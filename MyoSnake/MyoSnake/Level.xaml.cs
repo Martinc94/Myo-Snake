@@ -103,6 +103,9 @@ namespace MyoSnake
             // controls if the game keeps playing
             if (gameIsPlaying)
             {
+                // draw the pickups
+                drawPickups();
+
                 // draw the player
                 drawPlayer(player1);
 
@@ -355,6 +358,35 @@ namespace MyoSnake
             } // switch
         } // OnKeyDown()
 
+        private void drawPickups()
+        {
+            StackPanel sp = null;
+
+            if (p1PickupPlaced)
+            {
+                // try and get the stackpanel at the position the pickup
+                gameBoard.TryGetValue(p1Pickup.PosY + "." + p1Pickup.PosX, out sp);
+
+                if (sp != null)
+                {
+                    sp.Background = player1HeadColour;
+                    sp = null;
+                } // if
+            } // if
+
+            if (isTwoPlayer && p2PickupPlaced) // draw player 2 pick if two player
+            {
+                // try and get the stackpanel at the position the pickup
+                gameBoard.TryGetValue(p2Pickup.PosY + "." + p2Pickup.PosX, out sp);
+
+                if (sp != null)
+                {
+                    sp.Background = player2HeadColour;
+                    sp = null;
+                } // if
+            } // if
+        } // drawPickups()
+
         // draws the player on the screen
         private void drawPlayer(Snake player)
         {
@@ -509,18 +541,8 @@ namespace MyoSnake
         {
             StackPanel sp = null;
             Boolean isFree = false;
-            SolidColorBrush pickupColour = null;
             int posX;
             int posY;
-
-            if(pickup.PlayerName == PLAYER_ONE)
-            {
-                pickupColour = player1HeadColour;
-            }
-            else
-            {
-                pickupColour = player2HeadColour;
-            }
 
             // generate pickup position until a free spot is generated
             do
@@ -556,14 +578,6 @@ namespace MyoSnake
                 } // if
 
             } while (isFree == false); // do while
-
-            // place the pickup
-            if(sp != null)
-            {
-                // draw the pickup
-                sp.Background = pickupColour;
-
-            } // if
 
         } // placePickup()
 
