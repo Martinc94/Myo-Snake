@@ -151,7 +151,19 @@ namespace MyoSnake
 
                 // show game over screen
                 // Create the message dialog and set its content
-                var messageDialog = new MessageDialog("Game Over! Your Score is: " + player1.Score);
+                string mesg = "";
+
+                if (isTwoPlayer)
+                {
+                    mesg = "Game Over! \n\nPlayer One Score is: " + player1.Score +
+                        "\nPlayer Two Score is: " + player2.Score;
+                }
+                else
+                {
+                    mesg = "Game Over! \n\nPlayer One Score is: " + player1.Score;
+                } // if
+
+                var messageDialog = new MessageDialog(mesg);
 
                 messageDialog.Commands.Add(new UICommand(
                     "OK",
@@ -232,9 +244,7 @@ namespace MyoSnake
                     // players myos are loaded
                     // start the game loop
                     timer.Start();
-
-                    Debug.WriteLine("Closing Thread");
-
+                   
                 });
 
             } // if
