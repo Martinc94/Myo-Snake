@@ -114,7 +114,6 @@ namespace MyoSnake.Models
                     //error
                 }
 
-
                 highscores = tempScores;
 
             }
