@@ -416,11 +416,22 @@ namespace MyoSnake
                         removePickup(player.PlayerName);
 
                     }
-                    else if (sp.Background == bodyColour || sp.Background == headColour) // if the player is eating itself
+                    else if (sp.Background == bodyColour) // if the player is eating itself
                     {
                         // stop the game
                         gameIsPlaying = false;
 
+                    } 
+                    else if(sp.Background != backgroundColour) // you are eating the other player or the other pickup
+                    {
+                        // half your score as a penalty
+                        if (player.Score > 0)
+                            player.Score /= 2;
+                        else
+                            player.Score = 0;
+
+                        // stop the game
+                        gameIsPlaying = false;
                     } // if
 
                     // draw the players body
