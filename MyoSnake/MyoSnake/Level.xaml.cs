@@ -32,33 +32,34 @@ namespace MyoSnake
     /// </summary>
     public sealed partial class Level : Page
     {
-        MyoManager myoManager = null;
-        Random ran = new Random();
-        Boolean gameIsPlaying = true;
-        static int boardSize = 32;
-        Grid grid = new Grid();
-        Dictionary<string, StackPanel> gameBoard = new Dictionary<string, StackPanel>();
-        Snake player1 = new Snake(boardSize);
-
         const int EASY_GAME_SPEED = 300;
         const int NORMAL_GAME_SPEED = 250;
         const int HARD_GAME_SPEED = 200;
         const int PICKUP_SCORE = 10;
-        int player1Score = 0;
+        const string PLAYER_ONE = "Player1";
+        const string PLAYER_TWO = "Player2";
+
+        MyoManager myoManager = null;
+        Random ran = new Random();
+        Boolean gameIsPlaying = true;
+        Boolean isTwoPlayer = false;
+        static int boardSize = 32;
+        Grid grid = new Grid();
+        Dictionary<string, StackPanel> gameBoard = new Dictionary<string, StackPanel>();
+        Snake player1 = new Snake(PLAYER_ONE, boardSize, 10, 10);
+        Snake player2 = new Snake(PLAYER_TWO, boardSize, 20, 10);
 
         SolidColorBrush backgroundColour = new SolidColorBrush(Colors.SeaGreen);
-       // SolidColorBrush backgroundColour = new SolidColorBrush(Colors.OliveDrab);
-        SolidColorBrush pickUpColour = new SolidColorBrush(Colors.DarkOrange);
-
         SolidColorBrush player1BodyColour = new SolidColorBrush(Colors.LimeGreen);
         SolidColorBrush player1HeadColour = new SolidColorBrush(Colors.Lime);
-        SolidColorBrush player2BodyColour = new SolidColorBrush(Colors.Green);
+        SolidColorBrush player2BodyColour = new SolidColorBrush(Colors.Orange);
         SolidColorBrush player2HeadColour = new SolidColorBrush(Colors.Yellow);
 
-        Pickup pickup = new Pickup();
-        Boolean player1Moved = false;
-        Boolean pickupPlaced = false;
-       
+        Pickup p1Pickup = new Pickup(PLAYER_ONE);
+        Pickup p2Pickup = new Pickup(PLAYER_TWO);
+        Boolean p1PickupPlaced = false;
+        Boolean p2PickupPlaced = false;
+
         DispatcherTimer timer = new DispatcherTimer();
         gameSettings settings = null;
 
@@ -90,7 +91,7 @@ namespace MyoSnake
             // get the settings passed by the previous page
             settings = (gameSettings)e.Parameter;
 
-            Debug.WriteLine(settings.Diff + " - " + settings.Players);
+           // Debug.WriteLine(settings.Diff + " - " + settings.Players);
 
             // initialise level
             Init(settings);
@@ -102,24 +103,45 @@ namespace MyoSnake
             // controls if the game keeps playing
             if (gameIsPlaying)
             {
-                // draw the player
-                drawPlayer();
+                // draw the pickups
+                drawPickups();
 
-                if (pickupPlaced == false)
+                // draw the player
+                drawPlayer(player1);
+
+                if (p1PickupPlaced == false)
                 {
                     // place the pickup
-                    placePickup();
+                    placePickup(p1Pickup);
 
                     // flag as placed
-                    pickupPlaced = true;
+                    p1PickupPlaced = true;
 
                 } // if
 
+                if (isTwoPlayer)
+                {
+                    // draw second player
+                    drawPlayer(player2);
+
+                    if (p2PickupPlaced == false)
+                    {
+                        // place the pickup
+                        placePickup(p2Pickup);
+
+                        // flag as placed
+                        p2PickupPlaced = true;
+
+                    } // if
+                } // if
+
                 // reset player move count
-                player1Moved = false;
+                player1.Moved = false;
+                player2.Moved = false;
 
                 // update the score on the screen
-                player1ScoreTB.Text = player1Score.ToString();
+                player1ScoreTB.Text = player1.Score.ToString();
+                player2ScoreTB.Text = player2.Score.ToString();
 
             } else
             {
@@ -129,7 +151,19 @@ namespace MyoSnake
 
                 // show game over screen
                 // Create the message dialog and set its content
-                var messageDialog = new MessageDialog("Game Over! Your Score is: " + player1Score);
+                string mesg = "";
+
+                if (isTwoPlayer)
+                {
+                    mesg = "Game Over! \n\nPlayer One Score is: " + player1.Score +
+                        "\nPlayer Two Score is: " + player2.Score;
+                }
+                else
+                {
+                    mesg = "Game Over! \n\nPlayer One Score is: " + player1.Score;
+                } // if
+
+                var messageDialog = new MessageDialog(mesg);
 
                 messageDialog.Commands.Add(new UICommand(
                     "OK",
@@ -148,7 +182,6 @@ namespace MyoSnake
         // handler for message dialog
         private void CommandInvokedHandler(IUICommand command)
         {
-
             switch (command.Label)
             {
                 case "OK":
@@ -162,6 +195,18 @@ namespace MyoSnake
 
         private void Init(gameSettings settings)
         {
+            // flag weather the game is single player or two player
+            if(settings.Players == 2)
+            {
+                isTwoPlayer = true;
+                player2ScoreSP.Visibility = Visibility.Visible;
+                p2ButtonControlsSP.Visibility = Visibility.Visible;
+            } else
+            {
+                isTwoPlayer = false;
+                player2ScoreSP.Visibility = Visibility.Collapsed;
+                p2ButtonControlsSP.Visibility = Visibility.Collapsed;
+            } // if
 
             // set the speed that the game goes at based on difficulty
             switch (settings.Diff)
@@ -199,9 +244,7 @@ namespace MyoSnake
                     // players myos are loaded
                     // start the game loop
                     timer.Start();
-
-                    Debug.WriteLine("Closing Thread");
-
+                   
                 });
 
             } // if
@@ -258,7 +301,6 @@ namespace MyoSnake
             {
                 for (int j = 0; j < grid.ColumnDefinitions.Count; j++)
                 {
-                    
                     sp = new StackPanel();
                     sp.BorderThickness = new Thickness(2);
                     sp.BorderBrush = backgroundColour;
@@ -303,40 +345,81 @@ namespace MyoSnake
                 case VirtualKey.Left:
 
                     // move player 1 left
-                    moveP1Left();
+                    movePlayerLeft(PLAYER_ONE);
                     break;
                 case VirtualKey.Right:
 
                     // move player 1 right
-                    moveP1Right();
+                    movePlayerRight(PLAYER_ONE);
                     break;
 
                 // to handle player 2 controls
                 case VirtualKey.A:
 
                     // move player 2 left
-                    moveP2Left();
+                    movePlayerLeft(PLAYER_TWO);
                     break;
                 case VirtualKey.D:
 
                     // move player 2 right
-                    moveP2Right();
+                    movePlayerRight(PLAYER_TWO);
                     break;
 
             } // switch
         } // OnKeyDown()
 
-        // draws the player on the screen
-        private void drawPlayer()
+        private void drawPickups()
         {
             StackPanel sp = null;
-            Boolean increasePlayer1Size = false;
-            Boolean gotPickup = false;
+
+            if (p1PickupPlaced)
+            {
+                // try and get the stackpanel at the position the pickup
+                gameBoard.TryGetValue(p1Pickup.PosY + "." + p1Pickup.PosX, out sp);
+
+                if (sp != null)
+                {
+                    sp.Background = player1HeadColour;
+                    sp = null;
+                } // if
+            } // if
+
+            if (isTwoPlayer && p2PickupPlaced) // draw player 2 pick if two player
+            {
+                // try and get the stackpanel at the position the pickup
+                gameBoard.TryGetValue(p2Pickup.PosY + "." + p2Pickup.PosX, out sp);
+
+                if (sp != null)
+                {
+                    sp.Background = player2HeadColour;
+                    sp = null;
+                } // if
+            } // if
+        } // drawPickups()
+
+        // draws the player on the screen
+        private void drawPlayer(Snake player)
+        {
+            StackPanel sp = null;
+            Boolean increasePlayerSize = false;
+            SolidColorBrush bodyColour = null;
+            SolidColorBrush headColour = null;
+
+            // set the colours, based on the player
+            if(player.PlayerName == PLAYER_ONE)
+            {
+                bodyColour = player1BodyColour;
+                headColour = player1HeadColour;
+            }
+            else
+            {
+                bodyColour = player2BodyColour;
+                headColour = player2HeadColour;
+            } // if
 
             // reset old last player body parts
-
             // loop through each body part
-            foreach (var bodyPart in player1.Body)
+            foreach (var bodyPart in player.Body)
             {
                 sp = null;
 
@@ -346,17 +429,17 @@ namespace MyoSnake
                 // if a panel is there
                 if (sp != null)
                 {
-                    // draw the part
+                    // draw the background to replace player
                     sp.Background = backgroundColour;
 
                 } // if
             } // for
 
             // move the player
-            player1.Move();
+            player.Move();
 
             // loop through each body part
-            foreach (var bodyPart in player1.Body)
+            foreach (var bodyPart in player.Body)
             {
                 sp = null;
 
@@ -367,27 +450,38 @@ namespace MyoSnake
                 if(sp != null)
                 {
                     // check of pickup is placed
-                    if(sp.Background == pickUpColour)
+                    if(sp.Background == headColour)
                     {
                         // increase score
-                        player1Score += PICKUP_SCORE;
+                        player.Score += PICKUP_SCORE;
 
                         // flag player 1 for body size increase
-                        increasePlayer1Size = true;
+                        increasePlayerSize = true;
 
                         // remove pickup
-                        removePickup();
+                        removePickup(player.PlayerName);
 
                     }
-                    else if (sp.Background == player1BodyColour || sp.Background == player1HeadColour) // if the player is eating itself
+                    else if (sp.Background == bodyColour) // if the player is eating itself
                     {
                         // stop the game
                         gameIsPlaying = false;
 
+                    } 
+                    else if(sp.Background != backgroundColour) // you are eating the other player or the other pickup
+                    {
+                        // half your score as a penalty
+                        if (player.Score > 0)
+                            player.Score /= 2;
+                        else
+                            player.Score = 0;
+
+                        // stop the game
+                        gameIsPlaying = false;
                     } // if
 
                     // draw the players body
-                    sp.Background = player1BodyColour;
+                    sp.Background = bodyColour;
 
                 } // if
             } // for
@@ -395,40 +489,46 @@ namespace MyoSnake
             sp = null;
 
             // try and get the stackpanel at the position the body part is at
-            gameBoard.TryGetValue(player1.Head.PosY + "." + player1.Head.PosX, out sp);
+            gameBoard.TryGetValue(player.Head.PosY + "." + player.Head.PosX, out sp);
 
             // if a panel is there
             if (sp != null)
             {
                 // draw the players head
-                sp.Background = player1HeadColour;
+                sp.Background = headColour;
 
             } // if
 
             // check if player needs to get bigger
-            if (increasePlayer1Size)
+            if (increasePlayerSize)
             {
                 // increase player 1 size
-                player1.IncreaseBodySize();
+                player.IncreaseBodySize();
 
                 // reset flag
-                increasePlayer1Size = false;
+                increasePlayerSize = false;
 
             } // if
 
         } // drawPlayer()
 
-
         // removes pickup
-        private void removePickup()
+        private void removePickup(string playerName)
         {
             StackPanel sp = null;
 
             // remove old pickup
-
             // try and get the stackpanel at the position
-            gameBoard.TryGetValue(pickup.PosY + "." + pickup.PosX, out sp);
+            if (playerName == PLAYER_ONE)
+            {
 
+                gameBoard.TryGetValue(p1Pickup.PosY + "." + p1Pickup.PosX, out sp);
+            }
+            else
+            {
+                gameBoard.TryGetValue(p2Pickup.PosY + "." + p2Pickup.PosX, out sp);
+            } // if
+          
             // if a panel is there
             if (sp != null)
             {
@@ -436,15 +536,19 @@ namespace MyoSnake
                 sp.Background = backgroundColour;
 
                 // flag pickup as removed
-                pickupPlaced = false;
-
+                if(playerName == PLAYER_ONE)
+                {
+                    p1PickupPlaced = false;
+                } else
+                {
+                    p2PickupPlaced = false;
+                }
             } // if
         } // removePickup()
 
         // places the pickup for the player
-        private void placePickup()
+        private void placePickup(Pickup pickup)
         {
-
             StackPanel sp = null;
             Boolean isFree = false;
             int posX;
@@ -479,23 +583,11 @@ namespace MyoSnake
                     {
                         // otherwise, position not free
                         isFree = false;
-
-                        //Debug.WriteLine("Position not free!");
-       
+                      
                     } // if
-
                 } // if
 
             } while (isFree == false); // do while
-
-            // place the pickup
-            if(sp != null)
-            {
-
-                // draw the pickup
-                sp.Background = pickUpColour;
-
-            } // if
 
         } // placePickup()
 
@@ -510,71 +602,65 @@ namespace MyoSnake
 
         } // generateCoord()
 
-        private void moveP1Right()
+        private void movePlayerRight(string playerName)
         {
-            if (player1Moved == false)
+            if(playerName == PLAYER_ONE)    // if player one
             {
-                // move the player
-                player1.MoveRight();
 
-                // decrease move count
-                player1Moved = true;
+                if (player1.Moved == false)
+                {
+                    // move the player
+                    player1.MoveRight();
 
-            } // if
-        } // moveP1Right()
+                    // decrease move count
+                    player1.Moved = true;
 
-        private void moveP1Left()
-        {
-            if (player1Moved == false)
+                } // if
+            }
+            else // if player two
             {
-                // move the player
-                player1.MoveLeft();
+                if (player2.Moved == false)
+                {
+                    // move the player
+                    player2.MoveRight();
 
-                // decrease move count
-                player1Moved = true;
+                    // decrease move count
+                    player2.Moved = true;
 
-            } // if
-        } // moveP1Left()
+                } // if
+            } // f
 
-        private void moveP2Right()
+        } // movePlayerRight()
+
+        private void movePlayerLeft(string playerName)
         {
-            //if (player1Moved == false)
-            //{
-            //    // move the player
-            //    player1.MoveRight();
+            if (playerName == PLAYER_ONE)    // if player one
+            {
 
-            //    // decrease move count
-            //    player1Moved = true;
+                if (player1.Moved == false)
+                {
+                    // move the player
+                    player1.MoveLeft();
 
-            //} // if
-        } // moveP2Right()
+                    // decrease move count
+                    player1.Moved = true;
 
-        private void moveP2Left()
-        {
-            //if (player1Moved == false)
-            //{
-            //    // move the player
-            //    player1.MoveLeft();
+                } // if
+            }
+            else // if player two
+            {
+                if (player2.Moved == false)
+                {
+                    // move the player
+                    player2.MoveLeft();
 
-            //    // decrease move count
-            //    player1Moved = true;
+                    // decrease move count
+                    player2.Moved = true;
 
-            //} // if
-        } // moveP2Left()
+                } // if
+            } // f
 
-        private void leftBtn_Click(object sender, RoutedEventArgs e)
-        {
-            // move player 1 left
-            moveP1Left();
-
-        }
-
-        private void rightBtn_Click(object sender, RoutedEventArgs e)
-        {
-            // move player 1 right
-            moveP1Right();
-
-        }
+        } // movePlayerLeft()
 
         private async void Myo_PoseChanged(object sender, PoseEventArgs e)
         {
@@ -593,24 +679,13 @@ namespace MyoSnake
                                        
                     break;
                 case Pose.WaveIn:
-                    if (pName == "Player1")
-                    {
-                        moveP1Left();
-                    }
-                    if (pName == "Player2")
-                    {
-                        moveP2Left();
-                    }
+
+                    movePlayerLeft(pName);
                     break;
                 case Pose.WaveOut:
-                    if (pName == "Player1")
-                    {
-                        moveP1Right();
-                    }
-                    if (pName == "Player2")
-                    {
-                        moveP2Right();
-                    }
+
+                    movePlayerRight(pName);
+               
                     break;
                 case Pose.FingersSpread:
                     break;
@@ -655,7 +730,32 @@ namespace MyoSnake
             {
                 grid.Width = grid.Height;
             } // if
+        } // Current_SizeChanged()
+
+        private void leftBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // move player 1 left
+            movePlayerLeft(PLAYER_ONE);
+
         }
 
+        private void rightBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // move player 1 right
+            movePlayerRight(PLAYER_ONE);
+
+        }
+
+        private void p2leftBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // move player 1 left
+            movePlayerLeft(PLAYER_TWO);
+        }
+
+        private void p2rightBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // move player 1 right
+            movePlayerRight(PLAYER_TWO);
+        }
     }
 }

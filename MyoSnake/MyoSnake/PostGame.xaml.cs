@@ -42,7 +42,8 @@ namespace MyoSnake
 
         private void btnReplay_Click(object sender, RoutedEventArgs e)
         {
-
+            // navigate back to the level game, passing the same settings
+            Frame.Navigate(typeof(Level), settings);
         }
 
         private void btnMenu_Click(object sender, RoutedEventArgs e)

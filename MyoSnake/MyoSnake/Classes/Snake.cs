@@ -9,18 +9,21 @@ namespace MyoSnake
     class Snake
     {
         public string PlayerName { get; set; }
+        public int Score { get; set; }
         public List<SnakeBody> Body { get; set; }
-
         public SnakeBody Head { get; set; }
         public SnakeBody Tail { get; set; }
-
+        public Boolean Moved { get; set; }
         public int StartSize { get; set; }
         public int StartPosX { get; set; }
         public int StartPosY { get; set; }
         private int boardSize;
 
-        public Snake(int boardSize)
+        public Snake(string player, int boardSize, int startX, int startY)
         {
+
+            // set the player name
+            this.PlayerName = player;
 
             // save the board size
             this.boardSize = boardSize;
@@ -32,14 +35,17 @@ namespace MyoSnake
             StartSize = 20;
 
             // set start PosX and PosY
-            StartPosX = 10;
-            StartPosY = 10;
+            StartPosX = startX;
+            StartPosY = startY;
 
             // add body parts
             for (int i = 0; i < StartSize; i++)
             {
                 IncreaseBodySize();
             } // for
+
+            Score = 0;
+            Moved = false;
 
         } // constructor
 
