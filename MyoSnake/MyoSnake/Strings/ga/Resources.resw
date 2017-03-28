@@ -141,6 +141,9 @@
     <value>Imreoir Amháin</value>
     <comment>One Player</comment>
   </data>
+  <data name="btnOneVibrate.Content" xml:space="preserve">
+    <value>Imreoir Amháin Vibrate</value>
+  </data>
   <data name="btnReplay.Content" xml:space="preserve">
     <value>Imirt Arís</value>
     <comment>Play Again</comment>
@@ -152,6 +155,9 @@
   <data name="btnTwoPlayer.Content" xml:space="preserve">
     <value>Dhá imreoir</value>
     <comment>Two Player</comment>
+  </data>
+  <data name="btnTwoVibrate.Content" xml:space="preserve">
+    <value>Dhá imreoir Vibrate</value>
   </data>
   <data name="lblDiff.Text" xml:space="preserve">
     <value>Roghnaigh Deacracht</value>

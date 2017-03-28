@@ -156,10 +156,16 @@
   <data name="lblTitle.Text" xml:space="preserve">
     <value>MyoSnake</value>
   </data>
-  <data name="btnHighScores.Content" xml:space="preserve">
+  <data name="btnHighScore.Content" xml:space="preserve">
     <value>Highscores</value>
   </data>
   <data name="lblHighscore.Text" xml:space="preserve">
     <value>Highscores</value>
+  </data>
+  <data name="btnOneVibrate.Content" xml:space="preserve">
+    <value>Player 1 Vibrate</value>
+  </data>
+  <data name="btnTwoVibrate.Content" xml:space="preserve">
+    <value>Player 2 Vibrate</value>
   </data>
 </root>
