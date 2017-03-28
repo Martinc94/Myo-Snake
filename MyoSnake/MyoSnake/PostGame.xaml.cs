@@ -107,9 +107,8 @@ namespace MyoSnake
             if (response.IsSuccessStatusCode)
             {
                 //Debug.WriteLine("Success");
-                var messageDialog = new MessageDialog("Score submitted to server.");
-
-                await messageDialog.ShowAsync();
+                //var messageDialog = new MessageDialog("Score submitted to server.");
+                //await messageDialog.ShowAsync();
             }
             else
             {
