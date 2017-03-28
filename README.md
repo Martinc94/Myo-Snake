@@ -143,6 +143,10 @@ Example of Json Stored Object in MongoDB
   "HighScore": "2000"
 }
 ```
+## Note
+If running application in development mode you may need to install Microsoft Code Contracts on your machine.
+Links is in references section[10].
+
 ## References
 1. https://www.myo.com/
 2. https://github.com/tayfuzun/MyoSharp
@@ -153,3 +157,4 @@ Example of Json Stored Object in MongoDB
 7. https://www.mongodb.com/
 8. http://mongoosejs.com/
 9. https://msdn.microsoft.com/en-us/library/hh848246.aspx
+10. https://marketplace.visualstudio.com/items?itemName=RiSEResearchinSoftwareEngineering.CodeContractsforNET
