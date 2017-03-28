@@ -19,20 +19,26 @@ We had previously used a single myo in our labs and wanted to get two myo commun
 Snake is the common name for a videogame concept where the player maneuvers a line which grows in length, with the line itself being a primary obstacle. The concept originated in the 1976 arcade game Blockade[1]. It regained popularity in 1998 when it was included on Nokia phones.
 
 ## Gameplay
-How to play here.
+Player controls a square as it moves foward around the screen. The tail of the snake trails the head. 
+The player can move the direction the head is travelling in to the right or the left. 
+
+The players aim is to collect pickups around the screen. The snake grows in length each time it gathers a pickup. If the snake eats its body its game over. As we have added a second snake if player hits another snake its game over for that player.
+
+This application has both one and two player modes and snakes can be controlled by a Myo Armband and by Keyboard presses.
 
 ## Controls:
-Each snake can be controlled by a Myo Armband or by Keyboard.
-
 ### Myo:
 The wave in gesture moves the head of the snake to the left.
+
 The wave out gesture moves the head of the snake to the right.
 
 ### Keyboard:
 Left key press moves the head of the snake to the left for player one.
+
 Right key press moves the head of the snake to the right for player one.
 
 A key press moves the head of the snake to the left for player two.
+
 D key press moves the head of the snake to the right for player two.
 
 ## Technologies Used:
@@ -69,8 +75,14 @@ GitHub was used for managing the project's source control and issue tracking.
 The Server we chose to save the highscores is NodeJS.
 We chose NodeJS as its capable of Asynchronous I/O, its fast, lightweight, requires little setup, reliable and its use of javascript which allows handling and manipulation of the data such as determining rank of scores.
 
+#### NodeJS
+Node is an asynchronous event driven JavaScript runtime that is designed to build scalable network applications. Node is lightweight yet extremely effective and handling HTTP Services such as GET, POST, PUT and DELETE.
+
 ### Database
-The database we chose is MongoDB. We chose mongoDB as it combines well with NodeJS with the use of the Mongoose connector.
+The database we chose is MongoDB. We chose mongoDB as it combines well with NodeJS with the use of the Mongoose connector. MongoDB stores documents in JSON format.
+
+#### Mongoose
+Mongoose is the driver that connects the Node server to the MongoDB database.
 
 Example of Javascript code to connect to mongoDB and save document
 ```
