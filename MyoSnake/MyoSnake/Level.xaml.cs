@@ -22,14 +22,8 @@ using MyoSharp.Device;
 using MyoSharp.Poses;
 using System.Threading.Tasks;
 
-
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace MyoSnake
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class Level : Page
     {
         const int EASY_GAME_SPEED = 300;
@@ -70,15 +64,10 @@ namespace MyoSnake
 
             // get instance of MyoManager
             myoManager = MyoManager.getInstance();
-
-            if (myoManager.UseMyo) {
-                myoManager.connect();
-            }
-
+            
             this.InitializeComponent();
 
             // setup timer
-
             // set tick handler
             timer.Tick += Timer_Tick;
 
@@ -95,6 +84,12 @@ namespace MyoSnake
 
             // initialise level
             Init(settings);
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            timer.Stop();
         }
 
         // handler for tick event
@@ -238,8 +233,8 @@ namespace MyoSnake
                 var consumer = Task.Factory.StartNew(() =>
                 {
                     // wait for the selected number of player myos to connect
-                    while (myoManager.MyoEventArgsList.Count != settings.Players) { }
-
+                    while (myoManager.MyoEventArgsList.Count < settings.Players) { }
+                    
                     // for each connected myo
                     foreach (var myo in myoManager.MyoEventArgsList)
                     {
@@ -247,10 +242,6 @@ namespace MyoSnake
                         myo.Myo.PoseChanged += Myo_PoseChanged;
                     }
 
-                    // players myos are loaded
-                    // start the game loop
-                    timer.Start();
-                   
                 });
 
             } // if
@@ -331,13 +322,9 @@ namespace MyoSnake
             // add grid to page
             mainGrid.Children.Add(grid);
 
-            // if myos are not being used
-            if (myoManager.UseMyo == false)
-            {
-                // start the game
-                timer.Start();
-            } // if
-
+            // start the game
+            timer.Start();
+           
         } // Init()
 
         // handle key presses
@@ -466,6 +453,9 @@ namespace MyoSnake
 
                         // remove pickup
                         removePickup(player.PlayerName);
+                        if (myoManager.UseMyo) {
+                            myoManager.Vibrate(player.PlayerName);
+                        }
 
                     }
                     else if (sp.Background == bodyColour) // if the player is eating itself
