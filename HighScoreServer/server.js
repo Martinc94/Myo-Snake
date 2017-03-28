@@ -149,8 +149,8 @@ apiRoutes.get('/getScores', function (req, res) {
             for (i = 1; i < 26; i += 1) {
 
                 temp = {};
-                temp['name' + i] = hScore['name' + i];
-                temp['score' + i] = hScore['score' + i];
+                temp['name'] = hScore['name' + i];
+                temp['score'] = hScore['score' + i];
 
                 if (hScore['name' + i]) {
                     scoreArray.push(temp);
