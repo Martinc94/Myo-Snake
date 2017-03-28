@@ -80,9 +80,11 @@ namespace MyoSnake.Classes
 
         private async void _myoHub_MyoDisconnected(object sender, MyoEventArgs e)
         {
-            _myoHub.MyoConnected -= _myoHub_MyoConnected;
-            _myoHub.MyoDisconnected -= _myoHub_MyoDisconnected;
-       
+            //_myoHub.MyoConnected -= _myoHub_MyoConnected;
+            //_myoHub.MyoDisconnected -= _myoHub_MyoDisconnected;
+ 
+            playerName.Remove(e.Myo.Handle.ToString());
+
         }
 
         private async void _myoHub_MyoConnected(object sender, MyoEventArgs e)
@@ -135,10 +137,10 @@ namespace MyoSnake.Classes
                     myo.Myo.Vibrate(VibrationType.Medium);
                 }
             }
-
-
-           
+    
         }
+
+
 
     } // class
 } // namespace
