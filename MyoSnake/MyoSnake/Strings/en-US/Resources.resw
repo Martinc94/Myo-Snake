@@ -135,6 +135,9 @@
   <data name="btnOnePlayer.Content" xml:space="preserve">
     <value>One Player</value>
   </data>
+  <data name="btnOneVibrate.Content" xml:space="preserve">
+    <value>Player 1 Vibrate</value>
+  </data>
   <data name="btnReplay.Content" xml:space="preserve">
     <value>Play Again</value>
   </data>
@@ -144,11 +147,14 @@
   <data name="btnTwoPlayer.Content" xml:space="preserve">
     <value>Two Player</value>
   </data>
+  <data name="btnTwoVibrate.Content" xml:space="preserve">
+    <value>Player 2 Vibrate</value>
+  </data>
   <data name="lblDiff.Text" xml:space="preserve">
     <value>Select Difficulty</value>
   </data>
   <data name="lblHighscore.Text" xml:space="preserve">
-    <value>HighScores</value>
+    <value>Highscores</value>
   </data>
   <data name="lblMessage.Text" xml:space="preserve">
     <value>lblMessage</value>

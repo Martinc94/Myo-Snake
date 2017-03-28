@@ -1,6 +1,7 @@
 ﻿using MyoSnake.Classes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -23,9 +24,12 @@ namespace MyoSnake
     /// </summary>
     public sealed partial class Selection : Page
     {
+
+        MyoManager myoManager = null;
         public Selection()
         {
             this.InitializeComponent();
+            myoManager = MyoManager.getInstance();
         }
 
         private void btnOnePlayer_Click(object sender, RoutedEventArgs e)
@@ -44,6 +48,16 @@ namespace MyoSnake
             settings.Players = 2;
 
             Frame.Navigate(typeof(DifficultySelection), settings);
+        }
+
+        private void btnOneVibrate_Click(object sender, RoutedEventArgs e)
+        { 
+            myoManager.Vibrate("Player1");
+        }
+
+        private void btnTwoVibrate_Click(object sender, RoutedEventArgs e)
+        {
+            myoManager.Vibrate("Player2");
         }
     }
 }

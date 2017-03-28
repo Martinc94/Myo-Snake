@@ -18,9 +18,9 @@ namespace MyoSnake.Classes
         private static MyoManager myoManager = new MyoManager();
 
         public bool UseMyo = true;
+        public bool isConnected = true;
 
         IChannel _myoChannel;
-        IChannel _myoChannel1;
         IHub _myoHub;
        // IHub _myoHub1;
 
@@ -47,24 +47,26 @@ namespace MyoSnake.Classes
         public void connect()
         { // communication, device, exceptions, poses
 
+            IChannel _myoChannel=null;
+            IHub _myoHub=null;
             try
             {
+                playerName.Clear();
+                playerId.Clear();
+                MyoEventArgsList.Clear();
+
                 // create the channel
                 _myoChannel = Channel.Create(ChannelDriver.Create(ChannelBridge.Create(), MyoErrorHandlerDriver.Create(MyoErrorHandlerBridge.Create())));
 
                 // create the hub with the channel
                 _myoHub = MyoSharp.Device.Hub.Create(_myoChannel);
-
+            
                 // create the event handlers for connect and disconnect
                 _myoHub.MyoConnected += _myoHub_MyoConnected;
                 _myoHub.MyoDisconnected += _myoHub_MyoDisconnected;
 
                 // start listening 
                 _myoChannel.StartListening();
-
-                // create the channel
-                _myoChannel1 = Channel.Create(ChannelDriver.Create(ChannelBridge.Create(),
-                                        MyoErrorHandlerDriver.Create(MyoErrorHandlerBridge.Create())));
 
             }
             catch (System.InvalidOperationException e)
@@ -78,9 +80,11 @@ namespace MyoSnake.Classes
 
         private async void _myoHub_MyoDisconnected(object sender, MyoEventArgs e)
         {
-            _myoHub.MyoConnected -= _myoHub_MyoConnected;
-            _myoHub.MyoDisconnected -= _myoHub_MyoDisconnected;
-       
+            //_myoHub.MyoConnected -= _myoHub_MyoConnected;
+            //_myoHub.MyoDisconnected -= _myoHub_MyoDisconnected;
+ 
+            playerName.Remove(e.Myo.Handle.ToString());
+
         }
 
         private async void _myoHub_MyoConnected(object sender, MyoEventArgs e)
@@ -99,7 +103,7 @@ namespace MyoSnake.Classes
 
             if (playerId.Count == 2)
             {
-                for (int i = 0; i < 2; i++)
+                for (int i = 1; i < 2; i++)
                 {
                     playerName.Add(playerId[i], "Player" + (i + 1));
                 }
@@ -120,6 +124,23 @@ namespace MyoSnake.Classes
             playerName.TryGetValue(handle, out pName);
             return pName;
         }
+
+        public void Vibrate(string name)
+        {      
+            foreach (var myo in MyoEventArgsList)
+            {
+
+                string pName = "";
+                playerName.TryGetValue(myo.Myo.Handle.ToString(), out pName);
+
+                if (pName==name) {
+                    myo.Myo.Vibrate(VibrationType.Medium);
+                }
+            }
+    
+        }
+
+
 
     } // class
 } // namespace
