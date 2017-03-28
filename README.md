@@ -145,7 +145,7 @@ Example of Json Stored Object in MongoDB
 ```
 ## Note
 If running application in development mode you may need to install Microsoft Code Contracts on your machine.
-Links is in references section[10].
+Link is in references section[10].
 
 ## References
 1. https://www.myo.com/
