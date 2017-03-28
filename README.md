@@ -15,9 +15,10 @@ Find out more about the armband here: https://www.myo.com/.
 
 We had previously used a single myo in our labs and wanted to get two myo communicating together. We decided to create a multiplayer version of the classic game Snake.
 
-(Details about game here)
+## Snake
+Snake is the common name for a videogame concept where the player maneuvers a line which grows in length, with the line itself being a primary obstacle. The concept originated in the 1976 arcade game Blockade[1]. It regained popularity in 1998 when it was included on Nokia phones.
 
-## Rules
+## Gameplay
 How to play here.
 
 ## Controls:
@@ -95,3 +96,9 @@ Example of Json Stored Object in MongoDB
   "HighScore": "2000"
 }
 ```
+## References
+1. https://en.wikipedia.org/wiki/Snake_(video_game)
+2. 
+3. 
+4. 
+5. 
