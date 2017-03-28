@@ -36,6 +36,7 @@ namespace MyoUWP
             this.InitializeComponent();
         }
 
+
         private void Start_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(MyoSnake.Selection));
@@ -60,6 +61,11 @@ namespace MyoUWP
             {
                 myoManager.UseMyo = true;
             } // if
+
+            if (myoManager.UseMyo)
+            {
+                myoManager.connect();
+            }
 
         }
     }
