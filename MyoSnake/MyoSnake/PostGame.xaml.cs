@@ -38,34 +38,44 @@ namespace MyoSnake
             settings = (gameSettings)e.Parameter;
             lblMessage.Text = settings.Message;
 
-            showPopup();
-
-
-            /*try
-             {
-                 postToServer(settings.Player1Name, settings.Player1Score.ToString());
-
-                 if (settings.Players == 2)
-                 {
-                     postToServer(settings.Player2Name, settings.Player2Score.ToString());
-                 }
-             }
-             catch (Exception)
-             {
-
-
-             }*/
-
+            showPopupPlayer1();
         }
 
-        private async void showPopup()
+        private async void showPopupPlayer1()
         {
             var dialog1 = new ContentDialog1();
+            dialog1.Title = "Enter Player One Name";
             var result = await dialog1.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {
                 var text = dialog1.Text;
-                Debug.WriteLine(text);
+                if (text!=null)
+                {
+                    postToServer(text, settings.Player1Score.ToString());
+                }
+               
+                
+            }
+
+            if (settings.Players == 2)
+            {
+                showPopupPlayer2();
+            }
+
+        }
+
+        private async void showPopupPlayer2()
+        {
+            var dialog2 = new ContentDialog1();
+            dialog2.Title = "Enter Player Two Name";
+            var result = await dialog2.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+            {
+                var text = dialog2.Text;
+                if (text != null)
+                {
+                    postToServer(text, settings.Player2Score.ToString());
+                }
             }
         }
 
@@ -82,8 +92,6 @@ namespace MyoSnake
 
         private async void postToServer(string name, string score)
         {
-            //Frame.Navigate(typeof(MainPage));
-
             var client = new HttpClient();
 
             var pairs = new List<KeyValuePair<string, string>>
