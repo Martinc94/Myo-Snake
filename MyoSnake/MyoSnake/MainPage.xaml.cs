@@ -39,18 +39,6 @@ namespace MyoUWP
 
         private void Start_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(MyoSnake.Selection));
-        }
-
-        private void HighScore_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(MyoSnake.HighScores));
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            base.OnNavigatedFrom(e);
-
             // save if using myo
             if (dontUseMyoCB.IsChecked == true) // don't use the myo
             {
@@ -67,6 +55,12 @@ namespace MyoUWP
                 myoManager.connect();
             }
 
+            this.Frame.Navigate(typeof(MyoSnake.Selection));
+        }
+
+        private void HighScore_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MyoSnake.HighScores));
         }
     }
 }
