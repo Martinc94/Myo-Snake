@@ -26,6 +26,10 @@ The players aim is to collect pickups around the screen. The snake grows in leng
 
 This application has both one and two player modes and snakes can be controlled by a Myo Armband and by Keyboard presses.
 
+## Rules
+When player collects pickup their score increments by 10.
+When in multiplayer if player eats himself or another player their score is halfed.
+
 ## Controls:
 ### Myo:
 The wave in gesture moves the head of the snake to the left.
