@@ -27,8 +27,9 @@ The players aim is to collect pickups around the screen. The snake grows in leng
 This application has both one and two player modes and snakes can be controlled by a Myo Armband and by Keyboard presses.
 
 ## Rules
-When player collects pickup their score increments by 10.
-When in multiplayer if player eats himself or another player their score is halfed.
+When player collects a pickup their score increments by 10.
+
+When in multiplayer if player eats himself, another player or a wrong pickup their score is halfed and the game ends.
 
 ## Controls:
 ### Myo:
@@ -106,7 +107,7 @@ It allows for loose coupling and binding of data.
 ## Json.Net 
 This project uses Json.Net by newtonsoft as it handles serialisation and deserialisation very well.
 
-##Project Management
+## Project Management
 GitHub was used for managing the project's source control and issue tracking.
 
 ## Cloud
@@ -148,6 +149,10 @@ Example of Json Stored Object in MongoDB
 }
 ```
 ## Note
+This project requires myo connect running to use Myos.
+
+If you dont have myo connect running on your machine please select "I dont want to use myo" checkbox.(will lead to crash in myoSharp dll that cannot be caught in our code).
+
 If running application in development mode you may need to install Microsoft Code Contracts on your machine.
 Link is in references section[10].
 
