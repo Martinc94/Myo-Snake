@@ -201,12 +201,10 @@ namespace MyoSnake
             {
                 isTwoPlayer = true;
                 player2ScoreSP.Visibility = Visibility.Visible;
-                p2ButtonControlsSP.Visibility = Visibility.Visible;
             } else
             {
                 isTwoPlayer = false;
                 player2ScoreSP.Visibility = Visibility.Collapsed;
-                p2ButtonControlsSP.Visibility = Visibility.Collapsed;
             } // if
 
             // set the speed that the game goes at based on difficulty
