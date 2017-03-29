@@ -460,6 +460,15 @@ namespace MyoSnake
                     }
                     else if (sp.Background == bodyColour) // if the player is eating itself
                     {
+                        // if multiplyer, half the players score
+                        if(settings.Players > 1)
+                        {
+                            if (player.Score > 0)
+                                player.Score /= 2;
+                            else
+                                player.Score = 0;
+                        } // if
+
                         // stop the game
                         gameIsPlaying = false;
 
