@@ -201,6 +201,7 @@ namespace MyoSnake
             {
                 isTwoPlayer = true;
                 player2ScoreSP.Visibility = Visibility.Visible;
+                player2ScoreTB.Visibility = Visibility.Visible;
             } else
             {
                 isTwoPlayer = false;
@@ -326,10 +327,8 @@ namespace MyoSnake
         } // Init()
 
         // handle key presses
-        protected override void OnKeyDown(KeyRoutedEventArgs e)
+        private void Page_KeyDown(object sender, KeyRoutedEventArgs e)
         {
-            e.Handled = true;
-
             switch (e.Key)
             {
                 // To handle player One controls
@@ -357,6 +356,39 @@ namespace MyoSnake
                     break;
 
             } // switch
+        }
+
+        protected override void OnKeyDown(KeyRoutedEventArgs e)
+        {
+            e.Handled = true;
+
+            //switch (e.Key)
+            //{
+            //    // To handle player One controls
+            //    case VirtualKey.Left:
+
+            //        // move player 1 left
+            //        movePlayerLeft(PLAYER_ONE);
+            //        break;
+            //    case VirtualKey.Right:
+
+            //        // move player 1 right
+            //        movePlayerRight(PLAYER_ONE);
+            //        break;
+
+            //    // to handle player 2 controls
+            //    case VirtualKey.A:
+
+            //        // move player 2 left
+            //        movePlayerLeft(PLAYER_TWO);
+            //        break;
+            //    case VirtualKey.D:
+
+            //        // move player 2 right
+            //        movePlayerRight(PLAYER_TWO);
+            //        break;
+
+            //} // switch
         } // OnKeyDown()
 
         private void drawPickups()
@@ -760,5 +792,6 @@ namespace MyoSnake
             // move player 1 right
             movePlayerRight(PLAYER_TWO);
         }
+
     }
 }
