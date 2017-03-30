@@ -40,8 +40,8 @@ namespace MyoSnake
         static int boardSize = 32;
         Grid grid = new Grid();
         Dictionary<string, StackPanel> gameBoard = new Dictionary<string, StackPanel>();
-        Snake player1 = new Snake(PLAYER_ONE, boardSize, 10, 10);
-        Snake player2 = new Snake(PLAYER_TWO, boardSize, 20, 10);
+        Snake player1 = new Snake(PLAYER_ONE, boardSize, 20, 10);
+        Snake player2 = new Snake(PLAYER_TWO, boardSize, 10, 10);
 
         SolidColorBrush backgroundColour = new SolidColorBrush(Colors.SeaGreen);
         SolidColorBrush player1BodyColour = new SolidColorBrush(Colors.LimeGreen);
@@ -79,8 +79,6 @@ namespace MyoSnake
 
             // get the settings passed by the previous page
             settings = (gameSettings)e.Parameter;
-
-           // Debug.WriteLine(settings.Diff + " - " + settings.Players);
 
             // initialise level
             Init(settings);
@@ -201,11 +199,12 @@ namespace MyoSnake
             {
                 isTwoPlayer = true;
                 player2ScoreSP.Visibility = Visibility.Visible;
-                player2ScoreTB.Visibility = Visibility.Visible;
+                p2ButtonControlsSP.Visibility = Visibility.Visible;
             } else
             {
                 isTwoPlayer = false;
                 player2ScoreSP.Visibility = Visibility.Collapsed;
+                p2ButtonControlsSP.Visibility = Visibility.Collapsed;
             } // if
 
             // set the speed that the game goes at based on difficulty
@@ -357,39 +356,6 @@ namespace MyoSnake
 
             } // switch
         }
-
-        protected override void OnKeyDown(KeyRoutedEventArgs e)
-        {
-            e.Handled = true;
-
-            //switch (e.Key)
-            //{
-            //    // To handle player One controls
-            //    case VirtualKey.Left:
-
-            //        // move player 1 left
-            //        movePlayerLeft(PLAYER_ONE);
-            //        break;
-            //    case VirtualKey.Right:
-
-            //        // move player 1 right
-            //        movePlayerRight(PLAYER_ONE);
-            //        break;
-
-            //    // to handle player 2 controls
-            //    case VirtualKey.A:
-
-            //        // move player 2 left
-            //        movePlayerLeft(PLAYER_TWO);
-            //        break;
-            //    case VirtualKey.D:
-
-            //        // move player 2 right
-            //        movePlayerRight(PLAYER_TWO);
-            //        break;
-
-            //} // switch
-        } // OnKeyDown()
 
         private void drawPickups()
         {
@@ -671,7 +637,6 @@ namespace MyoSnake
         {
             if (playerName == PLAYER_ONE)    // if player one
             {
-
                 if (player1.Moved == false)
                 {
                     // move the player
@@ -730,9 +695,9 @@ namespace MyoSnake
                     break;
                 default:
                     break;
-            }
-           
-        }
+            } // switch
+
+        } // Myo_PoseChanged()
 
         // gets called when the window size changes
         private void Current_SizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
