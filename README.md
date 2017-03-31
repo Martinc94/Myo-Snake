@@ -4,6 +4,10 @@ Fourth Year Project For Gesture based UI Module
 ###### Martin Coleman
 ###### Ross Byrne
 
+Link to our sharepoint documentation:
+
+https://galwaymayoinstitute.sharepoint.com/sites/GestureBasedUIDevelopment/_layouts/15/WopiFrame.aspx?sourcedoc=%7B54124B97-9DAD-4CBA-81D0-C199592F9D09%7D&file=Martin%20Coleman%20Ross%20Byrne.docx&action=default
+
 ## Introduction
 This project is for our fourth year Gesture based UI Module.
 
