@@ -11,7 +11,7 @@ https://galwaymayoinstitute.sharepoint.com/sites/GestureBasedUIDevelopment/_layo
 ## Introduction
 This project is for our fourth year Gesture based UI Module.
 
-This is a universal app for the windows store. It can run on many platforms such as Windows 10 and Windows Phone. Find out more about universal apps here: https://msdn.microsoft.com/en-us/windows/uwp/get-started/whats-a-uwp
+This is a universal windows platform application. It can run on many platforms such as Windows 10 and Windows Phone. Find out more about universal apps here: https://msdn.microsoft.com/en-us/windows/uwp/get-started/whats-a-uwp
 
 We chose this project as we wanted to work with Thalmic labs Myo Armband[1]. The Myo Armband reads the electrical activity of your muscles to control technology with gestures and motion. 
 
